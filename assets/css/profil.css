@@ -1,0 +1,288 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background-color: #f8f8f8;
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 20px 60px;
+}
+
+.button-group {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+}
+.button {
+	background-color: #ff9800;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.button:hover {
+	background-color: #e68a00;
+}
+
+.balance {
+	font-size: 14px;
+	font-weight: bold;
+	color: #ff9900;
+	margin-top: 5px;
+}
+
+.menu-section {
+	width: 100%;
+	max-width: 400px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.menu-section .menu-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px 20px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.menu-section .menu-item:last-child {
+	border-bottom: none;
+}
+
+.menu-section .menu-item:hover {
+	background-color: #ff9900;
+	border-left: 5px solid #ff9900;
+}
+
+.menu-section .menu-item:hover span {
+	color: #ffffff;
+}
+
+.menu-section .menu-item img {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+
+.menu-section .menu-item span {
+	font-size: 14px;
+	color: #333;
+	transition: color 0.3s ease;
+}
+
+.menu-section .menu-item .arrow {
+	font-size: 16px;
+	color: #666;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	max-width: 400px;
+	background-color: #ffffff;
+	display: flex;
+	justify-content: space-around;
+	padding: 10px 0;
+	border-top: 1px solid #ddd;
+	margin-top: 0;
+}
+
+.footer a {
+	text-decoration: none;
+	color: #666;
+	font-size: 12px;
+	text-align: center;
+	transition: color 0.3s ease;
+}
+
+.footer a.active, .footer a:hover {
+	color: #ff9900;
+}
+
+.footer a span {
+	display: block;
+	font-size: 18px;
+}
+
+.footer a.active span {
+	color: #ff9900;
+}
+
+.popup-referral {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+/* .popup-edit {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+} */
+
+.popup-content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	position: relative;
+	width: 80%;
+	max-width: 300px;
+	text-align: center;
+}
+
+.close-btn {
+	position: absolute;
+	top: 7px;
+	right: 10px;
+	font-size: 24px;
+	cursor: pointer;
+	color: #ff9900;
+}
+
+.popup-content h2 {
+	margin-bottom: 15px;
+	font-size: 16px;
+	color: #333;
+}
+
+.referral-code {
+	background-color: #f8f8f8;
+	padding: 10px;
+	border: 1px solid #ff9900;
+	border-radius: 4px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	margin: 10px 0;
+}
+
+.logout-section {
+	display: flex;
+	justify-content: center;
+	padding: 20px 0;
+}
+
+.button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	align-items: center;
+}
+
+.rectangle {
+	width: 358px; /* Set the width of the rectangle */
+	margin: 0 5px; /* Add margin between buttons */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	background: #ff9900;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.rectangle:hover {
+	background: #e68a00;
+}
+
+.text {
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	margin: 0;
+}
+
+.confirm-btn {
+	background: #ff9900;
+	max-width: 100px;
+	max-height: 40px;
+}
+
+.cancel-btn {
+	background: #ff9900; /* Change background color to white */
+	color: #ddd;
+	max-width: 100px;
+	max-height: 40px;
+}
+
+.ok-btn {
+	background: #ff9900; /* Change background color to white */
+	color: #ddd;
+	max-width: 100px;
+	max-height: 40px;
+	align-items: center;
+}
+
+.cancel-btn:hover {
+	background: #e68a00;
+}
+
+.logout-image {
+	width: 100%;
+	max-width: 200px; /* Adjust the size as needed */
+	margin: 10px 0; /* Add some margin for spacing */
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rectangle.cancel-btn {
+    padding: 10px 30px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.rectangle.cancel-btn p {
+    margin: 0;
+}
+
+#edit-popup .button-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+#edit-popup .rectangle.cancel-btn {
+    margin: 0 auto !important;
+    width: fit-content !important;
+    padding: 10px 30px !important;
+}

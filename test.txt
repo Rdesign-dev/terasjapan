@@ -1,0 +1,8 @@
+    <!-- Tabs -->
+    <div class="tabs">
+        <?php foreach ($levels as $index => $level): ?>
+            <div class="tab <?php echo $index === 0 ? 'active' : ''; ?>" onclick="showTab('<?php echo $level->id; ?>')">
+                <?php echo $level->level_name; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>

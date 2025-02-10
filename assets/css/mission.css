@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 80px;
+    background-color: #f9f9f9;
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.mission-container {
+    width: 100%;
+    max-width: 400px;
+    min-height: 520px;
+    background-color: #ffffff;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('Assets/background.jfif');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.mission-container h1 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.mission-container img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 20px auto;
+}
+
+.mission-container p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    font-weight: 600;
+}

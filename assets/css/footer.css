@@ -1,0 +1,32 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.footer a.active, .footer a:hover {
+    color: #ff9900;
+}
+
+.footer a span {
+    display: block;
+    font-size: 18px;
+}
+
+.footer a.active span {
+    color: #ff9900;
+}

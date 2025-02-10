@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 140px;
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.delete-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('Assets/background.jfif');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.delete-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.delete-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.delete-points {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.delete-points li {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.delete-points li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-top: 3px;
+}
+
+.checkbox-container label {
+    font-size: px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.delete-btn {
+    width: 100%;
+    background-color: #ff9900;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #e67428;
+}
+
+.delete-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

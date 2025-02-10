@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 20px 60px; /* Reduced bottom padding */
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.feedback-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.feedback-title {
+    color: #ff9900;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f2f2f2;
+    resize: none;
+    height: 180px;
+}
+
+.char-count {
+    color: gray;
+    font-size: 12px;
+    text-align: right;
+}
+
+.feedback-category {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.category-btn {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #EAEAEA;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.category-btn.active {
+    background: #ff9900;
+    color: white;
+}
+
+.feedback-question {
+    color: black;
+    font-size: 16px;
+    margin: 10px 0;
+    margin-top: 15px;
+}
+
+.feedback-rating {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background: #f2f2f2;
+    border-radius: 10px;
+}
+
+.emoji {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.emoji.active {
+    background: #00205B;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+#send-feedback {
+    background-color: #ff9900;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.hidden {
+    display: none;
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}

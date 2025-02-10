@@ -1,0 +1,26 @@
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.header img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.header .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 80px;
+    background-color: #f9f9f9;
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.content-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.content-top img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 5px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+.content-top h1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+.content-top .badge {
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.description {
+    color: #4b5563;
+    font-size: 13px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.info {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.info .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.info .row span {
+    color: #6b7280;
+}
+.info .row .value {
+    color: #111827;
+    font-weight: bold;
+}
+.content-bottom {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 15px;
+    text-align: center;
+    max-width: 100%;
+    height: 230px;
+}
+.content-bottom p {
+    color: #4b5563;
+    margin-bottom: 15px;
+}
+.content-bottom img {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 150px;
+    height: 150px;
+}
+.content-bottom .note {
+    font-size: 12px;
+    color: #EA2203;
+    font-weight: bold;
+}

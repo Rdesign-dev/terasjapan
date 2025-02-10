@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 20px;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    background-size: cover;
+    background-position: center;
+    width: 375px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: height 0.3s ease;
+    overflow: hidden;
+    max-height: 90vh; /* limit height to 90% of viewport */
+    overflow-y: auto; /* enable vertical scrolling */
+    position: relative;
+}
+
+/* Add custom scrollbar styling */
+
+.logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input, .input-group select {
+    width: 80%;
+    padding: 10px;
+    border: 2px solid orange;
+    border-radius: 5px;
+    font-size: 14px;
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none; /* Remove default styling for Safari */
+    -moz-appearance: none; /* Remove default styling for Firefox */
+}
+
+.input-group select {
+    background-color: white; /* Ensure background is consistent */
+}
+
+.login-btn {
+    width: 85%;
+    gap: 20px;
+    padding: 10px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Add margin to create space between buttons */
+}
+
+.login-btn:hover {
+    background-color: darkorange;
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.register-link a {
+    color: orange;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+#authForm {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+#authForm.fade-out {
+    opacity: 0;
+}
+
+#authForm.fade-in {
+    opacity: 1;
+}
