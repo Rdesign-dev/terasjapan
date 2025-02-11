@@ -99,6 +99,21 @@ class Profile extends CI_Controller {
         $this->load->view('profile/setting');
     }
 
+    public function referral() {
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->User_model->get_user_by_id($user_id);
+
+        if ($user) {
+            $data['referral_code'] = $user->referral_code;
+            $data['referral_redeem_data'] = $this->User_model->get_referral_redeem_data_by_code($user->referral_code);
+        } else {
+            $data['referral_code'] = 'No referral code available';
+            $data['referral_redeem_data'] = [];
+        }
+
+        $this->load->view('profile/referral', $data);
+    }
+
     public function faq() {
         $this->load->view('profile/faq');
     }
@@ -158,6 +173,8 @@ class Profile extends CI_Controller {
         $this->session->set_flashdata('success', 'Thank you for your feedback!');
         redirect('profile');
     }
+
+    
 
     public function deleteAccount() {
         $user_id = $this->session->userdata('user_id');

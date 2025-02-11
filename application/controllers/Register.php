@@ -47,8 +47,8 @@ class Register extends CI_Controller {
             // Save referral redeem history
             if (!empty($referral_code) && isset($referrer)) {
                 $redeem_data = array(
-                    'user_id' => $referrer->id,
-                    'referred_user_id' => $new_user_id,
+                    'user_id' => $new_user_id,
+                    'referred_user_id' => $referrer->id,
                     'referral_code' => $referral_code,
                     'redeem_date' => date('Y-m-d H:i:s')
                 );

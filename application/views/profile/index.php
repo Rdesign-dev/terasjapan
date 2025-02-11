@@ -223,7 +223,13 @@
         }
 
         function showReferralPopup() {
-            document.getElementById('referralPopup').style.display = 'flex';
+            <?php if ($this->session->userdata('user_id')): ?>
+                // Jika user sudah login, arahkan ke halaman referral
+                window.location.href = "<?php echo base_url('profile/referral'); ?>";
+            <?php else: ?>
+                // Jika user belum login, tampilkan popup untuk login
+                document.getElementById('referralPopup').style.display = 'flex';
+            <?php endif; ?>
         }
     </script>
 

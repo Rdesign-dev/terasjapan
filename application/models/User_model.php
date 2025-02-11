@@ -20,6 +20,12 @@ class User_model extends CI_Model {
         return $this->db->update('users', $data); // Mengembalikan true jika berhasil
     }
     
+    public function delete_referral_redeem_data($user_id) {
+        // Hapus data terkait di tabel referral_redeem
+        $this->db->where('referred_user_id', $user_id);
+        $this->db->delete('referral_redeem');
+    }
+
     public function delete_user_related_data($user_id) {
         // Hapus data terkait di tabel redeem_voucher
         $this->db->where('user_id', $user_id);
@@ -27,6 +33,9 @@ class User_model extends CI_Model {
     }
 
     public function delete_user($user_id) {
+        // Hapus data terkait di tabel referral_redeem
+        $this->delete_referral_redeem_data($user_id);
+
         // Hapus data terkait di tabel redeem_voucher
         $this->delete_user_related_data($user_id);
         
@@ -82,5 +91,14 @@ class User_model extends CI_Model {
     // Metode untuk menyimpan riwayat penggunaan kode referral
     public function insert_referral_redeem($data) {
         return $this->db->insert('referral_redeem', $data);
+    }
+
+    public function get_referral_redeem_data_by_code($referral_code) {
+        $this->db->select('referral_redeem.*, users.name, users.profile_pic');
+        $this->db->from('referral_redeem');
+        $this->db->join('users', 'referral_redeem.user_id = users.id');
+        $this->db->where('referral_redeem.referral_code', $referral_code);
+        $query = $this->db->get();
+        return $query->result();
     }
 }
