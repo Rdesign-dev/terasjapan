@@ -34,17 +34,16 @@
                     <div class="friend-info">
                         <div class="avatar">
                             <?php 
-                            $profilePic = !empty($redeem->profile_pic) ? base_url('assets/image/ProfPic/' . $redeem->profile_pic) : base_url('assets/image/Profpic/Profile.jpg'); 
+                            $profilePic = !empty($redeem->referred_user_profile_pic) ? base_url('assets/image/ProfPic/' . $redeem->referred_user_profile_pic) : base_url('assets/image/Profpic/Profile.jpg'); 
                             ?>
-                            <img src="<?php echo $profilePic; ?>" alt="<?php echo $redeem->name; ?>">
+                            <img src="<?php echo $profilePic; ?>" alt="<?php echo $redeem->referred_user_name; ?>">
                         </div>
                         <div class="details">
-                            <p class="name"><?php echo $redeem->name; ?></p>
+                            <p class="name"><?php echo $redeem->referred_user_name; ?></p>
                             <p class="platform"><?php echo date('d M Y', strtotime($redeem->redeem_date)); ?></p>
                         </div>
                     </div>
-                    <!-- Abaikan button point untuk sekarang -->
-                    <!-- <button class="point-btn">Point : 110</button> -->
+                    <button class="point-btn">Point : <?php echo $redeem->referrer_points; ?></button> 
                 </div>
             <?php endforeach; ?>
         <?php else: ?>

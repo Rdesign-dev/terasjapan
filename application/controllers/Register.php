@@ -23,13 +23,19 @@ class Register extends CI_Controller {
 
             // Default points
             $points = 0;
+            $referrer_points = 0;
+            $referred_points = 0;
 
             // Check if referral code is valid
             if (!empty($referral_code)) {
                 $referrer = $this->User_model->get_user_by_referral_code($referral_code);
                 if ($referrer) {
-                    // Add points for valid referral
-                    $points += 10; // Example: Add 10 points for valid referral
+                    // Calculate points based on referral code
+                    $referrer_points = $this->calculate_points();
+                    $referred_points = $referrer_points;
+
+                    // Add points to referrer
+                    $this->User_model->update_user_points($referrer->id, $referrer_points);
                 }
             }
 
@@ -37,7 +43,7 @@ class Register extends CI_Controller {
             $user_data = array(
                 'name' => $name,
                 'nomor_telepon' => $nomor_telepon,
-                'poin' => $points,
+                'poin' => $referred_points,
                 'referral_code' => $this->generate_referral_code($name)
             );
 
@@ -47,10 +53,12 @@ class Register extends CI_Controller {
             // Save referral redeem history
             if (!empty($referral_code) && isset($referrer)) {
                 $redeem_data = array(
-                    'user_id' => $new_user_id,
-                    'referred_user_id' => $referrer->id,
+                    'user_id' => $referrer->id,
+                    'referred_user_id' => $new_user_id,
                     'referral_code' => $referral_code,
-                    'redeem_date' => date('Y-m-d H:i:s')
+                    'redeem_date' => date('Y-m-d H:i:s'),
+                    'referrer_points' => $referrer_points,
+                    'referred_points' => $referred_points
                 );
                 $this->User_model->insert_referral_redeem($redeem_data);
             }
@@ -83,5 +91,18 @@ class Register extends CI_Controller {
         }
 
         return $referral_code;
+    }
+
+    private function calculate_points() {
+        $random = rand(1, 100);
+        if ($random <= 85) {
+            return 5;
+        } elseif ($random <= 90) {
+            return 10;
+        } elseif ($random <= 93.5) {
+            return 15;
+        } else {
+            return 20;
+        }
     }
 }

@@ -38,6 +38,10 @@ class User_model extends CI_Model {
 
         // Hapus data terkait di tabel redeem_voucher
         $this->delete_user_related_data($user_id);
+
+            // Hapus baris terkait di tabel referral_redeem
+        $this->db->where('user_id', $user_id);
+        $this->db->delete('referral_redeem');
         
         // Hapus data pengguna
         $this->db->where('id', $user_id);
@@ -81,7 +85,9 @@ class User_model extends CI_Model {
     }
 
     public function get_user_by_referral_code($referral_code) {
-        return $this->db->get_where('users', ['referral_code' => $referral_code])->row();
+        $this->db->where('referral_code', $referral_code);
+        $query = $this->db->get('users');
+        return $query->row();
     }
 
     public function insert_user($data) {
@@ -94,11 +100,17 @@ class User_model extends CI_Model {
     }
 
     public function get_referral_redeem_data_by_code($referral_code) {
-        $this->db->select('referral_redeem.*, users.name, users.profile_pic');
+        $this->db->select('referral_redeem.*, referred_user.name as referred_user_name, referred_user.profile_pic as referred_user_profile_pic, referral_redeem.referrer_points');
         $this->db->from('referral_redeem');
-        $this->db->join('users', 'referral_redeem.user_id = users.id');
+        $this->db->join('users as referred_user', 'referral_redeem.referred_user_id = referred_user.id');
         $this->db->where('referral_redeem.referral_code', $referral_code);
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function update_user_points($user_id, $points) {
+        $this->db->set('poin', 'poin + ' . (int)$points, FALSE);
+        $this->db->where('id', $user_id);
+        $this->db->update('users');
     }
 }
