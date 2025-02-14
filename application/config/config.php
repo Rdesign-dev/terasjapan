@@ -106,7 +106,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 
 
@@ -114,7 +114,14 @@ $config['enable_hooks'] = FALSE;
 
 
 $config['fonnte_token'] = 'sVrY2zW4KSS_Pwx@JMDr';
-// untuk memasang token API Fonnte
+/*
+this token is a unique identifier used to authenticate API
+requests to the Fonnte service. 
+Fonnte is likely an external service or API that your 
+application interacts with,
+and the token ensures that only authorized 
+requests are made to the Fonnte API.
+*/
 
 /*
 |--------------------------------------------------------------------------
@@ -150,7 +157,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

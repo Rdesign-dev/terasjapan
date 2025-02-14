@@ -21,7 +21,6 @@
         <div class="input-group">
             <input type="text" value="<?php echo $referral_code; ?>" readonly>
             <button class="copy-btn" onclick="copyReferralCode()">Copy</button>
-            <button class="share-btn" onclick="shareReferralCode()">SHARE</button>
         </div>
     </div>
     <div class="container friends-list">
