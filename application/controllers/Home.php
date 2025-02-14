@@ -43,3 +43,15 @@ class Home extends CI_Controller {
         $this->load->view('home/alamat');
     }
 }
+
+class Reward extends CI_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('Reward_model');
+    }
+
+    public function redeem() {
+        // Implementasi redeem reward
+    }
+}

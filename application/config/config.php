@@ -1,4 +1,7 @@
 <?php
+
+use SebastianBergmann\Type\FalseType;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -106,12 +109,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = TRUE;
-
-
-
-
-
+$config['enable_hooks'] =  FALSE;
 
 $config['fonnte_token'] = 'sVrY2zW4KSS_Pwx@JMDr';
 /*

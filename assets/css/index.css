@@ -737,10 +737,16 @@ body {
 
 .modal-detail {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Ubah menjadi kolom */
     align-items: center;
-    gap: 20px;
+    gap: 10px; /* Tambahkan jarak antar elemen */
     margin-top: 10px;
+}
+
+#modalDescription {
+    text-align: left; /* Atur teks deskripsi agar rata kiri */
+    width: 100%; /* Atur lebar deskripsi agar sesuai dengan modal */
+    margin-top: 10px; /* Tambahkan jarak atas untuk deskripsi */
 }
 
 .exchange-btn {

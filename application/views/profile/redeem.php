@@ -38,7 +38,7 @@
                 <span class="value"><?php echo $voucher->kode_voucher; ?></span>
             </div>
             <div class="row">
-                <span>Expired Code</span>
+                <span>Expired </span>
                 <span class="value"><?php echo date('d-m-Y', strtotime($voucher->expires_at)); ?></span>
             </div>
         </div>

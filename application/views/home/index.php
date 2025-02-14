@@ -223,12 +223,14 @@
                 </div>
                 <div class="modal-detail">
                     <p id="modalPoints"></p>
+                    <p id="modalDescription"></p> <!-- Tambahkan elemen untuk deskripsi -->
+                    <p id="modalValidity"></p> <!-- Tambahkan elemen untuk periode validitas -->
+                    <p id="modalBranches"></p> <!-- Tambahkan elemen untuk cabang -->
                     <button class="exchange-btn" onclick="redeemReward()">Redeem</button>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="news-section">
         <h2>News & Event</h2>
@@ -345,6 +347,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalImage = document.getElementById("modalImage");
     const modalTitle = document.getElementById("modalTitle");
     const modalPoints = document.getElementById("modalPoints");
+    const modalDescription = document.getElementById("modalDescription"); // Tambahkan elemen deskripsi
+    const modalValidity = document.getElementById("modalValidity"); // Tambahkan elemen periode validitas
+    const modalBranches = document.getElementById("modalBranches"); // Tambahkan elemen cabang
     const closeButton = document.querySelector(".close");
     let currentRewardId = null;
 
@@ -376,6 +381,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     modalImage.src = "<?= base_url('assets/image/reward/'); ?>" + data.image_name;
                     modalTitle.innerText = data.title;
                     modalPoints.innerText = "Poin: " + data.points_required;
+                    modalDescription.innerText = data.description; // Tampilkan deskripsi
+                    modalValidity.innerText = "Voucher validity period: " + data.total_days + " days after redemption"; // Tampilkan periode validitas
+                    if (data.branches && data.branches.length > 0) {
+                        modalBranches.innerText = "Berlaku di: " + data.branches.map(branch => branch.branch_name).join(', '); // Tampilkan cabang
+                    } else {
+                        modalBranches.innerText = "Berlaku di: Tidak ada cabang yang tersedia"; // Tampilkan pesan jika tidak ada cabang
+                    }
                     modal.style.display = "block"; // Tampilkan modal
                 } catch (error) {
                     console.error("Error parsing JSON:", error);

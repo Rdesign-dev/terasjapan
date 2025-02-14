@@ -22,17 +22,15 @@ class Register extends CI_Controller {
             $referral_code = $this->input->post('referral_code');
 
             // Default points
-            $points = 0;
             $referrer_points = 0;
-            $referred_points = 0;
+            $referred_points = 10; // Fixed points for new user
 
             // Check if referral code is valid
             if (!empty($referral_code)) {
                 $referrer = $this->User_model->get_user_by_referral_code($referral_code);
                 if ($referrer) {
-                    // Calculate points based on referral code
+                    // Calculate points for referrer based on referral code
                     $referrer_points = $this->calculate_points();
-                    $referred_points = $referrer_points;
 
                     // Add points to referrer
                     $this->User_model->update_user_points($referrer->id, $referrer_points);

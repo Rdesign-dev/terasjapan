@@ -3,8 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Reward_model extends CI_Model {
 
-    public function get_reward_by_id($id) {
-        return $this->db->get_where('rewards', ['id' => $id])->row();
+    public function get_reward_by_id($reward_id) {
+        $this->db->where('id', $reward_id);
+        $query = $this->db->get('rewards');
+        return $query->row();
+    }
+
+    public function get_branches_by_reward_id($reward_id) {
+        $this->db->select('branch.branch_name');
+        $this->db->from('reward_branch');
+        $this->db->join('branch', 'reward_branch.branch_id = branch.id');
+        $this->db->where('reward_branch.reward_id', $reward_id);
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function get_vouchers_by_user_id($user_id) {

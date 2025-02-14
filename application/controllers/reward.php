@@ -21,6 +21,8 @@ class Reward extends CI_Controller {
         }
 
         $reward = $this->Reward_model->get_reward_by_id($id);
+        $branches = $this->Reward_model->get_branches_by_reward_id($id);
+        $reward->branches = $branches;
 
         if (!$reward) {
             $this->output->set_status_header(404);
