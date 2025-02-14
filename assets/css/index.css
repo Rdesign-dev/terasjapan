@@ -682,84 +682,109 @@ body {
 }
 
 .modal {
-    /* display: none; Sembunyikan modal saat awal */
     position: fixed;
-    z-index: 1000;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4); /* Warna gelap semi transparan */
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
-    background-color: #fff;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 8px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 250px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    position: relative;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .close {
-    color: #ff9900;
-    align-items: right;
-    font-size: 28px;
-    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
     cursor: pointer;
 }
 
-.close:hover {
-    color: grey;
-}
-
 .modal-body {
-    text-align: center;
+    display: flex;
+    gap: 15px;
 }
 
 .modal-body img {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.modal-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .modal-title {
-    display: center;
-    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.modal-detail {
+.modal-description {
+    font-size: 14px;
+    color: #333;
+}
+
+.modal-branches {
     display: flex;
-    flex-direction: column; /* Ubah menjadi kolom */
-    align-items: center;
-    gap: 10px; /* Tambahkan jarak antar elemen */
+    flex-wrap: wrap;
+    gap: 5px;
     margin-top: 10px;
 }
 
-#modalDescription {
-    text-align: left; /* Atur teks deskripsi agar rata kiri */
-    width: 100%; /* Atur lebar deskripsi agar sesuai dengan modal */
-    margin-top: 10px; /* Tambahkan jarak atas untuk deskripsi */
+.branch-badge {
+    background-color: #ff9900;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.point-text {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .exchange-btn {
     background-color: #ff9900;
     color: white;
-    padding: 8px;
+    padding: 8px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    margin-left: 10px;
+    text-decoration: none;
 }
 
 .exchange-btn:hover {
     background-color: #FA812F;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
 }

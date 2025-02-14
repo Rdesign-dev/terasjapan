@@ -218,16 +218,17 @@
             <span class="close">&times;</span>
             <div class="modal-body">
                 <img id="modalImage" src="" alt="Reward Image">
-                <div class="modal-title">
-                    <h3 id="modalTitle"></h3>
+                <div class="modal-info">
+                    <h3 id="modalTitle" class="modal-title"></h3>
+                    <p id="modalDescription" class="modal-description"></p>
                 </div>
-                <div class="modal-detail">
-                    <p id="modalPoints"></p>
-                    <p id="modalDescription"></p> <!-- Tambahkan elemen untuk deskripsi -->
-                    <p id="modalValidity"></p> <!-- Tambahkan elemen untuk periode validitas -->
-                    <p id="modalBranches"></p> <!-- Tambahkan elemen untuk cabang -->
-                    <button class="exchange-btn" onclick="redeemReward()">Redeem</button>
-                </div>
+            </div>
+            <div id="modalBranches" class="modal-branches">
+                <!-- Branch badges will be added dynamically here -->
+            </div>
+            <div class="modal-footer">
+                <span id="modalPoints" class="point-text"></span>
+                <a href="#" id="redeemLink" class="exchange-btn">Redeem</a>
             </div>
         </div>
     </div>
@@ -347,9 +348,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalImage = document.getElementById("modalImage");
     const modalTitle = document.getElementById("modalTitle");
     const modalPoints = document.getElementById("modalPoints");
-    const modalDescription = document.getElementById("modalDescription"); // Tambahkan elemen deskripsi
-    const modalValidity = document.getElementById("modalValidity"); // Tambahkan elemen periode validitas
-    const modalBranches = document.getElementById("modalBranches"); // Tambahkan elemen cabang
+    const modalDescription = document.getElementById("modalDescription");
+    const modalBranches = document.getElementById("modalBranches");
+    const redeemLink = document.getElementById("redeemLink");
     const closeButton = document.querySelector(".close");
     let currentRewardId = null;
 
@@ -381,13 +382,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     modalImage.src = "<?= base_url('assets/image/reward/'); ?>" + data.image_name;
                     modalTitle.innerText = data.title;
                     modalPoints.innerText = "Poin: " + data.points_required;
-                    modalDescription.innerText = data.description; // Tampilkan deskripsi
-                    modalValidity.innerText = "Voucher validity period: " + data.total_days + " days after redemption"; // Tampilkan periode validitas
-                    if (data.branches && data.branches.length > 0) {
-                        modalBranches.innerText = "Berlaku di: " + data.branches.map(branch => branch.branch_name).join(', '); // Tampilkan cabang
-                    } else {
-                        modalBranches.innerText = "Berlaku di: Tidak ada cabang yang tersedia"; // Tampilkan pesan jika tidak ada cabang
-                    }
+                    modalDescription.innerHTML = `Voucher <strong>Free Menu</strong> ${data.title}. <br>
+                        Masa berlaku sesuai yang tertera di aplikasi. <br>
+                        <em><strong>Voucher hanya berlaku di beberapa cabang</strong></em>`;
+                    modalBranches.innerHTML = data.branches.map(branch => `<span class="branch-badge">${branch.branch_name}</span>`).join('');
+                    redeemLink.href = "javascript:redeemReward(" + rewardId + ");";
                     modal.style.display = "block"; // Tampilkan modal
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
@@ -398,13 +397,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error fetching reward data:", error));
     }
 
-    window.redeemReward = function() {
+    window.redeemReward = function(rewardId) {
         fetch("<?= base_url('reward/redeem'); ?>", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "reward_id": currentRewardId })
+            body: JSON.stringify({ "reward_id": rewardId })
         })
         .then(response => response.json())
         .then(data => {
