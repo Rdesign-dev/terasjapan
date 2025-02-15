@@ -19,3 +19,6 @@ class Cleanup extends CI_Controller {
         echo "Expired sessions deleted!";
     }
 }
+
+// di urg ge sarua da jal terakhir commit na 9.04
+// tapi urang commit pas ngabran iqbal naha teu muncul nya?
