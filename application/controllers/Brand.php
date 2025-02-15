@@ -21,7 +21,6 @@ class Brand extends CI_Controller {
         // }
 
         $this->load->view('home/popup/' . $brandName);
-
     }
 
 }
