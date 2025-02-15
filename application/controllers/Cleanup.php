@@ -20,5 +20,6 @@ class Cleanup extends CI_Controller {
     }
 }
 
-// di urg ge sarua da jal terakhir commit na 9.04
-// tapi urang commit pas ngabran iqbal naha teu muncul nya?
+// kalem urg pull deui, bieu cigana can ka commit jal
+// sok coba ball
+// geus aman, cigana bieu ijal karak git add can commit
