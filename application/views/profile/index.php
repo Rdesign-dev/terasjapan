@@ -93,7 +93,7 @@
             <span>Send Feedback</span>
             <span class="arrow">></span>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/about'); ?>'">
             <span>About</span>
             <span class="arrow">></span>
         </div>

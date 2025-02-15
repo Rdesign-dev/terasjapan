@@ -79,6 +79,10 @@ class Profile extends CI_Controller {
         $this->load->view('profile/terms&conditions');
     }
 
+    public function about() {
+        $this->load->view('profile/about');
+    }
+
     public function Benefit() {
         $levels = $this->User_model->get_all_levels();
         $benefits = [];

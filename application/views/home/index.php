@@ -23,11 +23,11 @@
             $hour = date('H');
 
             if ($hour < 12) {
-                $greeting = 'Good morning';
+                $greeting = 'Ohayou';
             } elseif ($hour < 18) {
-                $greeting = 'Good afternoon';
+                $greeting = 'Konnichiwa';
             } else {
-                $greeting = 'Good evening';
+                $greeting = 'Konbanwa';
             }
 
             if ($name) {
@@ -221,6 +221,7 @@
                 <div class="modal-info">
                     <h3 id="modalTitle" class="modal-title"></h3>
                     <p id="modalDescription" class="modal-description"></p>
+                    <p id="modalValidity" class="modal-validity"></p> <!-- Tambahkan elemen untuk masa aktif voucher -->
                 </div>
             </div>
             <div id="modalBranches" class="modal-branches">
@@ -349,6 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalTitle = document.getElementById("modalTitle");
     const modalPoints = document.getElementById("modalPoints");
     const modalDescription = document.getElementById("modalDescription");
+    const modalValidity = document.getElementById("modalValidity"); // Tambahkan elemen untuk masa aktif voucher
     const modalBranches = document.getElementById("modalBranches");
     const redeemLink = document.getElementById("redeemLink");
     const closeButton = document.querySelector(".close");
@@ -382,9 +384,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     modalImage.src = "<?= base_url('assets/image/reward/'); ?>" + data.image_name;
                     modalTitle.innerText = data.title;
                     modalPoints.innerText = "Poin: " + data.points_required;
-                    modalDescription.innerHTML = `Voucher <strong>Free Menu</strong> ${data.title}. <br>
-                        Masa berlaku sesuai yang tertera di aplikasi. <br>
-                        <em><strong>Voucher hanya berlaku di beberapa cabang</strong></em>`;
+                    modalDescription.innerText = data.description; // Tampilkan deskripsi dari database
+                    modalValidity.innerText = "Voucher validity: " + data.total_days + " days after redeem"; // Display voucher validity
                     modalBranches.innerHTML = data.branches.map(branch => `<span class="branch-badge">${branch.branch_name}</span>`).join('');
                     redeemLink.href = "javascript:redeemReward(" + rewardId + ");";
                     modal.style.display = "block"; // Tampilkan modal
