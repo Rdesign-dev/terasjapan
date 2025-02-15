@@ -9,7 +9,10 @@ class Profile extends CI_Controller {
         $this->load->helper(['auth', 'url']);
         $this->load->model('User_model');
         $this->load->model('Reward_model');
-        $this->load->model('Feedback_model'); // Tambahkan ini
+        $this->load->model('Feedback_model');
+        // Load middleware
+        require_once APPPATH . 'middleware/VoucherOwnerMiddleware.php';
+        $this->voucher_middleware = new VoucherOwnerMiddleware();
     }
 
     public function index() {
@@ -34,6 +37,9 @@ class Profile extends CI_Controller {
     }
 
     public function redeem() {
+        // Verify voucher ownership
+        $this->voucher_middleware->verify_ownership();
+
         $voucher_id = $this->input->get('voucher_id');
         // Ambil data voucher berdasarkan kode voucher
         $voucher = $this->Reward_model->get_voucher_by_code($voucher_id);

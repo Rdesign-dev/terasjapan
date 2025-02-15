@@ -117,6 +117,18 @@ class Reward_model extends CI_Model {
         return $query->row();
     }
 
+    public function get_voucher_by_code_and_user($kode_voucher, $user_id) {
+        $this->db->select('rewards.title, rewards.image_name, rewards.points_required, rewards.category, 
+                           redeem_voucher.redeem_date, redeem_voucher.status, redeem_voucher.kode_voucher, 
+                           redeem_voucher.expires_at, redeem_voucher.qr_code_url');
+        $this->db->from('redeem_voucher');
+        $this->db->join('rewards', 'rewards.id = redeem_voucher.reward_id');
+        $this->db->where('redeem_voucher.kode_voucher', $kode_voucher);
+        $this->db->where('redeem_voucher.user_id', $user_id);
+        
+        return $this->db->get()->row();
+    }
+
     // Metode untuk memeriksa dan memperbarui status voucher yang sudah expired
     public function update_expired_vouchers() {
         date_default_timezone_set('Asia/Jakarta');
