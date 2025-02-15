@@ -19,7 +19,3 @@ class Cleanup extends CI_Controller {
         echo "Expired sessions deleted!";
     }
 }
-
-// kalem urg pull deui, bieu cigana can ka commit jal
-// sok coba ball
-// geus aman, cigana bieu ijal karak git add can commit
