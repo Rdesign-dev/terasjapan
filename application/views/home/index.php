@@ -118,48 +118,21 @@
                 <h2>Explore Our Brand</h2>
             </div>
             <div class="brands-grid">
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=toyotomimeatshop')?>">
-                        <img src="<?php echo base_url('assets/image/banner/banner1.png') ?>" alt="Brand 1">
-                        <p>Niku Sho Toyotomi</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=amibeautyid') ?>">
-                        <img src="<?php echo base_url('assets/image/banner/banner2.png') ?>" alt="Brand 2">
-                        <p>Amigos Beauty</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=terasjapan') ?>">
-                        <img src="<?php echo base_url('assets/image/banner/banner3.png') ?>" alt="Brand 3">
-                        <p>Teras Japan</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=tottoriramen') ?>">
-                        <img src="<?php echo base_url('assets/image/banner/banner4.png') ?>" alt="Brand 4">
-                        <p>Tottori Ramen</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=wataame') ?>">
-                        <img src="<?php echo base_url('assets/image/banner/banner5.png') ?>" alt="Brand 5">
-                        <p>Wata Ame</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=toyofuku') ?>">
-                        <img src="<?php echo base_url('assets/image/banner/banner6.png') ?>" alt="Brand 6">
-                        <p>Toyofuku</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="<?php echo base_url('brand/detail?brand_name=pokupoku') ?>">
-                        <img src="<?php echo base_url('assets/image/logo/pokapoka.jpeg') ?>" alt="Brand 6">
-                        <p>Toyofuku</p>
-                    </a>
-                </div>
+                <?php if (!empty($brands)): ?>
+                    <?php foreach($brands as $brand): ?>
+                        <div>
+                            <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>">
+                                <img src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
+                                     alt="<?php echo $brand->name; ?>">
+                                <p><?php echo $brand->name; ?></p>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="no-brand">
+                        <p>No brands available.</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
