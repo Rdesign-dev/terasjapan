@@ -34,26 +34,54 @@
                         alt="<?php echo $brand->name; ?>" />
                     <div class="brand-detail">
                         <div class="brand-social">
-                            <?php if($brand->wa): ?>
-                            <a class="whatsapp" href="https://wa.me/<?php echo $brand->wa; ?>" target="_blank">
-                                <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" class="whatsapp"
-                                    alt="Whatsapp" />
-                            </a>
-                            <?php endif; ?>
+                            <?php 
+                            // Create array of available social media
+                            $social_media = [];
+                            
+                            // Update the PHP section for Instagram
+                            if($brand->instagram) {
+                                $social_media[] = [
+                                    'type' => 'instagram',
+                                    'url' => "https://instagram.com/" . str_replace(['@', 'instagram.com/'], '', $brand->instagram),
+                                    'icon' => 'assets/image/icon/instagram.png'
+                                ];
+                            }
+                            
+                            if($brand->tiktok) {
+                                $social_media[] = [
+                                    'type' => 'tiktok',
+                                    'url' => "https://tiktok.com/@" . str_replace('@', '', $brand->tiktok),
+                                    'icon' => 'assets/image/icon/tiktok.png'
+                                ];
+                            }
+                            
+                            if($brand->wa) {
+                                $social_media[] = [
+                                    'type' => 'whatsapp',
+                                    'url' => "https://wa.me/" . $brand->wa,
+                                    'icon' => 'assets/image/icon/whatsapp.png'
+                                ];
+                            }
+                            
+                            if($brand->web) {
+                                $webUrl = (strpos($brand->web, 'http') === 0) ? $brand->web : 'https://' . $brand->web;
+                                $social_media[] = [
+                                    'type' => 'website',
+                                    'url' => $webUrl,
+                                    'icon' => 'assets/image/icon/globe.png'
+                                ];
+                            }
 
-                            <?php if($brand->web): ?>
-                            <a class="website" href="<?php echo $brand->web; ?>" target="_blank">
-                                <img src="<?php echo base_url('assets/image/icon/globe.png'); ?>" class="website"
-                                    alt="Website" />
-                            </a>
-                            <?php endif; ?>
-
-                            <?php if($brand->tiktok): ?>
-                            <a class="tiktok" href="<?php echo $brand->tiktok; ?>" target="_blank">
-                                <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" class="tiktok"
-                                    alt="tiktok" />
-                            </a>
-                            <?php endif; ?>
+                            // Display only up to 3 social media links
+                            $social_media = array_slice($social_media, 0, 3);
+                            
+                            foreach($social_media as $social): ?>
+                                <a class="<?php echo $social['type']; ?>" href="<?php echo $social['url']; ?>" target="_blank">
+                                    <img src="<?php echo base_url($social['icon']); ?>" 
+                                        class="<?php echo $social['type']; ?>" 
+                                        alt="<?php echo ucfirst($social['type']); ?>" />
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                         <div class="brand-description">
                             <a
@@ -172,31 +200,49 @@
 
         // Update social media links
         const socialContainer = document.querySelector('.brand-social');
-        let socialHTML = '';
-
-        if (brandData.wa) {
-            socialHTML += `
-            <a class="whatsapp" href="${brandData.wa}" target="_blank">
-                <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" class="whatsapp" alt="Whatsapp" />
-            </a>
-        `;
+        let socialMedia = [];
+        
+        if (brandData.instagram) {
+            socialMedia.push({
+                type: 'instagram',
+                url: `https://instagram.com/${brandData.instagram.replace(/(@|instagram\.com\/)/g, '')}`,
+                icon: '<?php echo base_url("assets/image/icon/instagram.png"); ?>'
+            });
         }
-
-        if (brandData.web) {
-            socialHTML += `
-            <a class="website" href="${brandData.web}" target="_blank">
-                <img src="<?php echo base_url('assets/image/icon/globe.png'); ?>" class="website" alt="Website" />
-            </a>
-        `;
-        }
-
+        
         if (brandData.tiktok) {
-            socialHTML += `
-            <a class="tiktok" href="${brandData.tiktok}" target="_blank">
-                <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" class="tiktok" alt="tiktok" />
-            </a>
-        `;
+            socialMedia.push({
+                type: 'tiktok',
+                url: `https://tiktok.com/@${brandData.tiktok.replace('@', '')}`,
+                icon: '<?php echo base_url("assets/image/icon/tiktok.png"); ?>'
+            });
         }
+        
+        if (brandData.wa) {
+            socialMedia.push({
+                type: 'whatsapp',
+                url: `https://wa.me/${brandData.wa}`,
+                icon: '<?php echo base_url("assets/image/icon/whatsapp.png"); ?>'
+            });
+        }
+        
+        if (brandData.web) {
+            const webUrl = brandData.web.startsWith('http') ? brandData.web : `https://${brandData.web}`;
+            socialMedia.push({
+                type: 'website',
+                url: webUrl,
+                icon: '<?php echo base_url("assets/image/icon/globe.png"); ?>'
+            });
+        }
+
+        // Take only first 3 social media
+        socialMedia = socialMedia.slice(0, 3);
+        
+        const socialHTML = socialMedia.map(social => `
+            <a class="${social.type}" href="${social.url}" target="_blank">
+                <img src="${social.icon}" class="${social.type}" alt="${social.type}" />
+            </a>
+        `).join('');
 
         socialContainer.innerHTML = socialHTML;
 
