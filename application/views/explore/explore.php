@@ -15,8 +15,8 @@
         <!-- Header -->
         <div class="header-wrapper">
             <div class="header-top-container">
-                <img class="header-logo" src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
-                     alt="<?php echo $brand->name; ?>" />
+                <img class="header-logo" src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>"
+                    alt="<?php echo $brand->name; ?>" />
                 <h1 class="header-title-text">Teras Heroes Club</h1>
             </div>
         </div>
@@ -36,24 +36,28 @@
                         <div class="brand-social">
                             <?php if($brand->wa): ?>
                             <a class="whatsapp" href="https://wa.me/<?php echo $brand->wa; ?>" target="_blank">
-                                <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" alt="Whatsapp" />
+                                <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" class="whatsapp"
+                                    alt="Whatsapp" />
                             </a>
                             <?php endif; ?>
-                            
+
                             <?php if($brand->web): ?>
                             <a class="website" href="<?php echo $brand->web; ?>" target="_blank">
-                                <img src="<?php echo base_url('assets/image/icon/globe.png'); ?>" alt="Website" />
+                                <img src="<?php echo base_url('assets/image/icon/globe.png'); ?>" class="website"
+                                    alt="Website" />
                             </a>
                             <?php endif; ?>
-                            
+
                             <?php if($brand->tiktok): ?>
-                            <a class="tiktok" href="https://www.tiktok.com/@<?php echo $brand->tiktok; ?>" target="_blank">
-                                <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" alt="tiktok" />
+                            <a class="tiktok" href="<?php echo $brand->tiktok; ?>" target="_blank">
+                                <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" class="tiktok"
+                                    alt="tiktok" />
                             </a>
                             <?php endif; ?>
                         </div>
                         <div class="brand-description">
-                            <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>">
+                            <a
+                                href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>">
                                 Brand detail...
                             </a>
                         </div>
@@ -67,31 +71,31 @@
             <h2>Available Promo</h2>
             <div class="promo-items">
                 <?php if (!empty($available_promos)): ?>
-                    <?php foreach ($available_promos as $promo): ?>
-                    <div class="promo-item">
-                        <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
-                             alt="<?php echo $promo->promo_name; ?>">
-                    </div>
-                    <?php endforeach; ?>
+                <?php foreach ($available_promos as $promo): ?>
+                <div class="promo-item">
+                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>"
+                        alt="<?php echo $promo->promo_name; ?>">
+                </div>
+                <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No available promos</p>
+                <p>No available promos</p>
                 <?php endif; ?>
             </div>
         </div>
 
         <!-- Coming Soon Promo Section -->
-        <div class="promo-section">
+        <div class="coming-section">
             <h2>Coming Soon Promo</h2>
-            <div class="promo-items">
+            <div class="coming-items">
                 <?php if (!empty($coming_promos)): ?>
-                    <?php foreach ($coming_promos as $promo): ?>
-                    <div class="promo-item">
-                        <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
-                             alt="<?php echo $promo->promo_name; ?>">
-                    </div>
-                    <?php endforeach; ?>
+                <?php foreach ($coming_promos as $promo): ?>
+                <div class="coming-item">
+                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>"
+                        alt="<?php echo $promo->promo_name; ?>">
+                </div>
+                <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No upcoming promos</p>
+                <p>No upcoming promos</p>
                 <?php endif; ?>
             </div>
         </div>
@@ -101,13 +105,15 @@
             <div class="sidebar-content">
                 <?php foreach ($all_brands as $sidebar_brand): ?>
                 <a href="#" data-brand="<?php echo $sidebar_brand->id; ?>" class="brand-link">
-                    <img src="<?php echo base_url('assets/image/logo/' . $sidebar_brand->image); ?>" 
-                         alt="<?php echo $sidebar_brand->name; ?>" />
+                    <img src="<?php echo base_url('assets/image/logo/' . $sidebar_brand->image); ?>"
+                        alt="<?php echo $sidebar_brand->name; ?>" />
                 </a>
                 <?php endforeach; ?>
             </div>
         </div>
 
+        <!-- Footer -->
+        <?php include 'application/views/layout/Footer.php'; ?>
     </div>
 
     <script>
@@ -130,11 +136,16 @@
             e.preventDefault();
             const brandId = this.dataset.brand;
 
+            console.log(brandId);
+
             try {
                 // Fetch brand data
-                const response = await fetch(`<?php echo base_url('explore/get_brand_data?brand='); ?>${brandId}`);
+                const response = await fetch(
+                    `<?php echo base_url('explore/get_brand_data?brand='); ?>${brandId}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const brandData = await response.json();
+
+                console.log("ini brand data:", brandData);
 
                 // Update the page content
                 updatePageContent(brandData);
@@ -143,8 +154,6 @@
                     top: 0,
                     behavior: 'smooth'
                 });
-                // Update URL without page reload
-                window.history.pushState({}, '', `<?php echo base_url('explore?brand='); ?>${brandId}`);
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -153,27 +162,63 @@
 
     // Function to update page content
     function updatePageContent(brandData) {
+        const availablePromos = brandData.available_promos;
+        const comingPromos = brandData.coming_promos;
+
         // Update brand section
         document.querySelector('.brand-logo').src = brandData.logo;
         document.querySelector('.brand-name').textContent = brandData.name;
         document.querySelector('.brand-image').src = brandData.banner;
-        document.querySelector('.whatsapp').href = brandData.linkWa;
-        document.querySelector('.website').href = brandData.linkWeb;
-        document.querySelector('.tiktok').href = brandData.linkTiktok;
-        document.querySelector('.brand-description a').href = brandData.link;
 
-        // Update promo section
-        const promoContainer = brandData.promos.map(promo => `
-            <div class="promo-item">
-                <img src="${promo.image}" alt="${promo.name}">
-            </div>
-        `).join('');
+        // Update social media links
+        const socialContainer = document.querySelector('.brand-social');
+        let socialHTML = '';
 
-        // Update first promo section
-        document.querySelector('.promo-items').innerHTML = promoContainer;
+        if (brandData.wa) {
+            socialHTML += `
+            <a class="whatsapp" href="${brandData.wa}" target="_blank">
+                <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" class="whatsapp" alt="Whatsapp" />
+            </a>
+        `;
+        }
 
-        // Update second promo section
-        document.querySelector('.promo2-items').innerHTML = promoContainer;
+        if (brandData.web) {
+            socialHTML += `
+            <a class="website" href="${brandData.web}" target="_blank">
+                <img src="<?php echo base_url('assets/image/icon/globe.png'); ?>" class="website" alt="Website" />
+            </a>
+        `;
+        }
+
+        if (brandData.tiktok) {
+            socialHTML += `
+            <a class="tiktok" href="${brandData.tiktok}" target="_blank">
+                <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" class="tiktok" alt="tiktok" />
+            </a>
+        `;
+        }
+
+        socialContainer.innerHTML = socialHTML;
+
+        // Update link brand detail
+        document.querySelector('.brand-description a').href =
+            `<?php echo base_url('brand/detail?brand_name='); ?>${brandData.name.toLowerCase().replace(/\s/g, '')}`;
+
+        // Update promo sections
+        const availablePromoContainer = brandData.available_promos.map(promo => `
+        <div class="promo-item">
+            <img src="${promo.image}" alt="${promo.name}">
+        </div>
+    `).join('');
+
+        const comingPromoContainer = brandData.coming_promos.map(promo => `
+        <div class="coming-item">
+            <img src="${promo.image}" alt="${promo.name}">
+        </div>
+    `).join('');
+
+        document.querySelector('.promo-items').innerHTML = availablePromoContainer || '<p>No available promos</p>';
+        document.querySelector('.coming-items').innerHTML = comingPromoContainer || '<p>No upcoming promos</p>';
     }
 
     // Visible sidebar on scroll
@@ -190,5 +235,6 @@
     });
     </script>
 </body>
-<?php include 'application/views/layout/Footer.php'; ?>
+
+
 </html>

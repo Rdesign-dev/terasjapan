@@ -15,7 +15,7 @@ class M_explore extends CI_Model {
         return $this->db->get('brands')->result();
     }
 
-    public function get_brand_promos($brand_id, $status = 'Available') {
+    public function get_brand_promos($brand_id, $status) {
         return $this->db->where([
             'id_brand' => $brand_id,
             'status' => $status
