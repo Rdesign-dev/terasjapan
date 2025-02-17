@@ -74,7 +74,15 @@ class Profile extends CI_Controller {
     }
 
     public function mission() {
-        $this->load->view('profile/mission');
+        $this->load->model('M_mission');
+        $mission_data = $this->M_mission->get_available_missions();
+        
+        $data = [
+            'missions' => $mission_data['missions'],
+            'missions_available' => $mission_data['missions_available']
+        ];
+        
+        $this->load->view('profile/mission', $data);
     }
 
     public function history() {
