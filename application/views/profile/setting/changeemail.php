@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/changeemail.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var baseUrl = '<?php echo base_url(); ?>';
+    </script>
+    <script src="<?php echo base_url('assets/js/changeemail.js'); ?>"></script>
 </head>
 <body>
     <!-- Header -->

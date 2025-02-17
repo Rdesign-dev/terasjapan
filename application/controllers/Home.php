@@ -11,6 +11,7 @@ class Home extends CI_Controller {
         $this->load->model('m_promo'); // Load the promo model
         $this->load->model('m_reward'); // Load the reward model
         $this->load->model('m_news'); // Load the news model
+        $this->load->model('M_brands');
     }
 
     public function index() {
@@ -36,6 +37,7 @@ class Home extends CI_Controller {
         // Get all news from the database
         $data['news'] = $this->m_news->get_all_news();
         
+        $data['brands'] = $this->M_brands->get_all_brands();
         $this->load->view('home/index', $data);
     }
 

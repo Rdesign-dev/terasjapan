@@ -92,55 +92,22 @@
             <h2 style="cursor: pointer;">Explore Our Brand</h2>
         </div>
         <div class="promo-items">
-            <a href="<?php echo base_url('brand/detail?brand_name=terasjapan'); ?>" class="promo-item-link"
-                style="text-decoration: none;">
-                <div class="promo-item">
-                    <img src="<?php echo base_url('assets/image/logo/terasjapan.jpeg'); ?>" alt="Brand 1">
-                    <p>Teras Japan</p>
+            <?php if (!empty($brands)): ?>
+                <?php foreach($brands as $brand): ?>
+                    <div class="promo-item">
+                        <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>" 
+                           class="promo-item-link" style="text-decoration: none;">
+                            <img src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
+                                 alt="<?php echo $brand->name; ?>">
+                            <p><?php echo $brand->name; ?></p>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-brand">
+                    <p>No brands available.</p>
                 </div>
-            </a>
-            <div class="promo-item">
-                <a href="<?php echo base_url('brand/detail?brand_name=tottoriramen'); ?>" class="promo-item-link"
-                    style="text-decoration: none;">
-                    <img src="<?php echo base_url('assets/image/logo/tottori.jpeg'); ?>" alt="Brand 2">
-                    <p>Tottori Ramen</p>
-                </a>
-            </div>
-            <div class="promo-item">
-                <a href="<?php echo base_url('brand/detail?brand_name=toyofuku'); ?>" class="promo-item-link"
-                    style="text-decoration: none;">
-                    <img src="<?php echo base_url('assets/image/logo/toyofuku.jpeg'); ?>" alt="Brand 3">
-                    <p>Toyofuku</p>
-                </a>
-            </div>
-            <div class="promo-item">
-                <a href="<?php echo base_url('brand/detail?brand_name=toyotomimeatshop'); ?>" class="promo-item-link"
-                    style="text-decoration: none;">
-                    <img src="<?php echo base_url('assets/image/logo/toyotomi.jpeg'); ?>" alt="Brand 4">
-                    <p>Toyotomi Meat</p>
-                </a>
-            </div>
-            <div class="promo-item">
-                <a href="<?php echo base_url('brand/detail?brand_name=amibeautyid'); ?>" class="promo-item-link"
-                    style="text-decoration: none;">
-                    <img src="<?php echo base_url('assets/image/logo/amigos.jpeg'); ?>" alt="Brand 5">
-                    <p>Amigos Beauty</p>
-                </a>
-            </div>
-            <div class="promo-item">
-                <a href="<?php echo base_url('brand/detail?brand_name=wataame'); ?>" class="promo-item-link"
-                    style="text-decoration: none;">
-                    <img src="<?php echo base_url('assets/image/logo/wataame.jpeg'); ?>" alt="Brand 5">
-                    <p>Wata Ame</p>
-                </a>
-            </div>
-            <div class="promo-item">
-                <a href="<?php echo base_url('brand/detail?brand_name=pokapoka'); ?>" class="promo-item-link"
-                    style="text-decoration: none;">
-                    <img src="<?php echo base_url('assets/image/logo/pokapoka.jpeg'); ?>" alt="Brand 5">
-                    <p>Poka Poka</p>
-                </a>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 

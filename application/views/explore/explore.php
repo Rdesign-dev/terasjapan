@@ -1,13 +1,3 @@
-<?php
-// Include brands.php file
-require_once 'brands.php';
-
-// Ternary operator to check if $_GET['brand'] is set, and the default value is 'terasjapan'
-$currentBrand = isset($_GET['brand']) ? $_GET['brand'] : 'terasjapan';
-
-// Get the brand data
-$brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +5,9 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shogun App</title>
-    <link rel="stylesheet" href="../assets/css/explore.css">
-    <link rel="stylesheet" href="../assets/css/footer.css">
+    <title>Explore Our Brands</title>
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/explore.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
     <link rel="icon" type="image/x-icon" href="../assets/image/logo/logo-amigos.png">
 </head>
 
@@ -26,7 +16,8 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
         <!-- Header -->
         <div class="header-wrapper">
             <div class="header-top-container">
-                <img class="header-logo" src="../assets/image/logo/logo-terasjapan-white.png" alt="Teras Japan Logo" />
+                <img class="header-logo" src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
+                     alt="<?php echo $brand->name; ?>" />
                 <h1 class="header-title-text">Teras Heroes Club</h1>
             </div>
         </div>
@@ -36,26 +27,36 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
             <div class="brand-container">
                 <div class="brand-items">
                     <div class="brand-title">
-                        <img class="brand-logo" src="<?php echo $brandData['logo']; ?>"
-                            alt="<?php echo $brandData['name']; ?>">
-                        <p class="brand-name"><?php echo $brandData['name']; ?></p>
+                        <img class="brand-logo" src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>"
+                            alt="<?php echo $brand->name; ?>">
+                        <p class="brand-name"><?php echo $brand->name; ?></p>
                     </div>
-                    <img class="brand-image" src="<?php echo $brandData['banner']; ?>"
-                        alt="<?php echo $brandData['name']; ?>" />
+                    <img class="brand-image" src="<?php echo base_url('assets/image/banner/' . $brand->banner); ?>"
+                        alt="<?php echo $brand->name; ?>" />
                     <div class="brand-detail">
                         <div class="brand-social">
-                            <a class="whatsapp" href="<?php echo $brandData['linkWa']; ?>" target="_blank">
-                                <img src="../assets/image/icon/whatsapp1.png" alt="Whatsapp" />
+                            <?php if($brand->wa): ?>
+                            <a class="whatsapp" href="https://wa.me/<?php echo $brand->wa; ?>" target="_blank">
+                                <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" alt="Whatsapp" />
                             </a>
-                            <a class="website" href="<?php echo $brandData['linkWeb']; ?>" target="_blank">
-                                <img src="../assets/image/icon/globe.png" alt="Website" />
+                            <?php endif; ?>
+                            
+                            <?php if($brand->web): ?>
+                            <a class="website" href="<?php echo $brand->web; ?>" target="_blank">
+                                <img src="<?php echo base_url('assets/image/icon/globe.png'); ?>" alt="Website" />
                             </a>
-                            <a class="tiktok" href="<?php echo $brandData['linkTiktok']; ?>" target="_blank">
-                                <img src="../assets/image/icon/tiktok1.png" alt="tiktok" />
+                            <?php endif; ?>
+                            
+                            <?php if($brand->tiktok): ?>
+                            <a class="tiktok" href="https://www.tiktok.com/@<?php echo $brand->tiktok; ?>" target="_blank">
+                                <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" alt="tiktok" />
                             </a>
+                            <?php endif; ?>
                         </div>
                         <div class="brand-description">
-                            <a href="<?php echo $brandData['link']; ?>">Brand detail...</a>
+                            <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>">
+                                Brand detail...
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -66,20 +67,23 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
         <div class="promo-section">
             <h2>Available Promo</h2>
             <div class="promo-items">
-                <?php foreach ($brandData['promos'] as $promo): ?>
+                <?php foreach ($promos as $promo): ?>
                 <div class="promo-item">
-                    <img src="<?php echo $promo['image']; ?>" alt="<?php echo $promo['name']; ?>">
+                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
+                         alt="<?php echo $promo->promo_name; ?>">
                 </div>
                 <?php endforeach; ?>
             </div>
         </div>
 
-        <div class="promo2-section">
-            <h2>Coming Soon Promo</h2>
-            <div class="promo2-items">
-                <?php foreach ($brandData['promos'] as $promo): ?>
-                <div class="promo2-item">
-                    <img src="<?php echo $promo['image']; ?>" alt="<?php echo $promo['name']; ?>">
+                <!-- Promo Section -->
+                <div class="promo-section">
+            <h2>Available Promo</h2>
+            <div class="promo-items">
+                <?php foreach ($promos as $promo): ?>
+                <div class="promo-item">
+                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
+                         alt="<?php echo $promo->promo_name; ?>">
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -88,9 +92,10 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
         <!-- Sidebar -->
         <div class="sidebar hidden">
             <div class="sidebar-content">
-                <?php foreach ($brands as $brand): ?>
-                <a href="#" data-brand="<?php echo $brand['id']; ?>" class="brand-link">
-                    <img src="<?php echo $brand['logo']; ?>" alt="<?php echo $brand['name']; ?>" />
+                <?php foreach ($all_brands as $sidebar_brand): ?>
+                <a href="#" data-brand="<?php echo $sidebar_brand->id; ?>" class="brand-link">
+                    <img src="<?php echo base_url('assets/image/logo/' . $sidebar_brand->image); ?>" 
+                         alt="<?php echo $sidebar_brand->name; ?>" />
                 </a>
                 <?php endforeach; ?>
             </div>
@@ -120,7 +125,7 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
 
             try {
                 // Fetch brand data
-                const response = await fetch(`get_brand_data.php?brand=${brandId}`);
+                const response = await fetch(`<?php echo base_url('explore/get_brand_data?brand='); ?>${brandId}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const brandData = await response.json();
 
@@ -132,7 +137,7 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
                     behavior: 'smooth'
                 });
                 // Update URL without page reload
-                window.history.pushState({}, '', `explore.php?brand=${brandId}`);
+                window.history.pushState({}, '', `<?php echo base_url('explore?brand='); ?>${brandId}`);
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -178,6 +183,5 @@ $brandData = $brands[$currentBrand] ?? $brands['terasjapan'];
     });
     </script>
 </body>
-<?php include 'Footer.php'; ?>
-
+<?php include 'application/views/layout/Footer.php'; ?>
 </html>

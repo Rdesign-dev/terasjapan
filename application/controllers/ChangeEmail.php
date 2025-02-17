@@ -41,7 +41,11 @@ class ChangeEmail extends CI_Controller {
         $otp_input = $this->input->post('otp');
         
         if ($this->M_email->verify_email_otp($user_id, $otp_input)) {
-            echo json_encode(['status' => 'success', 'message' => 'Email updated successfully']);
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Email updated successfully',
+                'redirect' => base_url('profile')
+            ]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid or expired OTP']);
         }

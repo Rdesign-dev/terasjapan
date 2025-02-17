@@ -1,26 +1,22 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Brand extends CI_Controller {
-
-    public function detail() 
-    {
-        $brandName = $this->input->get('brand_name');
-
-        
-        // TODO: check view is exist or not
-        // $filePath = 'home/popup/' . $brandName;
-        // $view = __DIR__ .'../views/' . $filePath . '.php';
-
-        // var_dump(file_exists($view));
-        // var_dump($view);
-        // var_dump(APPPATH);
-        // die();
-
-        // if(file_exists($view)) {
-        //     $this->load->view($filePath);
-        // }
-
-        $this->load->view('home/popup/' . $brandName);
+    
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('M_brands');
     }
 
+    public function detail() {
+        $brand_name = $this->input->get('brand_name');
+        $brand = $this->M_brands->get_brand_by_name($brand_name);
+        
+        if (!$brand) {
+            show_404();
+        }
+
+        $data['brand'] = $brand;
+        $this->load->view('home/detail', $data);
+    }
 }
