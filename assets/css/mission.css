@@ -77,3 +77,57 @@ body {
     margin-top: 10px;
     font-weight: 600;
 }
+
+.Mission-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.Mission-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.Mission-item h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ff9900;
+}
+
+.Mission-item p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.mission-reward {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+}
+
+.point-badge {
+    background-color: #fff5e6;
+    color: #ff9900;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.point-badge i {
+    color: #ff9900;
+}

@@ -17,10 +17,23 @@
     <!-- Mission Container -->
     <div class="mission-container">
         <h1>MISSION</h1>
-        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-            <img src="<?php echo base_url('assets/image/konten/konten4.png'); ?>" alt="No Mission">
-            <p>Sorry no missions available at the moment</p>
-        </div>
+        <?php if (isset($missions_available) && $missions_available): ?>
+            <?php foreach ($missions as $mission): ?>
+                <div class="Mission-item">
+                    <h3><?php echo $mission->title; ?></h3>
+                    <p><?php echo $mission->description; ?></p>
+                    <div class="mission-reward">
+                        <span class="point-badge">
+                            <i class="fas fa-star"></i> <?php echo number_format($mission->point_reward); ?> Points
+                        </span>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="no-mission">
+                <p>No missions available at this time.</p>
+            </div>
+        <?php endif; ?>
     </div>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>

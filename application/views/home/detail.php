@@ -25,34 +25,37 @@
             <p><?php echo $brand->desc; ?></p>
             <a href="#" class="order-btn">ORDER NOW</a>
         </div>
-        <div class="contact">
-            <p style="font-weight: 600; margin-bottom: 15px;">GET IN TOUCH</p>
-            <div style="text-align: center;">
-                <?php if($brand->instagram): ?>
-                    <a href="https://www.instagram.com/<?php echo $brand->instagram; ?>/">
-                        <i class="fab fa-instagram"></i> @<?php echo $brand->instagram; ?>
-                    </a>
-                <?php endif; ?>
-                
-                <?php if($brand->tiktok): ?>
-                    <a href="https://www.tiktok.com/@<?php echo $brand->tiktok; ?>/">
-                        <i class="fab fa-tiktok"></i> @<?php echo $brand->tiktok; ?>
-                    </a>
-                <?php endif; ?>
-                
-                <?php if($brand->wa): ?>
-                    <a href="https://wa.me/<?php echo $brand->wa; ?>">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                <?php endif; ?>
-                
-                <?php if($brand->web): ?>
-                    <a href="<?php echo $brand->web; ?>">
-                        <i class="fas fa-globe"></i> Website
-                    </a>
-                <?php endif; ?>
+        <?php 
+        if($brand->instagram || $brand->tiktok || $brand->wa || $brand->web): ?>
+            <div class="contact">
+                <p style="font-weight: 600; margin-bottom: 15px;">GET IN TOUCH</p>
+                <div class="social-icons">
+                    <?php if($brand->instagram): ?>
+                        <a href="https://instagram.com/<?php echo str_replace('instagram.com/', '', $brand->instagram); ?>" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    <?php endif; ?>
+                    
+                    <?php if($brand->tiktok): ?>
+                        <a href="https://www.tiktok.com/@<?php echo str_replace('@', '', $brand->tiktok); ?>" target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    <?php endif; ?>
+                    
+                    <?php if($brand->wa): ?>
+                        <a href="https://wa.me/<?php echo $brand->wa; ?>" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    <?php endif; ?>
+                    
+                    <?php if($brand->web): ?>
+                        <a href="<?php echo $brand->web; ?>" target="_blank">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
