@@ -23,7 +23,8 @@ class Explore extends CI_Controller {
 
         $data = [
             'brand' => $brand,
-            'promos' => $this->M_explore->get_brand_promos($brand->id),
+            'available_promos' => $this->M_explore->get_brand_promos($brand->id, 'Available'),
+            'coming_promos' => $this->M_explore->get_brand_promos($brand->id, 'Coming'),
             'all_brands' => $this->M_explore->get_all_brands()
         ];
 
@@ -40,25 +41,30 @@ class Explore extends CI_Controller {
             return;
         }
 
-        $promos = $this->M_explore->get_brand_promos($brand_id);
+        $available_promos = $this->M_explore->get_brand_promos($brand_id, 'Available');
+        $coming_promos = $this->M_explore->get_brand_promos($brand_id, 'Coming');
         
         $response = [
             'id' => $brand->id,
             'name' => $brand->name,
-            'desc' => $brand->desc,
             'logo' => base_url('assets/image/logo/' . $brand->image),
             'banner' => base_url('assets/image/banner/' . $brand->banner),
             'instagram' => $brand->instagram,
             'tiktok' => $brand->tiktok,
             'wa' => $brand->wa,
             'web' => $brand->web,
-            'promos' => array_map(function($promo) {
+            'available_promos' => array_map(function($promo) {
                 return [
                     'name' => $promo->promo_name,
-                    'desc' => $promo->promo_desc,
                     'image' => base_url('assets/image/promo/' . $promo->promo_image)
                 ];
-            }, $promos)
+            }, $available_promos),
+            'coming_promos' => array_map(function($promo) {
+                return [
+                    'name' => $promo->promo_name,
+                    'image' => base_url('assets/image/promo/' . $promo->promo_image)
+                ];
+            }, $coming_promos)
         ];
 
         echo json_encode($response);

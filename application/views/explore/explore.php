@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,29 +62,37 @@
             </div>
         </div>
 
-        <!-- Promo Section -->
+        <!-- Available Promo Section -->
         <div class="promo-section">
             <h2>Available Promo</h2>
             <div class="promo-items">
-                <?php foreach ($promos as $promo): ?>
-                <div class="promo-item">
-                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
-                         alt="<?php echo $promo->promo_name; ?>">
-                </div>
-                <?php endforeach; ?>
+                <?php if (!empty($available_promos)): ?>
+                    <?php foreach ($available_promos as $promo): ?>
+                    <div class="promo-item">
+                        <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
+                             alt="<?php echo $promo->promo_name; ?>">
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No available promos</p>
+                <?php endif; ?>
             </div>
         </div>
 
-                <!-- Promo Section -->
-                <div class="promo-section">
-            <h2>Available Promo</h2>
+        <!-- Coming Soon Promo Section -->
+        <div class="promo-section">
+            <h2>Coming Soon Promo</h2>
             <div class="promo-items">
-                <?php foreach ($promos as $promo): ?>
-                <div class="promo-item">
-                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
-                         alt="<?php echo $promo->promo_name; ?>">
-                </div>
-                <?php endforeach; ?>
+                <?php if (!empty($coming_promos)): ?>
+                    <?php foreach ($coming_promos as $promo): ?>
+                    <div class="promo-item">
+                        <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>" 
+                             alt="<?php echo $promo->promo_name; ?>">
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No upcoming promos</p>
+                <?php endif; ?>
             </div>
         </div>
 
