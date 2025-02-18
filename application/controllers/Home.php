@@ -20,12 +20,12 @@ class Home extends CI_Controller {
 
         if ($user) {
             $data['name'] = $user->name;
-            $data['poin'] = $user->poin;
-            $data['saldo'] = $user->saldo;
+            $data['poin'] = isset($user->poin) ? $user->poin : 0;
+            $data['balance'] = $user->balance; // Update this line to use 'balance' instead of 'saldo'
         } else {
             $data['name'] = 'Guest';
             $data['poin'] = 0;
-            $data['saldo'] = 0;
+            $data['balance'] = 0; // Update this line to use 'balance' instead of 'saldo'
         }
 
         // Get all promos from the database

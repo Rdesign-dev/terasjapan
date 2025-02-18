@@ -29,7 +29,7 @@
                         <h2>Welcome, <?php echo $user->name; ?></h2>
                         <p>Level: <?php echo $user->lv_member; ?></p>
                         <p class="text-yellow-500"><?php echo $user->poin; ?> Ryo Coin</p>
-                        <p class="text-yellow-500">Saldo: Rp <?php echo number_format($user->saldo, 0, ',', '.'); ?></p>
+                        <p class="text-yellow-500">Saldo: Rp <?php echo number_format($user->balance, 0, ',', '.'); ?></p>
                     </div>
                 </div>
                 <img src="<?php echo base_url('assets/image/icon/setting.png'); ?>" alt="Settings" class="settings-icon" onclick="window.location.href='<?php echo base_url('setting') ?>'">
