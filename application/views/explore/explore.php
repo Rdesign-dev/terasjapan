@@ -253,13 +253,15 @@
         // Update promo sections
         const availablePromoContainer = brandData.available_promos.map(promo => `
         <div class="promo-item">
-            <img src="${promo.image}" alt="${promo.name}">
+            <img src="<?php echo base_url('assets/image/promo/'); ?>${promo.promo_image}" 
+                 alt="${promo.promo_name}">
         </div>
     `).join('');
 
         const comingPromoContainer = brandData.coming_promos.map(promo => `
         <div class="coming-item">
-            <img src="${promo.image}" alt="${promo.name}">
+            <img src="<?php echo base_url('assets/image/promo/'); ?>${promo.promo_image}" 
+                 alt="${promo.promo_name}">
         </div>
     `).join('');
 

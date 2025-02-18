@@ -41,6 +41,7 @@ class Explore extends CI_Controller {
             return;
         }
 
+        // Get promos for this brand
         $available_promos = $this->M_explore->get_brand_promos($brand_id, 'Available');
         $coming_promos = $this->M_explore->get_brand_promos($brand_id, 'Coming');
         
@@ -55,14 +56,14 @@ class Explore extends CI_Controller {
             'web' => $brand->web,
             'available_promos' => array_map(function($promo) {
                 return [
-                    'name' => $promo->promo_name,
-                    'image' => base_url('assets/image/promo/' . $promo->promo_image)
+                    'promo_name' => $promo->promo_name,
+                    'promo_image' => $promo->promo_image
                 ];
             }, $available_promos),
             'coming_promos' => array_map(function($promo) {
                 return [
-                    'name' => $promo->promo_name,
-                    'image' => base_url('assets/image/promo/' . $promo->promo_image)
+                    'promo_name' => $promo->promo_name,
+                    'promo_image' => $promo->promo_image
                 ];
             }, $coming_promos)
         ];
