@@ -23,7 +23,7 @@ body {
     justify-content: center;
     position: relative;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .header .title {
@@ -43,75 +43,77 @@ body {
     padding: 0;
 }
 
-.faq-container {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.faq-item {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.faq-question {
-    font-size: 14px;
-    color: #333;
-    text-align: left;
-    padding-right: 25px;
-    line-height: 1.6;
-    font-weight: 500;
-}
-
-.faq-answer {
-    display: none;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #ff9900;
-    font-size: 14px;
-    color: #666;
-    line-height: 1.8;
-}
-
-.faq-answer a {
-    color: #ff9900;
-    text-decoration: none;
-}
-
-.faq-answer a:hover {
-    text-decoration: underline;
-}
-
-.faq-answer ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.faq-answer li {
-    position: relative;
+.container {
+    padding-top: 20px;
     padding-left: 20px;
-    margin-bottom: 8px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 5px;
+    align-items: center;
+    height: auto;
 }
 
-.faq-answer li:before {
-    content: "•";
-    position: absolute;
-    left: 5px;
+h1 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+p {
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+h2 {
     color: #ff9900;
+    border-bottom: 2px solid #ff9900;
+    padding-bottom: 5px;
+    margin-top: 15px;
+    font-size: 20px;
 }
 
-.faq-item.active .faq-answer {
-    display: block;
+ul {
+    list-style: disc;
+    list-style-position: inside;
+    padding: 0;
 }
 
-.faq-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+ul li {
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #ff9900;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+.last-update {
+    position: absolute;
+    margin-bottom: 20px;
+    margin-top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #aaa;
+    font-size: 14px;
 }
