@@ -16,16 +16,23 @@
 
     <!-- Mission Container -->
     <div class="mission-container">
-        <h1>MISSION</h1>
         <?php if (isset($missions_available) && $missions_available): ?>
             <?php foreach ($missions as $mission): ?>
-                <div class="Mission-item">
+                <div class="Mission-item <?php echo strtolower($mission->status); ?>">
                     <h3><?php echo $mission->title; ?></h3>
                     <p><?php echo $mission->description; ?></p>
                     <div class="mission-reward">
+                        <span class="mission-status <?php echo strtolower($mission->status); ?>">
+                            <?php echo $mission->status; ?>
+                        </span>
                         <span class="point-badge">
                             <i class="fas fa-star"></i> <?php echo number_format($mission->point_reward); ?> Points
                         </span>
+                        <?php if($mission->completed_at): ?>
+                            <span class="completion-date">
+                                Completed on: <?php echo date('d M Y', strtotime($mission->completed_at)); ?>
+                            </span>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

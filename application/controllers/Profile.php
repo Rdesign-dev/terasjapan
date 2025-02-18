@@ -74,14 +74,24 @@ class Profile extends CI_Controller {
     }
 
     public function mission() {
-        $this->load->model('M_mission');
-        $mission_data = $this->M_mission->get_available_missions();
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+
+        $this->load->model('M_user_mission');
+        $user_id = $this->session->userdata('user_id');
+        
+        // Check profile completion status first
+        $this->M_user_mission->check_profile_completion($user_id);
+        
+        // Get all missions with user status
+        $mission_data = $this->M_user_mission->get_user_missions($user_id);
         
         $data = [
             'missions' => $mission_data['missions'],
             'missions_available' => $mission_data['missions_available']
         ];
-        
+
         $this->load->view('profile/mission', $data);
     }
 
@@ -212,5 +222,45 @@ class Profile extends CI_Controller {
                 redirect('profile/setting/delete-account');
             }
         }
+    }
+
+    public function update() {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+
+        $user_id = $this->session->userdata('user_id');
+        
+        // Validate input
+        $this->form_validation->set_rules('birthdate', 'Birth Date', 'required');
+        $this->form_validation->set_rules('gender', 'Gender', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        $this->form_validation->set_rules('city', 'City', 'required');
+
+        if ($this->form_validation->run() === FALSE) {
+            // Handle validation errors
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('profile/edit');
+        }
+
+        // Update user data
+        $data = [
+            'birthdate' => $this->input->post('birthdate'),
+            'gender' => $this->input->post('gender'),
+            'address' => $this->input->post('address'),
+            'city' => $this->input->post('city')
+        ];
+
+        if ($this->M_user->update_profile($user_id, $data)) {
+            // Check mission completion
+            $this->load->model('M_user_mission');
+            $this->M_user_mission->check_profile_completion($user_id);
+            
+            $this->session->set_flashdata('success', 'Profile updated successfully');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update profile');
+        }
+
+        redirect('profile');
     }
 }
