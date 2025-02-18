@@ -15,5 +15,15 @@ class History extends CI_Controller {
         $data['transactions'] = $this->M_history->get_transactions_by_user($user_id); // Get transactions
         $this->load->view('history/history', $data); // Pass data to view
     }
+
+    public function transaction($transaction_id) {
+        $transaction = $this->M_history->get_transaction_by_id($transaction_id);
+        if ($transaction) {
+            $data['transaction'] = $transaction;
+            $this->load->view('history/transaction', $data);
+        } else {
+            show_404();
+        }
+    }
 }
 

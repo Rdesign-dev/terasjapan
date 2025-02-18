@@ -25,4 +25,11 @@ class M_history extends CI_Model {
         $this->db->order_by('created_at', 'DESC');
         return $this->db->get()->result();
     }
+
+    public function get_transaction_by_id($transaction_id) {
+        $this->db->select('*');
+        $this->db->from('transactions');
+        $this->db->where('transaction_id', $transaction_id);
+        return $this->db->get()->row();
+    }
 }
