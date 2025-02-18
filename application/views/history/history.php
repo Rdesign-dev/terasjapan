@@ -39,14 +39,20 @@
         <?php endif; ?>
     </div>
     <div class="benefit-container" id="newbie" style="display: none;">
-        <div class="benefit-item" onclick="window.location.href='transaction.php'">
-            <h3>Balance Top-up</h3>
-            <p>Balance top-up transaction of <strong>IDR 10,000</strong> has been successfully completed.</p>
-        </div>
-        <div class="benefit-item">
-            <h3>Teras Japan Payment</h3>
-            <p>Order payment transaction of <strong>IDR 100,000</strong> has been successfully completed.</p>
-        </div>
+        <?php if (!empty($transactions)): ?>
+            <?php foreach ($transactions as $transaction): ?>
+                <div class="benefit-item">
+                    <h3><?php echo $transaction->transaction_type; ?></h3>
+                    <p><?php echo $transaction->transaction_type; ?> transaction of <strong>IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?></strong> has been successfully completed.</p>
+                    <!-- <small>Transaction Date: <?php echo date('d-m-Y H:i', strtotime($transaction->created_at)); ?></small> -->
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="center-container">
+                <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                <p><strong>You don't have any balance transactions yet</strong></p>
+            </div>
+        <?php endif; ?>
     </div>
 
     <script>

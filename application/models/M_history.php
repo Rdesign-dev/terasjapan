@@ -17,4 +17,12 @@ class M_history extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function get_transactions_by_user($user_id) {
+        $this->db->select('*');
+        $this->db->from('transactions');
+        $this->db->where('user_id', $user_id);
+        $this->db->order_by('created_at', 'DESC');
+        return $this->db->get()->result();
+    }
 }

@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 525px;
+}
+
+.top-up-info {
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-up-info h2 {
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.top-up-info .datetime {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.success-icon {
+    width: 150px;
+    height: 150px;
+    margin: 10px 10px;
+}
+.success-message {
+    color: #ff9900;
+    font-size: 18px;
+    font-weight: bold;
+}
+.description {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+.detail-btn {
+    background-color: #ff9900;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+.detail-btn:hover {
+    background-color: #e68a00;
+}
