@@ -60,4 +60,28 @@
                 }
             });
         });
+        function clickEffect(e) {
+    var d = document.createElement("div");
+    d.className = "clickEffect";
+    d.style.top = e.clientY + "px";
+    d.style.left = e.clientX + "px";
+    document.body.appendChild(d);
+    d.addEventListener('animationend', function() {
+        d.parentElement.removeChild(d);
+    }.bind(this));
+}
+
+// Add event listeners for both click and touch
+document.addEventListener('click', clickEffect);
+document.addEventListener('touchstart', function(e) {
+    // Get touch coordinates
+    var touch = e.touches[0];
+    var evt = {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    };
+    clickEffect(evt);
+});
     </script>
+
+<link rel="stylesheet" href="<?php echo base_url('assets/css/clickEffect.css'); ?>">

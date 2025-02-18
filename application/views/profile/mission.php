@@ -28,11 +28,6 @@
                         <span class="point-badge">
                             <i class="fas fa-star"></i> <?php echo number_format($mission->point_reward); ?> Points
                         </span>
-                        <?php if($mission->completed_at): ?>
-                            <span class="completion-date">
-                                Completed on: <?php echo date('d M Y', strtotime($mission->completed_at)); ?>
-                            </span>
-                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

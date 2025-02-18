@@ -14,7 +14,6 @@
         <div class="back-btn" onclick="history.back()">←</div>
         <div class="title">My Voucher</div>
     </div>
-
     <div class="voucher-container">
         <?php if (!empty($vouchers)): ?>
             <?php foreach ($vouchers as $voucher): ?>
@@ -31,7 +30,9 @@
                         <div class="voucher-info">
                             <div class="voucher-details">
                                 <h3><?php echo $voucher->title; ?></h3>
-                                <p class="voucher-status"><?php echo $voucher->status; ?></p>
+                                <p class="voucher-status <?php echo strtolower($voucher->status); ?>">
+                                    <?php echo $voucher->status; ?>
+                                </p>
                             </div>
 
                             <div class="voucher-expired">

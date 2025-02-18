@@ -43,39 +43,15 @@ body {
 .mission-container {
     width: 100%;
     max-width: 400px;
-    min-height: 520px;
-    background-color: #ffffff;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('Assets/background.jfif');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-}
-
-.mission-container h1 {
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.mission-container img {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    margin: 20px auto;
-}
-
-.mission-container p {
-    font-size: 14px;
-    color: #666;
-    margin-top: 10px;
-    font-weight: 600;
+    gap: 10px;
+    margin-bottom: -20px;
+    background-size: cover;
+    background-position: center;
 }
 
 .Mission-item {
@@ -83,79 +59,63 @@ body {
     flex-direction: column;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
+    gap: 8px;
+    position: relative;
     cursor: pointer;
-    margin-bottom: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .Mission-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .Mission-item h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
     color: #ff9900;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mission-status {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* Warna hijau untuk status "Complete" */
+.mission-status.completed {
+    color: #28a745;
+}
+
+/* Warna merah untuk status "Pending" */
+.mission-status.pending {
+    color: #dc3545;
 }
 
 .Mission-item p {
     font-size: 14px;
-    color: #666;
-    margin-bottom: 15px;
+    color: #000;
+    margin: 0;
 }
 
 .mission-reward {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    margin-top: auto;
+    margin-top: 10px;
 }
 
 .point-badge {
-    background-color: #fff5e6;
-    color: #ff9900;
-    padding: 8px 12px;
+    background-color: #ff9900;
+    color: #fff;
+    padding: 6px 12px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.point-badge i {
-    color: #ff9900;
-}
-
-.mission-status {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.mission-status.pending {
-    background-color: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
-}
-
-.mission-status.completed {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.completion-date {
-    font-size: 12px;
-    color: #6c757d;
-    margin-top: 5px;
-    display: block;
+    border: none;
 }

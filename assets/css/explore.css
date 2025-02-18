@@ -236,3 +236,18 @@
         right: calc((100% - 400px) / 2);
     }
 }
+
+.no-promo {
+    font-size: 18px;
+    color: #ff5733;
+    font-weight: bold;
+    padding: 20px;
+    border: 2px dashed #ff5733;
+    border-radius: 8px;
+    background: #ffe6e1;
+    animation: fadeIn 1s ease-in-out;
+}
+.no-promo span {
+    color: #d84315;
+    font-size: 16px;
+}

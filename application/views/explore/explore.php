@@ -106,7 +106,9 @@
                 </div>
                 <?php endforeach; ?>
                 <?php else: ?>
-                <p>No available promos</p>
+                    <div class="no-promo">
+                        <p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -123,7 +125,9 @@
                 </div>
                 <?php endforeach; ?>
                 <?php else: ?>
-                <p>No upcoming promos</p>
+                    <div class="no-promo">
+                        <p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

@@ -103,17 +103,40 @@ body {
 }
 
 .voucher-status {
-    font-size: 14px;
     font-weight: 600;
-    color: #ff9900;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.voucher-status.expired {
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.voucher-status.used {
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.voucher-status.available {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    white-space: nowrap;
+    width: fit-content;
 }
 
 .voucher-expired {
     color: #ff0000;
     font-size: 14px;
     font-weight: 600;
-    text-align: right;
-    white-space: nowrap;
+    text-align: right; /* Ensure the background size is consistent with the text length */
+}
 }
 
 .detail-button {
