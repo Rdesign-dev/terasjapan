@@ -44,7 +44,6 @@ class ChangeEmail extends CI_Controller {
             echo json_encode([
                 'status' => 'success', 
                 'message' => 'Change email successful',
-                'redirect' => base_url('profile')
             ]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Please check your OTP code again.']);

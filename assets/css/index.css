@@ -339,6 +339,10 @@ body {
 .brands-grid a {
     text-decoration: none;
     color: inherit;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .brand-section {
