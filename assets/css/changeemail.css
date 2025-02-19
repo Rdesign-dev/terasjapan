@@ -92,3 +92,72 @@ body {
 .verify-btn:hover, .save-btn:hover {
     background-color: #e67428;
 }
+
+.popup-referral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ff9900;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.rectangle {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background: #ff9900;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rectangle:hover {
+    background: #e68a00;
+}
+
+.text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+}
+
+.ok-btn {
+    background: #ff9900;
+    color: #fff;
+}
+

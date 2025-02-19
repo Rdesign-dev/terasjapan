@@ -28,10 +28,10 @@ class ChangeEmail extends CI_Controller {
             if ($this->send_otp_email($new_email, $otp)) {
                 echo json_encode(['status' => 'success', 'message' => 'OTP sent to email']);
             } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to send OTP']);
+                echo json_encode(['status' => 'error', 'message' => 'Sorry, please check your email correctly.']);
             }
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Failed to save OTP']);
+            echo json_encode(['status' => 'error', 'message' => 'Please try again later.']);
         }
     }
 
@@ -43,11 +43,11 @@ class ChangeEmail extends CI_Controller {
         if ($this->M_email->verify_email_otp($user_id, $otp_input)) {
             echo json_encode([
                 'status' => 'success', 
-                'message' => 'Email updated successfully',
+                'message' => 'Change email successful',
                 'redirect' => base_url('profile')
             ]);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid or expired OTP']);
+            echo json_encode(['status' => 'error', 'message' => 'Please check your OTP code again.']);
         }
     }
 

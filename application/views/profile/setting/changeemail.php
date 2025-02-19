@@ -10,7 +10,6 @@
     <script>
         var baseUrl = '<?php echo base_url(); ?>';
     </script>
-    <script src="<?php echo base_url('assets/js/changeemail.js'); ?>"></script>
 </head>
 <body>
     <!-- Header -->
@@ -38,6 +37,18 @@
         </form>
     </div>
 
+    <div id="rewardRedeemPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeRewardRedeemPopup()">&times;</span>
+            <p id="rewardRedeemMessage"></p>
+            <div class="button-container">
+                <div class="rectangle ok-btn" onclick="closeRewardRedeemPopup()">
+                    <p class="text">OK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
             $('#sendOtpBtn').click(function() {
@@ -49,11 +60,14 @@
                         data: { new_email: newEmail },
                         dataType: 'json',
                         success: function(response) {
-                            alert(response.message);
+                            showRewardRedeemPopup(response.message);
                             if (response.status === 'success') {
                                 $('#changeEmailForm').hide();
                                 $('#verifyOtpForm').show();
                             }
+                        },
+                        error: function() {
+                            showRewardRedeemPopup('An error occurred. Please try again.');
                         }
                     });
                 }
@@ -68,14 +82,26 @@
                     data: { otp: otp },
                     dataType: 'json',
                     success: function(response) {
-                        alert(response.message);
+                        showRewardRedeemPopup(response.message);
                         if (response.status === 'success') {
                             location.reload();
                         }
+                    },
+                    error: function() {
+                        showRewardRedeemPopup('An error occurred. Please try again.');
                     }
                 });
             });
         });
+
+        function showRewardRedeemPopup(message) {
+            document.getElementById('rewardRedeemMessage').innerText = message;
+            document.getElementById('rewardRedeemPopup').style.display = 'flex';
+        }
+
+        function closeRewardRedeemPopup() {
+            document.getElementById('rewardRedeemPopup').style.display = 'none';
+        }
     </script>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
