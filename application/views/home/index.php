@@ -185,6 +185,34 @@
         </div>
     </div>
 
+    <!-- Popup Reward Redeem Success -->
+    <div id="rewardRedeemPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeRewardRedeemPopup()">&times;</span>
+            <img src="<?php echo base_url('assets/image/icon/cek.png') ?>" class="popup-image" alt="popup-image">
+            <p>Your reward has been successfully redeemed.</p>
+            <div class="button-container">
+                <div class="rectangle ok-btn" onclick="closeRewardRedeemPopup()">
+                    <p class="text">OK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Reward Fetch Error -->
+    <div id="rewardFetchErrorPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeRewardFetchErrorPopup()">&times;</span>
+            <h2>Error</h2>
+            <p>An error occurred while fetching reward data. Please try again later.</p>
+            <div class="button-container">
+                <div class="rectangle ok-btn" onclick="closeRewardFetchErrorPopup()">
+                    <p class="text">OK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="news-section">
         <h2>News & Event</h2>
         <div class="news-grid">
@@ -302,11 +330,14 @@
         const modalTitle = document.getElementById("modalTitle");
         const modalPoints = document.getElementById("modalPoints");
         const modalDescription = document.getElementById("modalDescription");
-        const modalValidity = document.getElementById(
-            "modalValidity"); // Tambahkan elemen untuk masa aktif voucher
+        const modalValidity = document.getElementById("modalValidity");
         const modalBranches = document.getElementById("modalBranches");
         const redeemLink = document.getElementById("redeemLink");
         const closeButton = document.querySelector(".close");
+        const rewardRedeemPopupCloseButton = document.querySelector("#rewardRedeemPopup .close-btn");
+        const rewardFetchErrorPopupCloseButton = document.querySelector("#rewardFetchErrorPopup .close-btn");
+        const rewardRedeemPopupOkButton = document.querySelector("#rewardRedeemPopup .ok-btn");
+        const rewardFetchErrorPopupOkButton = document.querySelector("#rewardFetchErrorPopup .ok-btn");
         let currentRewardId = null;
 
         rewardItems.forEach(item => {
@@ -320,6 +351,11 @@
         closeButton.addEventListener("click", function() {
             modal.style.display = "none";
         });
+
+        rewardRedeemPopupCloseButton.addEventListener("click", closeRewardRedeemPopup);
+        rewardFetchErrorPopupCloseButton.addEventListener("click", closeRewardFetchErrorPopup);
+        rewardRedeemPopupOkButton.addEventListener("click", closeRewardRedeemPopup);
+        rewardFetchErrorPopupOkButton.addEventListener("click", closeRewardFetchErrorPopup);
 
         window.addEventListener("click", function(event) {
             if (event.target === modal) {
@@ -347,10 +383,13 @@
                     } catch (error) {
                         console.error("Error parsing JSON:", error);
                         console.error("Response text:", text);
-                        alert("An error occurred while fetching reward data. Please try again later.");
+                        showRewardFetchErrorPopup();
                     }
                 })
-                .catch(error => console.error("Error fetching reward data:", error));
+                .catch(error => {
+                    console.error("Error fetching reward data:", error);
+                    showRewardFetchErrorPopup();
+                });
         }
 
         window.redeemReward = function(rewardId) {
@@ -367,13 +406,29 @@
                 .then(data => {
                     console.log("Redeem reward response:", data); // Debugging
                     if (data.status === 'success') {
-                        alert('Reward redeemed successfully');
+                        showRewardRedeemPopup();
                         modal.style.display = "none";
                     } else {
                         alert(data.message);
                     }
                 })
                 .catch(error => console.error("Error redeeming reward:", error));
+        }
+
+        function showRewardRedeemPopup() {
+            document.getElementById('rewardRedeemPopup').style.display = 'flex';
+        }
+
+        function closeRewardRedeemPopup() {
+            document.getElementById('rewardRedeemPopup').style.display = 'none';
+        }
+
+        function showRewardFetchErrorPopup() {
+            document.getElementById('rewardFetchErrorPopup').style.display = 'flex';
+        }
+
+        function closeRewardFetchErrorPopup() {
+            document.getElementById('rewardFetchErrorPopup').style.display = 'none';
         }
     });
     </script>

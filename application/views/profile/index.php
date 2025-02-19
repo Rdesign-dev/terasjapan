@@ -70,7 +70,7 @@
             <span class="arrow">></span>
         </div>
         <div class="menu-item" onclick="checkLoginStatus()">
-            <span>Voucher Saya</span>
+            <span>My Voucher</span>
             <span class="arrow">></span>
         </div>
         <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/contactus') ?>'">
