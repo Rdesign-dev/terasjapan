@@ -70,6 +70,8 @@
                             showRewardRedeemPopup('An error occurred. Please try again.');
                         }
                     });
+                } else {
+                    showRewardRedeemPopup('Please check your email correctly.');
                 }
             });
 
