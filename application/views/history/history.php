@@ -32,27 +32,43 @@
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <div class="center-container">
-                <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
-                <p><strong>You don't have transaction history</strong></p>
-            </div>
+            <?php if ($this->session->userdata('user_id')): ?>
+                <div class="center-container">
+                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                    <p><strong>You don't have transaction history</strong></p>
+                </div>
+            <?php else: ?>
+                <div class="center-container">
+                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                    <p><strong>log in first to access your transaction history.</strong></p>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
     <div class="benefit-container" id="newbie" style="display: none;">
-        <?php if (!empty($transactions)): ?>
-            <?php foreach ($transactions as $transaction): ?>
-                <div class="benefit-item" 
-                     <?php if ($transaction->transaction_type == 'Balance Top-up'): ?>
-                         onclick="window.location.href='<?php echo site_url('history/transaction/' . $transaction->transaction_id); ?>'"
-                     <?php endif; ?>>
-                    <h3><?php echo $transaction->transaction_type; ?></h3>
-                    <p><?php echo $transaction->transaction_type; ?> transaction of <strong>IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?></strong> has been successfully completed.</p>
+        <?php if ($this->session->userdata('user_id')): ?>
+            <?php if (!empty($transactions)): ?>
+                <?php foreach ($transactions as $transaction): ?>
+                    <div class="benefit-item" 
+                         <?php if ($transaction->transaction_type == 'Balance Top-up'): ?>
+                             onclick="window.location.href='<?php echo site_url('history/transaction/' . $transaction->transaction_id); ?>'"
+                         <?php elseif ($transaction->transaction_type == 'Teras Japan Payment'): ?>
+                             onclick="window.location.href='<?php echo site_url('history/transaction/' . $transaction->transaction_id); ?>'"
+                         <?php endif; ?>>
+                        <h3><?php echo $transaction->transaction_type; ?></h3>
+                        <p><?php echo $transaction->transaction_type; ?> transaction of <strong>IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?></strong> has been successfully completed.</p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="center-container">
+                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                    <p><strong>You don't have any balance transactions yet</strong></p>
                 </div>
-            <?php endforeach; ?>
+            <?php endif; ?>
         <?php else: ?>
             <div class="center-container">
                 <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
-                <p><strong>You don't have any balance transactions yet</strong></p>
+                <p><strong>log in first to access your transaction history.</strong></p>
             </div>
         <?php endif; ?>
     </div>

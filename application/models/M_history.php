@@ -32,4 +32,11 @@ class M_history extends CI_Model {
         $this->db->where('transaction_id', $transaction_id);
         return $this->db->get()->row();
     }
+
+    public function get_branch_by_id($branch_id) {
+        $this->db->select('*');
+        $this->db->from('branch');
+        $this->db->where('id', $branch_id);
+        return $this->db->get()->row();
+    }
 }
