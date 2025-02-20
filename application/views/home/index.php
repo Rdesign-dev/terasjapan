@@ -57,6 +57,28 @@
     </div>
     </a>
     </div>
+
+    <div class="mission-section">
+        <div class="mission-header">
+            <h2>Mission</h2>
+        </div>
+        <?php if (!empty($user_missions)): ?>
+            <?php foreach ($user_missions as $user_mission): ?>
+                <div class="mission-item">
+                    <div class="mission-text">
+                        <strong><?php echo $user_mission->title; ?></strong>
+                        <span class="mission-points"><?php echo $user_mission->point_reward; ?> Points</span>
+                    </div>
+                    <span class="status"><?php echo $user_mission->status; ?></span>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="no-mission">
+                <p>No missions available.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+    
     <div class="promo-section">
         <div class="promo-header">
             <h2>Promo This Week</h2>

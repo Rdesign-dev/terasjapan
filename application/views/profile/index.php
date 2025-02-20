@@ -179,6 +179,19 @@
         </div>
     </div>
 
+    <!-- Popup Login -->
+    <div id="loginPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeLoginPopup()">&times;</span>
+            <p>Please log in to access this feature.</p>
+            <div class="button-container">
+                <div class="rectangle ok-btn" onclick="redirectToLogin()">
+                    <p class="text">OK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Tambahkan script untuk mengontrol popup -->
     <script>
         function checkLoginStatus() {

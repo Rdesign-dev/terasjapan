@@ -12,6 +12,7 @@ class Home extends CI_Controller {
         $this->load->model('m_reward'); // Load the reward model
         $this->load->model('m_news'); // Load the news model
         $this->load->model('M_brands');
+        $this->load->model('M_mission');
     }
 
     public function index() {
@@ -38,6 +39,11 @@ class Home extends CI_Controller {
         $data['news'] = $this->m_news->get_all_news();
         
         $data['brands'] = $this->M_brands->get_all_brands();
+
+        // Get missions and user missions
+        $data['missions'] = $this->M_mission->get_available_missions();
+        $data['user_missions'] = $this->M_mission->get_user_missions($user_id);
+
         $this->load->view('home/index', $data);
     }
 

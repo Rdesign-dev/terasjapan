@@ -11,6 +11,8 @@ class Profile extends CI_Controller {
         $this->load->model('Reward_model');
         $this->load->model('Feedback_model');
         // Load middleware
+        require_once APPPATH . 'middleware/AuthMiddleware.php';
+        $this->auth_middleware = new AuthMiddleware();
         require_once APPPATH . 'middleware/VoucherOwnerMiddleware.php';
         $this->voucher_middleware = new VoucherOwnerMiddleware();
     }
@@ -128,6 +130,9 @@ class Profile extends CI_Controller {
     }
 
     public function referral() {
+        // Check if user is logged in
+        $this->auth_middleware->check_login();
+
         $user_id = $this->session->userdata('user_id');
         $user = $this->User_model->get_user_by_id($user_id);
 
@@ -151,26 +156,29 @@ class Profile extends CI_Controller {
     }
 
     public function myvoucher() {
-         // Ambil data pengguna dari session
-         $user_id = $this->session->userdata('user_id');
+        // Check if user is logged in
+        $this->auth_middleware->check_login();
 
-         // Perbarui status voucher yang sudah expired
+        // Ambil data pengguna dari session
+        $user_id = $this->session->userdata('user_id');
+
+        // Perbarui status voucher yang sudah expired
         $data = $this->Reward_model->update_expired_vouchers();
         
-         // Ambil data voucher dari database jika user_id ada
-         $vouchers = null;
-         if ($user_id) {
-             $vouchers = $this->Reward_model->get_vouchers_by_user_id($user_id);
-         }
+        // Ambil data voucher dari database jika user_id ada
+        $vouchers = null;
+        if ($user_id) {
+            $vouchers = $this->Reward_model->get_vouchers_by_user_id($user_id);
+        }
  
-         // Debugging
-         log_message('debug', 'User ID: ' . $user_id);
-         log_message('debug', 'Vouchers: ' . print_r($vouchers, true));
+        // Debugging
+        log_message('debug', 'User ID: ' . $user_id);
+        log_message('debug', 'Vouchers: ' . print_r($vouchers, true));
  
-         // Kirim data voucher ke view
-         $data = array(
-             'vouchers' => $vouchers
-         );
+        // Kirim data voucher ke view
+        $data = array(
+            'vouchers' => $vouchers
+        );
 
         $this->load->view('profile/myvoucher', $data);
     }
@@ -201,8 +209,6 @@ class Profile extends CI_Controller {
         $this->session->set_flashdata('success', 'Thank you for your feedback!');
         redirect('profile');
     }
-
-    
 
     public function deleteAccount() {
         $user_id = $this->session->userdata('user_id');
