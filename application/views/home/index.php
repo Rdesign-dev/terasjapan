@@ -213,6 +213,21 @@
         </div>
     </div>
 
+    <div id="confirmRedeemPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeConfirmRedeemPopup()">&times;</span>
+            <p>Are you sure you want to redeem this reward?</p>
+            <div class="button-container">
+                <div class="rectangle yes-btn" onclick="confirmRedeemReward()">
+                    <p class="text">Yes</p>
+                </div>
+                <div class="rectangle no-btn" onclick="closeConfirmRedeemPopup()">
+                    <p class="text">No</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="news-section">
         <h2>News & Event</h2>
         <div class="news-grid">
@@ -338,6 +353,9 @@
         const rewardFetchErrorPopupCloseButton = document.querySelector("#rewardFetchErrorPopup .close-btn");
         const rewardRedeemPopupOkButton = document.querySelector("#rewardRedeemPopup .ok-btn");
         const rewardFetchErrorPopupOkButton = document.querySelector("#rewardFetchErrorPopup .ok-btn");
+        const confirmRedeemPopup = document.getElementById("confirmRedeemPopup");
+        const confirmRedeemPopupCloseButton = document.querySelector("#confirmRedeemPopup .close-btn");
+        const confirmRedeemPopupNoButton = document.querySelector("#confirmRedeemPopup .no-btn");
         let currentRewardId = null;
 
         rewardItems.forEach(item => {
@@ -356,6 +374,8 @@
         rewardFetchErrorPopupCloseButton.addEventListener("click", closeRewardFetchErrorPopup);
         rewardRedeemPopupOkButton.addEventListener("click", closeRewardRedeemPopup);
         rewardFetchErrorPopupOkButton.addEventListener("click", closeRewardFetchErrorPopup);
+        confirmRedeemPopupCloseButton.addEventListener("click", closeConfirmRedeemPopup);
+        confirmRedeemPopupNoButton.addEventListener("click", closeConfirmRedeemPopup);
 
         window.addEventListener("click", function(event) {
             if (event.target === modal) {
@@ -378,7 +398,7 @@
                             " days after redeem"; // Display voucher validity
                         modalBranches.innerHTML = data.branches.map(branch =>
                             `<span class="branch-badge">${branch.branch_name}</span>`).join('');
-                        redeemLink.href = "javascript:redeemReward(" + rewardId + ");";
+                        redeemLink.href = "javascript:showConfirmRedeemPopup(" + rewardId + ");";
                         modal.style.display = "flex"; // Tampilkan modal
                     } catch (error) {
                         console.error("Error parsing JSON:", error);
@@ -392,14 +412,25 @@
                 });
         }
 
-        window.redeemReward = function(rewardId) {
+        window.showConfirmRedeemPopup = function(rewardId) {
+            // Check if user is logged in
+            <?php if ($this->session->userdata('logged_in')): ?>
+                confirmRedeemPopup.style.display = 'flex';
+                currentRewardId = rewardId;
+            <?php else: ?>
+                alert('Please log in to redeem rewards.');
+                window.location.href = '<?= base_url('login'); ?>';
+            <?php endif; ?>
+        }
+
+        window.confirmRedeemReward = function() {
             fetch("<?= base_url('reward/redeem'); ?>", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "reward_id": rewardId
+                        "reward_id": currentRewardId
                     })
                 })
                 .then(response => response.json())
@@ -407,6 +438,7 @@
                     console.log("Redeem reward response:", data); // Debugging
                     if (data.status === 'success') {
                         showRewardRedeemPopup();
+                        confirmRedeemPopup.style.display = "none";
                         modal.style.display = "none";
                     } else {
                         alert(data.message);
@@ -421,6 +453,7 @@
 
         function closeRewardRedeemPopup() {
             document.getElementById('rewardRedeemPopup').style.display = 'none';
+            window.location.href = '<?= base_url('profile/myvoucher'); ?>';
         }
 
         function showRewardFetchErrorPopup() {
@@ -429,6 +462,10 @@
 
         function closeRewardFetchErrorPopup() {
             document.getElementById('rewardFetchErrorPopup').style.display = 'none';
+        }
+
+        function closeConfirmRedeemPopup() {
+            document.getElementById('confirmRedeemPopup').style.display = 'none';
         }
     });
     </script>
