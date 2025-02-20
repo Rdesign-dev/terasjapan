@@ -228,6 +228,18 @@
         </div>
     </div>
 
+    <div id="loginPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeLoginPopup()">&times;</span>
+            <p>Please log in to redeem rewards.</p>
+            <div class="button-container">
+                <div class="rectangle ok-btn" onclick="redirectToLogin()">
+                    <p class="text">OK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="news-section">
         <h2>News & Event</h2>
         <div class="news-grid">
@@ -356,6 +368,9 @@
         const confirmRedeemPopup = document.getElementById("confirmRedeemPopup");
         const confirmRedeemPopupCloseButton = document.querySelector("#confirmRedeemPopup .close-btn");
         const confirmRedeemPopupNoButton = document.querySelector("#confirmRedeemPopup .no-btn");
+        const loginPopup = document.getElementById("loginPopup");
+        const loginPopupCloseButton = document.querySelector("#loginPopup .close-btn");
+        const loginPopupOkButton = document.querySelector("#loginPopup .ok-btn");
         let currentRewardId = null;
 
         rewardItems.forEach(item => {
@@ -376,6 +391,8 @@
         rewardFetchErrorPopupOkButton.addEventListener("click", closeRewardFetchErrorPopup);
         confirmRedeemPopupCloseButton.addEventListener("click", closeConfirmRedeemPopup);
         confirmRedeemPopupNoButton.addEventListener("click", closeConfirmRedeemPopup);
+        loginPopupCloseButton.addEventListener("click", closeLoginPopup);
+        loginPopupOkButton.addEventListener("click", redirectToLogin);
 
         window.addEventListener("click", function(event) {
             if (event.target === modal) {
@@ -418,8 +435,7 @@
                 confirmRedeemPopup.style.display = 'flex';
                 currentRewardId = rewardId;
             <?php else: ?>
-                alert('Please log in to redeem rewards.');
-                window.location.href = '<?= base_url('login'); ?>';
+                showLoginPopup();
             <?php endif; ?>
         }
 
@@ -466,6 +482,18 @@
 
         function closeConfirmRedeemPopup() {
             document.getElementById('confirmRedeemPopup').style.display = 'none';
+        }
+
+        function showLoginPopup() {
+            loginPopup.style.display = 'flex';
+        }
+
+        function closeLoginPopup() {
+            loginPopup.style.display = 'none';
+        }
+
+        function redirectToLogin() {
+            window.location.href = '<?= base_url('login'); ?>';
         }
     });
     </script>
