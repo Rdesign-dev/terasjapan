@@ -45,10 +45,11 @@ class Home extends CI_Controller {
         $this->load->view('home/alamat', $data);
     }
 
-    public function get_addresses_by_brand($brand_id) {
-        $addresses = $this->M_alamat->get_addresses_by_brand($brand_id);
-        echo json_encode($addresses);
-    }
+
+	public function get_addresses_by_brand($brand_id) {
+    	$addresses = $this->M_alamat->get_addresses_by_brand($brand_id);
+    	echo json_encode($addresses);
+	}
 }
 
 class Reward extends CI_Controller {
