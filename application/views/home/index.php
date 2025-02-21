@@ -57,28 +57,29 @@
     </div>
     </a>
     </div>
-
-    <div class="mission-section">
-        <div class="mission-header">
-            <h2>Mission</h2>
-        </div>
-        <?php if (!empty($user_missions)): ?>
-            <?php foreach ($user_missions as $user_mission): ?>
-                <div class="mission-item">
-                    <div class="mission-text">
-                        <strong><?php echo $user_mission->title; ?></strong>
-                        <span class="mission-points"><?php echo $user_mission->point_reward; ?> Points</span>
-                    </div>
-                    <!-- <p>Time Remaining</p> -->
-                    <span class="status"><?php echo $user_mission->status; ?></span>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="no-mission">
-                <p>No missions available.</p>
+    <?php if ($this->session->userdata('logged_in')): ?>
+        <div class="mission-section">
+            <div class="mission-header">
+                <h2>Mission</h2>
             </div>
-        <?php endif; ?>
-    </div>
+            <?php if (!empty($user_missions)): ?>
+                <?php foreach ($user_missions as $user_mission): ?>
+                    <div class="mission-item">
+                        <div class="mission-text">
+                            <strong><?php echo $user_mission->title; ?></strong>
+                            <span class="mission-points"><?php echo $user_mission->point_reward; ?> Points</span>
+                        </div>
+                        <!-- <p>Time Remaining</p> -->
+                        <span class="status"><?php echo $user_mission->status; ?></span>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-mission">
+                    <p>No missions available.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
     
     <div class="promo-section">
         <div class="promo-header">
