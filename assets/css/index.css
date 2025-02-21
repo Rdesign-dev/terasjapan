@@ -927,7 +927,7 @@ body {
 
 .mission-container {
 	display: flex;
-	flex-direction: row; /* Pastikan item berbaris horizontal */
+	flex-direction: column; /* Pastikan item berbaris horizontal */
 	gap: 15px; /* Jarak antar item */
 	overflow-x: auto; /* Scroll jika banyak item */
 	padding-bottom: 10px;
