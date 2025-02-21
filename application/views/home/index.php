@@ -69,6 +69,7 @@
                         <strong><?php echo $user_mission->title; ?></strong>
                         <span class="mission-points"><?php echo $user_mission->point_reward; ?> Points</span>
                     </div>
+                    <!-- <p>Time Remaining</p> -->
                     <span class="status"><?php echo $user_mission->status; ?></span>
                 </div>
             <?php endforeach; ?>

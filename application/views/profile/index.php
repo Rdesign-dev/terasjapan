@@ -26,7 +26,7 @@
                          alt="Profile Picture" 
                          class="w-[60px] h-[60px] rounded-full object-cover">
                     <div class="flex flex-col gap-1">
-                        <h2>Welcome, <?php echo $user->name; ?></h2>
+                        <h2><?php echo $user->name; ?></h2>
                         <p>Level: <?php echo $user->lv_member; ?></p>
                         <p class="text-yellow-500"><?php echo $user->poin; ?> Ryo Coin</p>
                         <p class="text-yellow-500">Saldo: Rp <?php echo number_format($user->balance, 0, ',', '.'); ?></p>

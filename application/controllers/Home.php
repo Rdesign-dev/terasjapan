@@ -5,14 +5,15 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->helper('url'); // Ensure URL helper is loaded
-        $this->load->model('User_model'); // Load the user model
+        $this->load->helper('url');
+        $this->load->model('User_model');
         $this->load->model('Reward_model');
-        $this->load->model('m_promo'); // Load the promo model
-        $this->load->model('m_reward'); // Load the reward model
-        $this->load->model('m_news'); // Load the news model
+        $this->load->model('m_promo');
+        $this->load->model('m_reward');
+        $this->load->model('m_news');
         $this->load->model('M_brands');
         $this->load->model('M_mission');
+        $this->load->model('M_alamat'); // Load the new model
     }
 
     public function index() {
@@ -22,33 +23,31 @@ class Home extends CI_Controller {
         if ($user) {
             $data['name'] = $user->name;
             $data['poin'] = isset($user->poin) ? $user->poin : 0;
-            $data['balance'] = $user->balance; // Update this line to use 'balance' instead of 'saldo'
+            $data['balance'] = $user->balance;
         } else {
             $data['name'] = 'Guest';
             $data['poin'] = 0;
-            $data['balance'] = 0; // Update this line to use 'balance' instead of 'saldo'
+            $data['balance'] = 0;
         }
 
-        // Get all promos from the database
         $data['promos'] = $this->m_promo->get_all_promos();
-
-        // Get all rewards from the database
         $data['rewards'] = $this->m_reward->get_all_rewards();
-
-        // Get all news from the database
         $data['news'] = $this->m_news->get_all_news();
-        
         $data['brands'] = $this->M_brands->get_all_brands();
-
-        // Get missions and user missions
         $data['missions'] = $this->M_mission->get_available_missions();
         $data['user_missions'] = $this->M_mission->get_user_missions($user_id);
 
         $this->load->view('home/index', $data);
     }
 
-    public function alamat() { // Ensure this method name matches the link
-        $this->load->view('home/alamat');
+    public function alamat() {
+        $data['brands'] = $this->M_alamat->get_all_brands();
+        $this->load->view('home/alamat', $data);
+    }
+
+    public function get_addresses_by_brand($brand_id) {
+        $addresses = $this->M_alamat->get_addresses_by_brand($brand_id);
+        echo json_encode($addresses);
     }
 }
 
