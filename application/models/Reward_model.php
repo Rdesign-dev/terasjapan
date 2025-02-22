@@ -67,8 +67,11 @@ class Reward_model extends CI_Model {
         $voucher_code = sprintf('%s-%s-%s-%03d', $promo_code, $date_code, $user_code, $count);
 
         // Generate QR code using goqr.me API
-        $qr_image_name = 'vcreward-' . $count . '.png';
-        $qr_image_path = 'assets/image/qrcode/' . $qr_image_name;
+        do {
+            $qr_image_name = 'vcreward-' . $user_code . '-' . $date_code . '-' . uniqid() . '.png';
+            $qr_image_path = 'assets/image/qrcode/' . $qr_image_name;
+        } while (file_exists(FCPATH . $qr_image_path));
+
         $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($voucher_code);
         
         // Debugging: Log QR URL

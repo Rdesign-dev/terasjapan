@@ -48,7 +48,7 @@
                             logos +=
                                 '<img src="<?php echo base_url('assets/image/logo/') ?>' +
                                 image.trim() +
-                                '" alt="Logo" class="logo" style="width:18px; height:18px;">';
+                                '" alt="Logo" class="logo" style="width:auto; height:18px;">';
                         });
                     }
 
