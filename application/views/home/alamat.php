@@ -65,6 +65,40 @@
             }
         });
     }
+
+    function loadAllAddresses() {
+        $.ajax({
+            url: '<?php echo base_url('home/get_all_addresses') ?>',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var branchesSection = $('.branches-section');
+                branchesSection.empty();
+                data.forEach(function(address) {
+                    var logos = "";
+                    if (address.brand_images) {
+                        var logoArray = address.brand_images.split(',');
+                        logoArray.forEach(function(image) {
+                            logos += '<img src="<?php echo base_url('assets/image/logo/') ?>' + image.trim() + '" alt="Logo" class="logo" style="width:auto; height:18px;">';
+                        });
+                    }
+                    branchesSection.append(`
+                        <div class="branch-item">
+                            <div class="branch-header">
+                                <h2>${address.city}</h2>
+                                <div class="logos">${logos}</div>
+                            </div>
+                            <p>${address.address}</p>
+                        </div>
+                    `);
+                });
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        loadAllAddresses();
+    });
     </script>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
