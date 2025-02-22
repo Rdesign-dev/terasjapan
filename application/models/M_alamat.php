@@ -19,6 +19,7 @@ class M_alamat extends CI_Model {
         $this->db->join('brands', 'address_brand.brand_id = brands.id');
         $this->db->where("addresses.id IN ($subquery)", NULL, FALSE);
         $this->db->group_by('addresses.id');
+        $this->db->order_by('addresses.city', 'ASC'); // Urutkan berdasarkan abjad nama kota
     
         $query = $this->db->get();
         return $query->result();
@@ -31,6 +32,7 @@ class M_alamat extends CI_Model {
         $this->db->join('address_brand', 'addresses.id = address_brand.address_id');
         $this->db->join('brands', 'address_brand.brand_id = brands.id');
         $this->db->group_by('addresses.id');
+        $this->db->order_by('addresses.city', 'ASC'); // Urutkan berdasarkan abjad nama kota
     
         $query = $this->db->get();
         return $query->result();

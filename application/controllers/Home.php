@@ -13,7 +13,7 @@ class Home extends CI_Controller {
         $this->load->model('m_news');
         $this->load->model('M_brands');
         $this->load->model('M_mission');
-        $this->load->model('M_alamat'); // Load the new model
+        $this->load->model('M_alamat'); // Pastikan Anda memuat model M_alamat
     }
 
     public function index() {
