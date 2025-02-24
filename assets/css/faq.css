@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 80px;
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.faq-container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.faq-question {
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    padding-right: 25px;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ff9900;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.8;
+}
+
+.faq-answer a {
+    color: #ff9900;
+    text-decoration: none;
+}
+
+.faq-answer a:hover {
+    text-decoration: underline;
+}
+
+.faq-answer ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.faq-answer li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+}
+
+.faq-answer li:before {
+    content: "â€¢";
+    position: absolute;
+    left: 5px;
+    color: #ff9900;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
+.faq-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}

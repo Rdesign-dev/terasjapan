@@ -928,7 +928,7 @@ body {
 .mission-container {
 	display: flex;
 	flex-direction: column; /* Pastikan item berbaris horizontal */
-	gap: 15px; /* Jarak antar item */
+	gap: 20px; /* Jarak antar item */
 	overflow-x: auto; /* Scroll jika banyak item */
 	padding-bottom: 10px;
 	flex-wrap: nowrap; /* Cegah item turun ke bawah */
@@ -942,6 +942,7 @@ body {
 	padding: 10px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	border: 2px solid #ff9900;
+	gap: 10px;
 }
 
 .mission-text {
