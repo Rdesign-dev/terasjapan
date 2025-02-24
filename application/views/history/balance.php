@@ -14,19 +14,39 @@
         <div class="back-btn" onclick="history.back()">←</div>
         <div class="title">Transaction</div>
     </div>
-    <div class="container">
-        <div class="top-up-info">
-            <h2>Teras Japan Payment</h2>
-            <div class="datetime">
-                <p><?php echo date('d M Y', strtotime($transaction->created_at)); ?> &#8226; <span class="time"><?php echo date('H : i : s', strtotime($transaction->created_at)); ?></span></p>
+    <div class="content">
+        <div class="logo-container">
+            <img src="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>" alt="Amigos logo">
+            <h1>Amigos Mulia Indonesia</h1>
+        </div>
+        <div class="details">
+            <div class="detail-item">
+                <p>Date</p>
+                <span class="value"><?php echo date('d-m-Y', strtotime($transaction->created_at)); ?></span>
+            </div>
+            <div class="detail-item">
+                <p>Outlet</p>
+                <span class="value"><?php echo $branch->branch_name; ?></span>
+            </div>
+            <div class="detail-item">
+                <p>Cashier Name</p>
+                <span class="value"><?php echo ucwords($cashier->name); ?></span> <!-- Tampilkan nama kasir dengan huruf kapital di setiap kata -->
+            </div>
+            <div class="detail-item">
+                <p>Payment Method</p>
+                <span class="value"><?php echo $transaction->payment_method; ?></span>
+            </div>
+            <div class="total-payment">
+                <span>Total Payments</span>
+                <span class="amount">Rp<?php echo number_format($transaction->amount, 0, ',', '.'); ?></span>
             </div>
         </div>
-        <div class="status">
-            <img src="<?php echo base_url('assets/image/icon/cek.png'); ?>" alt="Success" class="success-icon">
-            <h3 class="success-message">Teras Japan Payment</h3>
-            <p class="description">Transaction successful! Your balance has been deducted by <strong>IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?></strong> at Teras Japan Branch <strong><?php echo $branch->branch_name; ?></strong>.</p>
+        <div class="transaction-summary">
+            <span id="toggleDetail">Payment Receipt</span>
+            <div class="receipt-container" id="receiptContainer">
+                <img src="<?php echo base_url('assets/image/transaction_proof/' . $transaction->transaction_evidence); ?>" alt="Struk Pembayaran">
+            </div>
         </div>
-        <button class="detail-btn">Click here for transaction proof details.</button>
     </div>
 
     <script>
@@ -36,6 +56,17 @@
                 profileLink.classList.add('active');
             }
         }
+
+        document.getElementById("toggleDetail").addEventListener("click", function () {
+            let receipt = document.getElementById("receiptContainer");
+
+            // Toggle tampilan struk
+            if (receipt.style.display === "none" || receipt.style.display === "") {
+                receipt.style.display = "block"; // Tampilkan jika sebelumnya tersembunyi
+            } else {
+                receipt.style.display = "none"; // Sembunyikan jika sudah tampil
+            }
+        });
     </script>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>

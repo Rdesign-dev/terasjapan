@@ -22,11 +22,9 @@ class History extends CI_Controller {
             $data['transaction'] = $transaction;
             $branch = $this->M_history->get_branch_by_id($transaction->branch_id);
             $data['branch'] = $branch;
-            if ($transaction->transaction_type == 'Teras Japan Payment') {
-                $this->load->view('history/balance', $data);
-            } else {
-                $this->load->view('history/transaction', $data);
-            }
+            $cashier = $this->M_history->get_cashier_by_id($transaction->account_cashier_id);
+            $data['cashier'] = $cashier;
+            $this->load->view('history/balance', $data);
         } else {
             show_404();
         }

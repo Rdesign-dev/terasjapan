@@ -23,20 +23,31 @@ class M_history extends CI_Model {
         $this->db->from('transactions');
         $this->db->where('user_id', $user_id);
         $this->db->order_by('created_at', 'DESC');
-        return $this->db->get()->result();
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function get_transaction_by_id($transaction_id) {
         $this->db->select('*');
         $this->db->from('transactions');
-        $this->db->where('transaction_id', $transaction_id);
-        return $this->db->get()->row();
+        $this->db->where('transaction_id', $transaction_id); // Gunakan kolom transaction_id
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function get_branch_by_id($branch_id) {
-        $this->db->select('*');
-        $this->db->from('branch');
+        $this->db->select('branch_name');
+        $this->db->from('branch'); // Gunakan tabel branch
         $this->db->where('id', $branch_id);
-        return $this->db->get()->row();
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function get_cashier_by_id($cashier_id) {
+        $this->db->select('name');
+        $this->db->from('accounts');
+        $this->db->where('id', $cashier_id);
+        $query = $this->db->get();
+        return $query->row();
     }
 }

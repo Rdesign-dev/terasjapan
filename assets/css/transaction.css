@@ -38,58 +38,103 @@ body {
     color: #ffffff;
 }
 
-.container {
-    width: 90%;
-    max-width: 400px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+.content {
+    padding: 16px;
+    background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    height: 525px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 80px;
 }
-
-.top-up-info {
+.logo-container {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 16px;
 }
-
-.top-up-info h2 {
-    margin-top: 20px;
-    font-size: 25px;
-    font-weight: 600;
+.logo-container img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 8px;
+    border-radius: 50%;
 }
-
-.top-up-info .datetime {
-    margin-top: 10px;
-    font-size: 13px;
-}
-
-.success-icon {
-    width: 150px;
-    height: 150px;
-    margin: 10px 10px;
+.logo-container h1 {
+    font-size: 20px;
+    color: #ff9900;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 .success-message {
-    color: #ff9900;
-    font-size: 18px;
+    background-color: #d1fae5;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.success-message i {
+    color: #10b981;
+    margin-right: 8px;
+}
+.success-message span {
+    color: #10b981;
+}
+.transaction-details {
+    color: #374151;
+    margin-bottom: 16px;
+}
+.total-payment {
+    background-color: #ffc264;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.total-payment span {
+    color: #000;
+}
+.total-payment .amount {
     font-weight: bold;
 }
-.description {
-    font-size: 14px;
-    color: #666;
-    margin: 10px 0;
+
+.receipt-container {
+    display: none; /* Sembunyikan gambar saat awal */
+    text-align: center; /* Pusatkan gambar */
+    margin-top: 10px;
 }
-.detail-btn {
-    background-color: #ff9900;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 15px;
-    font-size: 14px;
+.transaction-summary {
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 30px;
 }
-.detail-btn:hover {
-    background-color: #e68a00;
+.receipt-container img {
+    max-width: 100%;
+    height: auto;
+    border: 2px dashed #ff9900;
+}
+
+.details {
+    margin-bottom: 16px;
+}
+.details .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.details .detail-item span {
+    color: #6b7280;
+    font-weight: 700;
+}
+.details .detail-item p {
+    color: black;
+    font-size: 16px;
+}
+.details .detail-item .value {  
+    color: #374151;
 }
