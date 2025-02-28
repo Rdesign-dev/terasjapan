@@ -11,6 +11,19 @@ class Login extends CI_Controller {
     }
 
     public function index() {
+        // Tangkap parameter dari redirect registrasi
+        $phone_from_register = $this->input->get('phone');
+        $otp_sent = $this->input->get('otp_sent');
+
+        if ($phone_from_register && $otp_sent) {
+            // Jika dari registrasi, langsung tampilkan form OTP
+            $this->load->view('auth/login', [
+                'phone_number' => $phone_from_register,
+                'otp_sent' => true
+            ]);
+            return;
+        }
+
         $this->form_validation->set_rules('phone_number', 'Phone Number', 'required');
         
         if ($this->form_validation->run() == FALSE) {

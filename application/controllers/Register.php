@@ -61,8 +61,16 @@ class Register extends CI_Controller {
                 $this->User_model->insert_referral_redeem($redeem_data);
             }
 
-            $this->session->set_flashdata('success', 'Registration successful!');
-            redirect('login');
+            // Generate and save OTP
+            $otp = rand(100000, 999999);
+            $this->load->model('m_account'); // Load model untuk OTP
+            $this->m_account->simpan_otp($phone_number, $otp);
+
+            // Set session data untuk menampilkan form OTP
+            $this->session->set_flashdata('success', 'Registration successful! Please verify your phone number.');
+            
+            // Redirect ke halaman login dengan parameter untuk menampilkan form OTP
+            redirect('login?phone=' . $phone_number . '&otp_sent=true');
         }
     }
 

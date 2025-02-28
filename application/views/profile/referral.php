@@ -46,7 +46,9 @@
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p>No friends have used your referral code yet.</p>
+            <div class="no-friends" style="text-align: center; margin-top: 20px;">
+            <p style="color: #888; font-size: 16px;">No friends have used your referral code yet.</p>
+            </div>
         <?php endif; ?>
     </div>
 

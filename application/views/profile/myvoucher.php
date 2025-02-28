@@ -66,7 +66,10 @@
             <?php endforeach; ?>
         <?php else: ?>
             <div class="no-voucher">
-                <p>No vouchers available.</p>
+            <div class="no-voucher-content" style="text-align: center; padding: 20px;">
+                <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History" style="max-width: 200px; margin-bottom: 20px;">
+                <p><strong>You don't have any vouchers yet, huhu 😢. Keep making transactions to earn awesome vouchers! 🚀</strong></p>
+            </div>
             </div>
         <?php endif; ?>
     </div>

@@ -43,7 +43,12 @@
         <form id="authForm" method="post" action="<?php echo isset($otp_sent) ? base_url('login/verify') : base_url('login'); ?>" enctype="multipart/form-data">
             <!-- Nomor HP field -->
             <div class="input-group">
-                <input type="text" name="phone_number" placeholder="Nomor HP" value="<?php echo isset($phone_number) ? $phone_number : ''; ?>" required>
+                <input type="text" 
+                       name="phone_number" 
+                       placeholder="Nomor HP" 
+                       value="<?php echo isset($phone_number) ? $phone_number : ''; ?>" 
+                       <?php echo isset($otp_sent) ? 'readonly' : ''; ?>
+                       required>
                 <?php echo form_error('phone_number', '<small class="error">', '</small>'); ?>
             </div>
             <!-- OTP field (hidden until nomor is entered) -->

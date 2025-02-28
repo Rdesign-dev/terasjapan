@@ -264,6 +264,20 @@
         </div>
     </div>
 
+    <!-- Add this new popup div after the existing popups -->
+    <div id="rewardErrorPopup" class="popup-referral" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeRewardErrorPopup()">&times;</span>
+            <img src="<?php echo base_url('assets/image/icon/x.png') ?>" class="popup-image" alt="error-image">
+            <p id="errorMessage">Insufficient points to redeem this reward.</p>
+            <div class="button-container">
+                <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
+                    <p class="text">OK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="news-section">
         <h2>News & Event</h2>
         <div class="news-grid">
@@ -395,6 +409,8 @@
         const loginPopup = document.getElementById("loginPopup");
         const loginPopupCloseButton = document.querySelector("#loginPopup .close-btn");
         const loginPopupOkButton = document.querySelector("#loginPopup .ok-btn");
+        const rewardErrorPopupCloseButton = document.querySelector("#rewardErrorPopup .close-btn");
+        const rewardErrorPopupOkButton = document.querySelector("#rewardErrorPopup .ok-btn");
         let currentRewardId = null;
 
         rewardItems.forEach(item => {
@@ -417,6 +433,8 @@
         confirmRedeemPopupNoButton.addEventListener("click", closeConfirmRedeemPopup);
         loginPopupCloseButton.addEventListener("click", closeLoginPopup);
         loginPopupOkButton.addEventListener("click", redirectToLogin);
+        rewardErrorPopupCloseButton.addEventListener("click", closeRewardErrorPopup);
+        rewardErrorPopupOkButton.addEventListener("click", closeRewardErrorPopup);
 
         window.addEventListener("click", function(event) {
             if (event.target === modal) {
@@ -465,26 +483,39 @@
 
         window.confirmRedeemReward = function() {
             fetch("<?= base_url('reward/redeem'); ?>", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "reward_id": currentRewardId
-                    })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "reward_id": currentRewardId
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Redeem reward response:", data); // Debugging
-                    if (data.status === 'success') {
-                        showRewardRedeemPopup();
-                        confirmRedeemPopup.style.display = "none";
-                        modal.style.display = "none";
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => console.error("Error redeeming reward:", error));
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Redeem reward response:", data);
+                if (data.status === 'success') {
+                    showRewardRedeemPopup();
+                    confirmRedeemPopup.style.display = "none";
+                    modal.style.display = "none";
+                } else {
+                    showRewardErrorPopup(data.message);
+                    confirmRedeemPopup.style.display = "none";
+                    modal.style.display = "none";
+                }
+            })
+            .catch(error => console.error("Error redeeming reward:", error));
+        }
+
+        function showRewardErrorPopup(message) {
+            const popup = document.getElementById('rewardErrorPopup');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message || 'Insufficient points to redeem this reward.';
+            popup.style.display = 'flex';
+        }
+
+        function closeRewardErrorPopup() {
+            document.getElementById('rewardErrorPopup').style.display = 'none';
         }
 
         function showRewardRedeemPopup() {
