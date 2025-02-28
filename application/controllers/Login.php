@@ -16,7 +16,7 @@ class Login extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/login');
         } else {
-            $phone_number = $this->input->post('phone_number');
+            $phone_number = $this->format_phone_number($this->input->post('phone_number'));
             $this->_send_otp($phone_number);
         }
     }
@@ -42,7 +42,7 @@ class Login extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/login', ['phone_number' => $this->input->post('phone_number'), 'otp_sent' => true]);
         } else {
-            $phone_number = $this->input->post('phone_number');
+            $phone_number = $this->format_phone_number($this->input->post('phone_number'));
             $otp = $this->input->post('otp');
             $this->_verifikasi_otp($phone_number, $otp);
         }
@@ -77,5 +77,17 @@ class Login extends CI_Controller {
     public function logout() {
         $this->session->sess_destroy();
         redirect('login');
+    }
+
+    private function format_phone_number($phone_number) {
+        // Hapus semua karakter non-digit
+        $phone_number = preg_replace('/[^0-9]/', '', $phone_number);
+        
+        // Jika dimulai dengan +62 atau 62, ubah ke format 0
+        if (substr($phone_number, 0, 2) === '62') {
+            $phone_number = '0' . substr($phone_number, 2);
+        }
+        
+        return $phone_number;
     }
 }

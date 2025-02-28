@@ -18,7 +18,7 @@ class Register extends CI_Controller {
             $this->load->view('auth/register');
         } else {
             $name = $this->input->post('name');
-            $phone_number = $this->input->post('phone_number');
+            $phone_number = $this->format_phone_number($this->input->post('phone_number'));
             $referral_code = $this->input->post('referral_code');
 
             // Default points
@@ -102,5 +102,17 @@ class Register extends CI_Controller {
         } else {
             return 20;
         }
+    }
+
+    private function format_phone_number($phone_number) {
+        // Hapus semua karakter non-digit
+        $phone_number = preg_replace('/[^0-9]/', '', $phone_number);
+        
+        // Jika dimulai dengan +62 atau 62, ubah ke format 0
+        if (substr($phone_number, 0, 2) === '62') {
+            $phone_number = '0' . substr($phone_number, 2);
+        }
+        
+        return $phone_number;
     }
 }
