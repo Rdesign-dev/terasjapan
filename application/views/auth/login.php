@@ -43,8 +43,8 @@
         <form id="authForm" method="post" action="<?php echo isset($otp_sent) ? base_url('login/verify') : base_url('login'); ?>" enctype="multipart/form-data">
             <!-- Nomor HP field -->
             <div class="input-group">
-                <input type="text" name="nomor_telepon" placeholder="Nomor HP" value="<?php echo isset($nomor_telepon) ? $nomor_telepon : ''; ?>" required>
-                <?php echo form_error('nomor_telepon', '<small class="error">', '</small>'); ?>
+                <input type="text" name="phone_number" placeholder="Nomor HP" value="<?php echo isset($phone_number) ? $phone_number : ''; ?>" required>
+                <?php echo form_error('phone_number', '<small class="error">', '</small>'); ?>
             </div>
             <!-- OTP field (hidden until nomor is entered) -->
             <?php if (isset($otp_sent) && $otp_sent): ?>
@@ -68,8 +68,8 @@
             </div>
             <!-- Nomor HP field -->
             <div class="input-group">
-                <input type="text" name="nomor_telepon" placeholder="Nomor HP" required>
-                <?php echo form_error('nomor_telepon', '<small class="error">', '</small>'); ?>
+                <input type="text" name="phone_number" placeholder="Nomor HP" required>
+                <?php echo form_error('phone_number', '<small class="error">', '</small>'); ?>
             </div>
             <!-- Kode Referral field (optional) -->
             <div class="input-group">

@@ -11,14 +11,14 @@ class Register extends CI_Controller {
 
     public function index() {
         $this->form_validation->set_rules('name', 'Name', 'required');
-        $this->form_validation->set_rules('nomor_telepon', 'Nomor Telepon', 'required');
+        $this->form_validation->set_rules('phone_number', 'Nomor Telepon', 'required');
         $this->form_validation->set_rules('referral_code', 'Kode Referral', 'trim');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/register');
         } else {
             $name = $this->input->post('name');
-            $nomor_telepon = $this->input->post('nomor_telepon');
+            $phone_number = $this->input->post('phone_number');
             $referral_code = $this->input->post('referral_code');
 
             // Default points
@@ -40,7 +40,7 @@ class Register extends CI_Controller {
             // Save user data
             $user_data = array(
                 'name' => $name,
-                'nomor_telepon' => $nomor_telepon,
+                'phone_number' => $phone_number,
                 'poin' => $referred_points,
                 'referral_code' => $this->generate_referral_code($name)
             );

@@ -51,9 +51,9 @@ class M_account extends CI_Model {
     }
 
     // Fungsi untuk menyimpan OTP
-    // public function simpan_otp($nomor_telepon, $otp) {
+    // public function simpan_otp($phone_number, $otp) {
     //     $data = array(
-    //         'nomor_telepon' => $nomor_telepon,
+    //         'phone_number' => $phone_number,
     //         'otp' => $otp,
     //         'waktu' => date('Y-m-d H:i:s') // Simpan waktu saat ini dalam format yang valid
     //     );
@@ -61,40 +61,40 @@ class M_account extends CI_Model {
     //     $this->db->replace('users', $data);
 
     //     // Kirim OTP ke WhatsApp menggunakan API Fontee
-    //     $this->kirim_otp_ke_whatsapp($nomor_telepon, $otp);
+    //     $this->kirim_otp_ke_whatsapp($phone_number, $otp);
     // }
 
-    public function simpan_otp($nomor_telepon, $otp) {
+    public function simpan_otp($phone_number, $otp) {
         date_default_timezone_set('Asia/Jakarta');
         $data = array(
                     'otp' => $otp,
                     'waktu' => date('Y-m-d H:i:s') // Simpan waktu saat ini dalam format yang valid
                 );
                 // Simpan atau update OTP di database
-                $this->db->where('nomor_telepon', $nomor_telepon);
+                $this->db->where('phone_number', $phone_number);
                 $this->db->update('users', $data);
         
                 // Kirim OTP ke WhatsApp menggunakan API Fontee
-                $this->kirim_otp_ke_whatsapp($nomor_telepon, $otp);
+                $this->kirim_otp_ke_whatsapp($phone_number, $otp);
     }
 
     // Fungsi untuk memeriksa OTP
-    public function cek_otp($nomor_telepon) {
-        $this->db->where('nomor_telepon', $nomor_telepon);
+    public function cek_otp($phone_number) {
+        $this->db->where('phone_number', $phone_number);
         $query = $this->db->get('users');
         $otp_data = $query->row_array();
 
         return $otp_data;
     }
 
-    // public function reset_otp($nomor_telepon) {
-    //     $this->db->where('nomor_telepon', $nomor_telepon);
+    // public function reset_otp($phone_number) {
+    //     $this->db->where('phone_number', $phone_number);
     //     $this->db->update('users', ['otp' => NULL, 'waktu' => NULL]);
     // }
 
     // Fungsi untuk mengambil data pengguna berdasarkan nomor telepon
-    public function get_user_by_phone($nomor_telepon) {
-        return $this->db->where('nomor_telepon', $nomor_telepon)->get('users')->row();
+    public function get_user_by_phone($phone_number) {
+        return $this->db->where('phone_number', $phone_number)->get('users')->row();
     }
 
     // Fungsi untuk memasukkan data pengguna baru
@@ -103,12 +103,12 @@ class M_account extends CI_Model {
     }
 
     // Fungsi untuk mengirim OTP ke WhatsApp menggunakan API Fontee
-    private function kirim_otp_ke_whatsapp($nomor_telepon, $otp) {
+    private function kirim_otp_ke_whatsapp($phone_number, $otp) {
         $token = $this->config->item('fonnte_token');
         $message = "$otp sebagai kode verifikasi untuk login ke aplikasi kami. Jangan berikan kode ini kepada siapapun.";
 
         $data = [
-            'target' => $nomor_telepon,
+            'target' => $phone_number,
             'message' => $message,
             'countryCode' => '62', // Kode negara Indonesia
         ];

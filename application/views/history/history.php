@@ -87,13 +87,12 @@
 
         // Add script to keep profile active in footer
         window.onload = function() {
-            const profileLink = document.querySelector('.footer a[href="history.php"]');
+            const profileLink = document.querySelector('.footer a[href="history"]');
             if (profileLink) {
                 profileLink.classList.add('active');
             }
         }
     </script>
-
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
 </html>

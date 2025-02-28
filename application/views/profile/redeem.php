@@ -18,7 +18,7 @@
             <img src="<?php echo base_url('assets/image/reward/' . $voucher->image_name); ?>" alt="<?php echo $voucher->title; ?> image">
             <div>
                 <h1><?php echo $voucher->title; ?></h1>
-                <span class="badge"><?php echo $voucher->category; ?></span>
+                <span class="badge <?php echo strtolower($voucher->status); ?>"><?php echo $voucher->status; ?></span>
             </div>
         </div>
         <p class="description">
