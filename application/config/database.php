@@ -95,6 +95,26 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-// bal urang ie database na tapi nyaeta bingung beh struktur na username jeng password login na a
-// Login na rek username password atau email password
-// untuk sekarnag mah username doang dulu nanti baru di imrovisasi lagi paling cek coba login pecak ball mnh registrasi ulang
+// $db['default'] = array(
+// 	'dsn'	=> '',
+// 	'hostname' => 'n0gsz.h.filess.io',
+// 	'username' => 'Terasjapan_eitherpack',
+// 	'password' => '21202a331aa02385d6ec2e297bb71b9ef1429497',
+// 	'database' => 'Terasjapan_eitherpack',
+// 	'port'	   => '3307',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// );
+

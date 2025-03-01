@@ -56,7 +56,8 @@ class Login extends CI_Controller {
             $this->load->view('auth/login', ['phone_number' => $this->input->post('phone_number'), 'otp_sent' => true]);
         } else {
             $phone_number = $this->format_phone_number($this->input->post('phone_number'));
-            $otp = $this->input->post('otp');
+            // Remove any whitespace from OTP input
+            $otp = preg_replace('/\s+/', '', $this->input->post('otp'));
             $this->_verifikasi_otp($phone_number, $otp);
         }
     }

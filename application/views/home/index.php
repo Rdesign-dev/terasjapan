@@ -7,6 +7,8 @@
     <title>Shogun App</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/index.css')?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css')?>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -274,6 +276,23 @@
                 <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
                     <p class="text">OK</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Overlay Popup -->
+        <div id="popupOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white border-2 border-blue-500 rounded-lg shadow-lg p-6 max-w-md mx-auto relative">
+            <img alt="A solid dark red rectangle" class="w-full h-48 object-cover mb-4 rounded-lg" height="400" src="https://storage.googleapis.com/a1aa/image/nRRyL7OmOvWrQtJ6g8vNhdWAa4mOjX6GpYJ91Ze1jKQ.jpg" width="600"/>
+            <h1 class="text-2xl font-bold mb-4 text-gray-800">Judul Berita</h1>
+            <p class="text-gray-700 mb-6 leading-relaxed">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut interdum lectus. Sed mattis euismod euismod. Curabitur vel urna mauris.
+            </p>
+            <div class="flex justify-end">
+                <button id="closePopup" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition duration-300">
+                    <i class="fas fa-times mr-2"></i>
+                    Close
+                </button>
             </div>
         </div>
     </div>
