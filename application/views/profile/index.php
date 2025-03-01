@@ -61,7 +61,7 @@
             <span>Benefit</span>
             <span class="arrow">></span>
         </div>
-        <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/mission') ?>'">
+        <div class="menu-item" onclick="checkMissionLoginStatus()">
             <span>Mission</span>
             <span class="arrow">></span>
         </div>
@@ -244,6 +244,32 @@
                 document.getElementById('referralPopup').style.display = 'flex';
             <?php endif; ?>
         }
+
+        function checkMissionLoginStatus() {
+            <?php if ($this->session->userdata('user_id')): ?>
+                // If user is logged in, redirect to mission page
+                window.location.href = "<?php echo base_url('profile/mission'); ?>";
+            <?php else: ?>
+                // If user is not logged in, show login popup
+                document.getElementById('loginPopup').style.display = 'flex';
+            <?php endif; ?>
+        }
+
+        function closeLoginPopup() {
+            document.getElementById('loginPopup').style.display = 'none';
+        }
+
+        function redirectToLogin() {
+            window.location.href = '<?= base_url('login'); ?>';
+        }
+
+        // Add event listener for clicking outside the popup
+        window.addEventListener('click', function(event) {
+            const loginPopup = document.getElementById('loginPopup');
+            if (event.target == loginPopup) {
+                loginPopup.style.display = 'none';
+            }
+        });
     </script>
 
 

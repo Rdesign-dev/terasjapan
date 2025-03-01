@@ -87,29 +87,38 @@
         </div>
         <div class="promo-items">
             <?php if (!empty($promos)): ?>
-            <?php foreach ($promos as $promo): ?>
-            <div class="promo-item">
-                <img src="<?php echo base_url('assets/image/promo/' . $promo->image_name); ?>"
-                    alt="<?php echo $promo->title; ?>">
-                <p><?php echo $promo->title; ?></p>
-            </div>
-            <?php endforeach; ?>
-            <?php else: ?>
-            <?php if (empty($promo_this_week)) : ?>
-            <div class="no-promo">
-                <p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p>
-            </div>
-            <?php else : ?>
-            <ul>
-                <?php foreach ($promo_this_week as $promo) : ?>
-                <li><?= htmlspecialchars($promo) ?></li>
+                <?php foreach ($promos as $promo): ?>
+                    <div class="promo-item"
+                         data-id="<?= $promo->id ?>"
+                         data-title="<?= htmlspecialchars($promo->title) ?>"
+                         data-description="<?= htmlspecialchars($promo->description) ?>"
+                         data-image="<?= base_url('assets/image/promo/' . $promo->image_name) ?>">
+                        <img src="<?php echo base_url('assets/image/promo/' . $promo->image_name); ?>"
+                            alt="<?php echo $promo->title; ?>">
+                        <p><?php echo $promo->title; ?></p>
+                    </div>
                 <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
+            <?php else: ?>
+                <div class="no-promo">
+                    <p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p>
+                </div>
             <?php endif; ?>
         </div>
     </div>
-
+    <!-- Update the promo modal HTML -->
+    <div id="promoModal" class="promo-modal" style="display: none;">
+        <div class="promo-modal-content">
+            <span class="promo-close" onclick="closePromoModal()">&times;</span>
+            <div class="promo-modal-body">
+                <img id="promoModalImage" src="" alt="Promo Image" class="promo-modal-image">
+                <div class="promo-modal-info">
+                    <h3 id="promoModalTitle" class="promo-modal-title"></h3>
+                    <p id="promoModalDescription" class="promo-modal-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Brand Section -->
     <div class="brand-section">
         <div class="promo-header">
@@ -597,6 +606,41 @@
             }
         });
     });
+    </script>
+
+    <!-- Add this JavaScript code -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const promoModal = document.getElementById('promoModal');
+        const promoModalImage = document.getElementById('promoModalImage');
+        const promoModalTitle = document.getElementById('promoModalTitle');
+        const promoModalDescription = document.getElementById('promoModalDescription');
+
+        // Add click handlers to all promo items
+        document.querySelectorAll('.promo-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.getAttribute('data-title');
+                const description = this.getAttribute('data-description');
+                const imageUrl = this.getAttribute('data-image');
+
+                promoModalImage.src = imageUrl;
+                promoModalTitle.textContent = title;
+                promoModalDescription.textContent = description;
+                promoModal.style.display = 'flex';
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === promoModal) {
+                promoModal.style.display = 'none';
+            }
+        });
+    });
+
+    function closePromoModal() {
+        document.getElementById('promoModal').style.display = 'none';
+    }
     </script>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
