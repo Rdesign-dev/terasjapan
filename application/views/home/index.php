@@ -7,8 +7,6 @@
     <title>Shogun App</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/index.css')?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css')?>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -280,19 +278,16 @@
         </div>
     </div>
 
-        <!-- Overlay Popup -->
-        <div id="popupOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white border-2 border-blue-500 rounded-lg shadow-lg p-6 max-w-md mx-auto relative">
-            <img alt="A solid dark red rectangle" class="w-full h-48 object-cover mb-4 rounded-lg" height="400" src="https://storage.googleapis.com/a1aa/image/nRRyL7OmOvWrQtJ6g8vNhdWAa4mOjX6GpYJ91Ze1jKQ.jpg" width="600"/>
-            <h1 class="text-2xl font-bold mb-4 text-gray-800">Judul Berita</h1>
-            <p class="text-gray-700 mb-6 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut interdum lectus. Sed mattis euismod euismod. Curabitur vel urna mauris.
-            </p>
-            <div class="flex justify-end">
-                <button id="closePopup" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition duration-300">
-                    <i class="fas fa-times mr-2"></i>
-                    Close
-                </button>
+    <!-- Add this HTML for the news popup modal -->
+    <div id="newsModal" class="news-modal" style="display: none;">
+        <div class="news-modal-content">
+            <span class="news-close">&times;</span>
+            <div class="news-modal-body">
+                <img id="newsModalImage" src="" alt="News Image" class="news-modal-image">
+                <div class="news-modal-info">
+                    <h3 id="newsModalTitle" class="news-modal-title"></h3>
+                    <p id="newsModalDescription" class="news-modal-description"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -301,28 +296,24 @@
         <h2>News & Event</h2>
         <div class="news-grid">
             <?php if (!empty($news)): ?>
-            <?php foreach ($news as $news_item): ?>
-            <div class="news-item">
-                <img src="<?= base_url("assets/image/news&event/{$news_item->image}") ?>"
-                    alt="<?= $news_item->title ?>">
-                <div class="news-content">
-                    <h3><?= $news_item->title ?></h3>
-                    <p><?= $news_item->description ?></p>
-                </div>
-            </div>
-            <?php endforeach; ?>
-            <?php else: ?>
-            <?php if (empty($promo_this_week)) : ?>
-            <div class="no-promo">
-                <p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p>
-            </div>
-            <?php else : ?>
-            <ul>
-                <?php foreach ($promo_this_week as $promo) : ?>
-                <li><?= htmlspecialchars($promo) ?></li>
+                <?php foreach ($news as $news_item): ?>
+                    <div class="news-item" 
+                         data-id="<?= $news_item->id ?>"
+                         data-title="<?= htmlspecialchars($news_item->title) ?>"
+                         data-description="<?= htmlspecialchars($news_item->description) ?>"
+                         data-image="<?= base_url('assets/image/news_event/' . $news_item->image) ?>">
+                        <img src="<?= base_url('assets/image/news_event/' . $news_item->image) ?>"
+                             alt="<?= htmlspecialchars($news_item->title) ?>">
+                        <div class="news-content">
+                            <h3><?= htmlspecialchars($news_item->title) ?></h3>
+                            <p><?= htmlspecialchars(substr($news_item->description, 0, 100)) ?>...</p>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
+            <?php else: ?>
+                <div class="no-news">
+                    <p>No news available at the moment.</p>
+                </div>
             <?php endif; ?>
         </div>
     </div>
@@ -569,6 +560,42 @@
         function redirectToLogin() {
             window.location.href = '<?= base_url('login'); ?>';
         }
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const newsModal = document.getElementById('newsModal');
+        const newsModalImage = document.getElementById('newsModalImage');
+        const newsModalTitle = document.getElementById('newsModalTitle');
+        const newsModalDescription = document.getElementById('newsModalDescription');
+        const newsCloseButton = document.querySelector('.news-close');
+
+        // Add click handlers to all news items
+        document.querySelectorAll('.news-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.getAttribute('data-title');
+                const description = this.getAttribute('data-description');
+                const imageUrl = this.getAttribute('data-image');
+
+                newsModalImage.src = imageUrl;
+                newsModalTitle.textContent = title;
+                newsModalDescription.textContent = description;
+                newsModal.style.display = 'flex';
+            });
+        });
+
+        // Close modal when clicking close button
+        newsCloseButton.addEventListener('click', function() {
+            newsModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === newsModal) {
+                newsModal.style.display = 'none';
+            }
+        });
     });
     </script>
 </body>
