@@ -10,68 +10,53 @@ class Register extends CI_Controller {
     }
 
     public function index() {
-        $this->form_validation->set_rules('name', 'Name', 'required');
-        $this->form_validation->set_rules('phone_number', 'Nomor Telepon', 'required');
-        $this->form_validation->set_rules('referral_code', 'Kode Referral', 'trim');
+        $name = $this->input->post('name');
+        $phone_number = $this->format_phone_number($this->input->post('phone_number'));
+        
+        // Check if phone number already exists
+        if ($this->User_model->check_phone_exists($phone_number)) {
+            $this->session->set_flashdata('error', 'This phone number is already registered');
+            redirect('login');
+            return;
+        }
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/register');
-        } else {
-            $name = $this->input->post('name');
-            $phone_number = $this->format_phone_number($this->input->post('phone_number'));
-            $referral_code = $this->input->post('referral_code');
+        // Continue with registration if phone doesn't exist
+        $referral_code = strtoupper(substr($name, 0, 3) . rand(100, 999));
+        
+        $user_data = array(
+            'name' => $name,
+            'phone_number' => $phone_number,
+            'poin' => 10,
+            'referral_code' => $referral_code
+        );
 
-            // Default points
-            $referrer_points = 0;
-            $referred_points = 10; // Fixed points for new user
-
-            // Check if referral code is valid
-            if (!empty($referral_code)) {
-                $referrer = $this->User_model->get_user_by_referral_code($referral_code);
-                if ($referrer) {
-                    // Calculate points for referrer based on referral code
-                    $referrer_points = $this->calculate_points();
-
-                    // Add points to referrer
-                    $this->User_model->update_user_points($referrer->id, $referrer_points);
-                }
-            }
-
-            // Save user data
-            $user_data = array(
-                'name' => $name,
-                'phone_number' => $phone_number,
-                'poin' => $referred_points,
-                'referral_code' => $this->generate_referral_code($name)
-            );
-
-            $this->User_model->insert_user($user_data);
-            $new_user_id = $this->db->insert_id();
-
-            // Save referral redeem history
-            if (!empty($referral_code) && isset($referrer)) {
-                $redeem_data = array(
-                    'user_id' => $referrer->id,
-                    'referred_user_id' => $new_user_id,
-                    'referral_code' => $referral_code,
-                    'redeem_date' => date('Y-m-d H:i:s'),
-                    'referrer_points' => $referrer_points,
-                    'referred_points' => $referred_points
-                );
-                $this->User_model->insert_referral_redeem($redeem_data);
-            }
-
-            // Generate and save OTP
+        if ($this->User_model->insert_user($user_data)) {
+            // Generate OTP
             $otp = rand(100000, 999999);
-            $this->load->model('m_account'); // Load model untuk OTP
+            $this->load->model('m_account');
             $this->m_account->simpan_otp($phone_number, $otp);
 
-            // Set session data untuk menampilkan form OTP
             $this->session->set_flashdata('success', 'Registration successful! Please verify your phone number.');
-            
-            // Redirect ke halaman login dengan parameter untuk menampilkan form OTP
             redirect('login?phone=' . $phone_number . '&otp_sent=true');
+        } else {
+            $this->session->set_flashdata('error', 'Registration failed. Please try again.');
+            redirect('login');
         }
+    }
+
+    // Add this new function to check phone number
+    public function check_phone_number($phone_number) {
+        $formatted_phone = $this->format_phone_number($phone_number);
+        
+        // Check if phone number already exists
+        $existing_user = $this->User_model->get_user_by_phone($formatted_phone);
+        
+        if ($existing_user) {
+            $this->form_validation->set_message('check_phone_number', 'This phone number is already registered.');
+            return FALSE;
+        }
+        
+        return TRUE;
     }
 
     private function generate_referral_code($name) {

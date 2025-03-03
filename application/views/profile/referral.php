@@ -11,7 +11,7 @@
 <body>
     <div class="header">
         <div class="back-btn" onclick="history.back()">&larr;</div>
-        <div class="title">Contact Us</div>
+        <div class="title">Referral</div>
     </div>
     <div class="container">
         <div class="center">

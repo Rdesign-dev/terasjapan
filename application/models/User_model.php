@@ -113,4 +113,10 @@ class User_model extends CI_Model {
         $this->db->where('id', $user_id);
         $this->db->update('users');
     }
+
+    public function check_phone_exists($phone_number) {
+        $query = $this->db->where('phone_number', $phone_number)
+                          ->get('users');
+        return $query->num_rows() > 0;
+    }
 }

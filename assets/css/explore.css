@@ -251,3 +251,27 @@
     color: #d84315;
     font-size: 16px;
 }
+
+/* Mengatur lebar scrollbar */
+/* Mengatur lebar scrollbar vertikal */
+::-webkit-scrollbar {
+	width: 8px; /* Untuk scrollbar vertikal */
+	height: 8px; /* Sembunyikan scrollbar horizontal */
+}
+
+/* Mengatur tampilan track (jalur scrollbar) */
+::-webkit-scrollbar-track {
+	background: #f1f1f1; /* Warna background track */
+	border-radius: 10px;
+}
+
+/* Mengatur tampilan thumb (bagian yang bisa digeser) */
+::-webkit-scrollbar-thumb {
+	background: #ff9800; /* Warna thumb */
+	border-radius: 10px;
+}
+
+/* Mengatur hover effect pada thumb */
+::-webkit-scrollbar-thumb:hover {
+	background: #e65100;
+}

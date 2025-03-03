@@ -14,9 +14,10 @@ body {
 }
 
 /* Mengatur lebar scrollbar */
+/* Mengatur lebar scrollbar vertikal */
 ::-webkit-scrollbar {
 	width: 8px; /* Untuk scrollbar vertikal */
-	height: 8px; /* Untuk scrollbar horizontal */
+	height: 8px; /* Sembunyikan scrollbar horizontal */
 }
 
 /* Mengatur tampilan track (jalur scrollbar) */
@@ -145,8 +146,10 @@ body {
 .brand-items {
 	display: flex;
 	overflow-x: auto;
-	gap: 10px;
-	padding: 10px;
+	gap: 15px;
+	padding: 15px;
+	scroll-snap-type: x mandatory;
+	cursor: pointer;
 }
 
 .promo-item,
@@ -156,11 +159,14 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
+	flex: 0 0 auto;
+	text-align: center;
+	scroll-snap-align: start;
 }
 
 .promo-item img,
 .brand-item img {
-	width: 100%;
+	width: 100px;
 	height: 100px;
 	object-fit: contain;
 }
@@ -171,6 +177,7 @@ body {
 	text-align: center;
 	margin: 10px 0;
 	color: #333;
+	margin-top: 8px;
 }
 .popup {
 	position: fixed;
@@ -578,6 +585,7 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
+	cursor: pointer;
 }
 
 .news-item img {
@@ -1121,7 +1129,7 @@ body {
     justify-content: center;
     cursor: pointer;
     font-size: 20px;
-    border: 2px solid #FF9900;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     color: #FF9900;
     z-index: 1;
 }

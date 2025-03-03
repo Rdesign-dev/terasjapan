@@ -124,12 +124,12 @@
         <div class="promo-header">
             <h2 style="cursor: pointer;">Explore Our Brand</h2>
         </div>
-        <div class="promo-items">
+        <div class="brand-items"> <!-- Changed from promo-items to brand-items -->
             <?php if (!empty($brands)): ?>
                 <?php foreach($brands as $brand): ?>
-                    <div class="promo-item">
+                    <div class="brand-item"> <!-- Changed from promo-item to brand-item -->
                         <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>" 
-                           class="promo-item-link" style="text-decoration: none;">
+                           class="brand-item-link" style="text-decoration: none;">
                             <img src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
                                  alt="<?php echo $brand->name; ?>">
                             <p><?php echo $brand->name; ?></p>
@@ -315,7 +315,7 @@
                              alt="<?= htmlspecialchars($news_item->title) ?>">
                         <div class="news-content">
                             <h3><?= htmlspecialchars($news_item->title) ?></h3>
-                            <p><?= htmlspecialchars(substr($news_item->description, 0, 100)) ?>...</p>
+                            <p><?= htmlspecialchars(substr($news_item->captions, 0, 100)) ?>...</p>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -616,25 +616,21 @@
         const promoModalTitle = document.getElementById('promoModalTitle');
         const promoModalDescription = document.getElementById('promoModalDescription');
 
-        // Add click handlers to all promo items
-        document.querySelectorAll('.promo-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const title = this.getAttribute('data-title');
-                const description = this.getAttribute('data-description');
-                const imageUrl = this.getAttribute('data-image');
+        // Update selector to only target promo items within promo-items container
+        document.querySelector('.promo-items').querySelectorAll('.promo-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Prevent click if target is a brand link
+                if (!e.target.closest('.brand-item-link')) {
+                    const title = this.getAttribute('data-title');
+                    const description = this.getAttribute('data-description');
+                    const imageUrl = this.getAttribute('data-image');
 
-                promoModalImage.src = imageUrl;
-                promoModalTitle.textContent = title;
-                promoModalDescription.textContent = description;
-                promoModal.style.display = 'flex';
+                    promoModalImage.src = imageUrl;
+                    promoModalTitle.textContent = title;
+                    promoModalDescription.textContent = description;
+                    promoModal.style.display = 'flex';
+                }
             });
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === promoModal) {
-                promoModal.style.display = 'none';
-            }
         });
     });
 
