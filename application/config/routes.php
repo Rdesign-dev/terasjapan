@@ -72,6 +72,11 @@ $route['profile/redeem'] = 'profile/redeem';
 $route['profile/faq'] = 'profile/faq';
 $route['profile/feedback'] = 'profile/feedback';
 $route['profile/privacypolicy'] = 'profile/privacypolicy';
+
+// Admin routes
+$route['admin'] = 'admin/dashboard/index';
+// $route['testing/admin'] = 'admin/dashboard'; // remove or comment this line
+
 // $route['history/transaction/(:num)'] = 'history/transaction/$1';
 // $route['balance/transaction/(:num)'] = 'balance/transaction/$1';
 
