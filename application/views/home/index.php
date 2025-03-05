@@ -86,8 +86,14 @@
             <h2>Promo This Week</h2>
         </div>
         <div class="promo-items">
-            <?php if (!empty($promos)): ?>
-                <?php foreach ($promos as $promo): ?>
+            <?php 
+            $activePromos = array_filter($promos ?? [], function($promo) {
+                return isset($promo->status) && $promo->status === 'Active';
+            });
+            
+            if (!empty($activePromos)): 
+            ?>
+                <?php foreach ($activePromos as $promo): ?>
                     <div class="promo-item"
                          data-id="<?= $promo->id ?>"
                          data-title="<?= htmlspecialchars($promo->title) ?>"
@@ -304,8 +310,15 @@
     <div class="news-section">
         <h2>News & Event</h2>
         <div class="news-grid">
-            <?php if (!empty($news)): ?>
-                <?php foreach ($news as $news_item): ?>
+            <?php 
+            // Filter for active news items
+            $activeNews = array_filter($news ?? [], function($news_item) {
+                return isset($news_item->status) && $news_item->status === 'Active';
+            });
+            
+            if (!empty($activeNews)): 
+            ?>
+                <?php foreach ($activeNews as $news_item): ?>
                     <div class="news-item" 
                          data-id="<?= $news_item->id ?>"
                          data-title="<?= htmlspecialchars($news_item->title) ?>"

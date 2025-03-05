@@ -1000,7 +1000,7 @@ body {
 .news-modal-content {
     background: white;
     width: 90%;
-    max-width: 500px;
+    max-width: 400px;
     border-radius: 12px;
     padding: 20px;
     position: relative;
