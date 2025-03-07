@@ -54,7 +54,7 @@
             <div class="points-container">
                 <span class="points-value"><?php echo $poin ?? '0'; ?></span>
                 <span class="points-text">ryo</span>
-                <img src="<?php echo base_url('assets/image/icon/coin.png') ?>" class="coin-icon">
+                <img src="<?php echo icon_url('coin.png') ?>" class="coin-icon">
             </div>
             <?php endif; ?>
         </div>
@@ -109,9 +109,9 @@
                          data-id="<?= $promo->id ?>"
                          data-title="<?= htmlspecialchars($promo->title) ?>"
                          data-description="<?= htmlspecialchars($promo->description) ?>"
-                         data-image="<?= base_url('assets/image/promo/' . $promo->image_name) ?>">
-                        <img src="<?php echo base_url('assets/image/promo/' . $promo->image_name); ?>"
-                            alt="<?php echo $promo->title; ?>">
+                         data-image="<?= promo_url($promo->image_name) ?>">
+                        <img src="<?php echo promo_url($promo->image_name); ?>"
+                             alt="<?php echo $promo->title; ?>">
                         <p><?php echo $promo->title; ?></p>
                     </div>
                 <?php endforeach; ?>
@@ -147,7 +147,7 @@
                     <div class="brand-item"> <!-- Changed from promo-item to brand-item -->
                         <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>" 
                            class="brand-item-link" style="text-decoration: none;">
-                            <img src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
+                            <img src="<?php echo brand_url($brand->image); ?>" 
                                  alt="<?php echo $brand->name; ?>">
                             <p><?php echo $brand->name; ?></p>
                         </a>
@@ -202,7 +202,7 @@
             ?>
                 <?php foreach ($available_rewards as $reward): ?>
                 <div class="reward-item" data-id="<?php echo $reward->id; ?>">
-                    <img src="<?php echo base_url('assets/image/reward/' . $reward->image_name); ?>"
+                    <img src="<?php echo reward_url($reward->image_name); ?>"
                         alt="<?php echo $reward->title; ?>">
                     <div class="reward-info">
                         <div class="reward-title"><?php echo $reward->title; ?></div>
@@ -250,7 +250,7 @@
     <div id="rewardRedeemPopup" class="popup-referral" style="display: none;">
         <div class="popup-content">
             <span class="close-btn" onclick="closeRewardRedeemPopup()">&times;</span>
-            <img src="<?php echo base_url('assets/image/icon/cek.png') ?>" class="popup-image" alt="popup-image">
+            <img src="<?php echo icon_url('cek.png') ?>" class="popup-image" alt="popup-image">
             <p>Your reward has been successfully redeemed.</p>
             <div class="button-container">
                 <div class="rectangle ok-btn" onclick="closeRewardRedeemPopup()">
@@ -305,7 +305,7 @@
     <div id="rewardErrorPopup" class="popup-referral" style="display: none;">
         <div class="popup-content">
             <span class="close-btn" onclick="closeRewardErrorPopup()">&times;</span>
-            <img src="<?php echo base_url('assets/image/icon/x.png') ?>" class="popup-image" alt="error-image">
+            <img src="<?php echo icon_url('x.png') ?>" class="popup-image" alt="error-image">
             <p id="errorMessage">Insufficient points to redeem this reward.</p>
             <div class="button-container">
                 <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
@@ -345,8 +345,8 @@
                          data-id="<?= $news_item->id ?>"
                          data-title="<?= htmlspecialchars($news_item->title) ?>"
                          data-description="<?= htmlspecialchars($news_item->description) ?>"
-                         data-image="<?= base_url('assets/image/news_event/' . $news_item->image) ?>">
-                        <img src="<?= base_url('assets/image/news_event/' . $news_item->image) ?>"
+                         data-image="<?= news_url($news_item->image) ?>">
+                        <img src="<?= news_url($news_item->image) ?>"
                              alt="<?= htmlspecialchars($news_item->title) ?>">
                         <div class="news-content">
                             <h3><?= htmlspecialchars($news_item->title) ?></h3>
@@ -363,7 +363,7 @@
     </div>
 
     <a href="https://wa.me/6282283619320" class="whatsapp-section" style="text-decoration: none;">
-        <img src="<?php echo base_url('assets/image/icon/whatsapp.png') ?>" alt="WhatsApp">
+        <img src="<?php echo icon_url('whatsapp.png') ?>" alt="WhatsApp">
         <span>Join our Community via WhatsApp</span>
     </a>
 
@@ -503,7 +503,7 @@
                 .then(text => {
                     try {
                         const data = JSON.parse(text);
-                        modalImage.src = "<?= base_url('assets/image/reward/'); ?>" + data.image_name;
+                        modalImage.src = "<?= reward_url(''); ?>" + data.image_name;
                         modalTitle.innerText = data.title;
                         modalPoints.innerText = "Poin: " + data.points_required;
                         modalDescription.innerText = data.description; // Tampilkan deskripsi dari database
