@@ -609,6 +609,24 @@ body {
 	color: #666;
 }
 
+.news-no-promo {
+	font-size: 18px;
+	color: #ff5733;
+	font-weight: bold;
+	padding: 20px;
+	border: 2px dashed #ff5733;
+	border-radius: 8px;
+	background: #ffe6e1;
+	animation: fadeIn 1s ease-in-out;
+	grid-column: span 2; /* Make it span across two columns */
+	width: 100%; /* Ensure it takes full width */
+}
+
+.news-no-promo span {
+	color: #d84315;
+	font-size: 16px;
+}
+
 .branch-button {
 	width: 100%;
 	max-width: 400px;
@@ -1137,4 +1155,10 @@ body {
 .promo-close:hover {
     background: #FF9900;
     color: white;
+}
+
+.stock-warning {
+    color: #ff4444;
+    font-size: 0.8em;
+    margin-top: 5px;
 }

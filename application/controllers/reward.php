@@ -45,24 +45,24 @@ class Reward extends CI_Controller {
             return;
         }
 
-        // $reward_id = $this->input->post('reward_id');
         $data = json_decode(file_get_contents('php://input'), true);
         $reward_id = $data['reward_id'] ?? null;
         
-        // Validasi reward_id
         if (!$reward_id || !is_numeric($reward_id)) {
             $this->output->set_status_header(400);
             echo json_encode(['status' => 'error', 'message' => 'Invalid reward ID']);
             return;
         }
 
-        // Proses penukaran poin ke reward
         $result = $this->Reward_model->redeem_reward($user_id, $reward_id);
 
         if ($result['status'] == 'error') {
             $this->output->set_status_header(400);
-        } else {
-            $this->output->set_status_header(200);
+            // Add specific handling for out of stock error
+            if ($result['message'] == 'Reward is out of stock') {
+                echo json_encode(['status' => 'error', 'message' => 'Sorry, this reward is out of stock']);
+                return;
+            }
         }
 
         echo json_encode($result);

@@ -6,6 +6,7 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->helper('url');
+        $this->load->helper('asset');
         $this->load->model('User_model');
         $this->load->model('Reward_model');
         $this->load->model('m_promo');
@@ -14,6 +15,7 @@ class Home extends CI_Controller {
         $this->load->model('M_brands');
         $this->load->model('M_mission');
         $this->load->model('M_alamat'); // Pastikan Anda memuat model M_alamat
+        $this->load->model('M_banner');
     }
 
     public function index() {
@@ -36,6 +38,7 @@ class Home extends CI_Controller {
         $data['brands'] = $this->M_brands->get_all_brands();
         $data['missions'] = $this->M_mission->get_available_missions();
         $data['user_missions'] = $this->M_mission->get_user_missions($user_id);
+        $data['banners'] = $this->M_banner->get_active_banners();
 
         $this->load->view('home/index', $data);
     }

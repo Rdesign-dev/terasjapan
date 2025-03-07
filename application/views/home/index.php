@@ -12,9 +12,20 @@
 <body>
     <!-- Banner -->
     <div class="banner">
-        <img src="<?php echo base_url('assets/image/Ads/ads1.png') ?>" alt="Advertisement 1">
-        <img src="<?php echo base_url('assets/image/Ads/ads2.png') ?>" alt="Advertisement 2">
-        <img src="<?php echo base_url('assets/image/Ads/ads3.png') ?>" alt="Advertisement 3">
+        <?php if (!empty($banners)): ?>
+            <?php foreach($banners as $banner): ?>
+                <img src="<?php echo banner_url($banner->image) ?>" 
+                     alt="<?php echo $banner->title ?>"
+                     <?php if (!empty($banner->link)): ?>
+                     onclick="window.location.href='<?php echo $banner->link ?>'"
+                     style="cursor: pointer;"
+                     <?php endif; ?>>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="no-banner"></div>
+                <p>No active banners available.</p>
+            </div>
+        <?php endif; ?>
     </div>
     <div class="header-wrapper">
         <div class="header-top-container">
@@ -180,24 +191,35 @@
     <div class="reward-section">
         <h2>Rewards</h2>
         <div class="reward-items">
-            <?php if (!empty($rewards)): ?>
-            <?php foreach ($rewards as $reward): ?>
-            <div class="reward-item" data-id="<?php echo $reward->id; ?>">
-                <img src="<?php echo base_url('assets/image/reward/' . $reward->image_name); ?>"
-                    alt="<?php echo $reward->title; ?>">
-                <div class="reward-info">
-                    <div class="reward-title"><?php echo $reward->title; ?></div>
-                    <div class="reward-points">
-                        <span class="points-value"><?php echo $reward->points_required; ?></span>
-                        <span class="points-text">Poin</span>
+            <?php 
+            $available_rewards = array_filter($rewards ?? [], function($reward) {
+                return isset($reward->qty) && 
+                       $reward->qty > 0 && 
+                       strtotime($reward->valid_until) > time(); // Check if reward hasn't expired
+            });
+            
+            if (!empty($available_rewards)): 
+            ?>
+                <?php foreach ($available_rewards as $reward): ?>
+                <div class="reward-item" data-id="<?php echo $reward->id; ?>">
+                    <img src="<?php echo base_url('assets/image/reward/' . $reward->image_name); ?>"
+                        alt="<?php echo $reward->title; ?>">
+                    <div class="reward-info">
+                        <div class="reward-title"><?php echo $reward->title; ?></div>
+                        <div class="reward-points">
+                            <span class="points-value"><?php echo $reward->points_required; ?></span>
+                            <span class="points-text">Poin</span>
+                        </div>
+                        <?php if ($reward->qty <= 5): ?>
+                        <div class="stock-warning"><?php echo $reward->qty; ?> voucher left!</div>
+                        <?php endif; ?>
                     </div>
                 </div>
-            </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php else: ?>
-            <div class="no-promo">
-                <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
-            </div>
+                <div class="no-promo">
+                    <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
+                </div>
             <?php endif; ?>
         </div>
     </div>
@@ -331,11 +353,11 @@
                             <p><?= htmlspecialchars(substr($news_item->captions, 0, 100)) ?>...</p>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
             <?php else: ?>
-                <div class="no-news">
-                    <p>No news available at the moment.</p>
-                </div>
+                <div class="news-no-promo">
+                    <p>🔪 Unavailable News & Events, <span>Comeback Soon!</span></p>
+            </div>
             <?php endif; ?>
         </div>
     </div>

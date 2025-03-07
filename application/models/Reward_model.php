@@ -5,6 +5,8 @@ class Reward_model extends CI_Model {
 
     public function get_reward_by_id($reward_id) {
         $this->db->where('id', $reward_id);
+        $this->db->where('qty >', 0); // Only get rewards with available quantity
+        $this->db->where('valid_until >', date('Y-m-d H:i:s')); // Only get rewards that haven't expired
         $query = $this->db->get('rewards');
         return $query->row();
     }
@@ -44,10 +46,20 @@ class Reward_model extends CI_Model {
             return ['status' => 'error', 'message' => 'Invalid user or reward'];
         }
 
+        // Cek quantity reward
+        if ($reward->qty <= 0) {
+            return ['status' => 'error', 'message' => 'Reward is out of stock'];
+        }
+
         // Cek apakah user memiliki cukup poin
         if ($user->poin < $reward->points_required) {
             return ['status' => 'error', 'message' => 'Insufficient points'];
         }
+
+        // Kurangi quantity reward
+        $this->db->where('id', $reward_id);
+        $this->db->set('qty', 'qty-1', FALSE);
+        $this->db->update('rewards');
 
         // Kurangi poin user
         $new_points = $user->poin - $reward->points_required;
