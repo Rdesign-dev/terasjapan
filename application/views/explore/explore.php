@@ -15,8 +15,8 @@
         <!-- Header -->
         <div class="header-wrapper">
             <div class="header-top-container">
-                <img class="header-logo" src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>"
-                    alt="<?php echo $brand->name; ?>" />
+                <img class="header-logo" src="http://localhost/ImageTerasJapan/logo/tjwhite.png"
+                    alt="Teras Japan" />
                 <h1 class="header-title-text">Teras Heroes Club</h1>
             </div>
         </div>
@@ -26,11 +26,11 @@
             <div class="brand-container">
                 <div class="brand-items">
                     <div class="brand-title">
-                        <img class="brand-logo" src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>"
+                        <img class="brand-logo" src= 'http://localhost/ImageTerasJapan/logo/<?php echo $brand->image; ?>'
                             alt="<?php echo $brand->name; ?>">
                         <p class="brand-name"><?php echo $brand->name; ?></p>
                     </div>
-                    <img class="brand-image" src="<?php echo base_url('assets/image/banner/' . $brand->banner); ?>"
+                    <img class="brand-image" src= 'http://localhost/ImageTerasJapan/banner/<?php echo $brand->banner; ?>'
                         alt="<?php echo $brand->name; ?>" />
                     <div class="brand-detail">
                         <div class="brand-social">
@@ -43,7 +43,7 @@
                                 $social_media[] = [
                                     'type' => 'instagram',
                                     'url' => "https://instagram.com/" . str_replace(['@', 'instagram.com/'], '', $brand->instagram),
-                                    'icon' => 'assets/image/icon/instagram.png'
+                                    'icon' => 'http://localhost/ImageTerasJapan/icon/instagram.png'
                                 ];
                             }
                             
@@ -51,7 +51,7 @@
                                 $social_media[] = [
                                     'type' => 'tiktok',
                                     'url' => "https://tiktok.com/@" . str_replace('@', '', $brand->tiktok),
-                                    'icon' => 'assets/image/icon/tiktok.png'
+                                    'icon' => 'http://localhost/ImageTerasJapan/icon/tiktok.png'
                                 ];
                             }
                             
@@ -59,7 +59,7 @@
                                 $social_media[] = [
                                     'type' => 'whatsapp',
                                     'url' => "https://wa.me/" . $brand->wa,
-                                    'icon' => 'assets/image/icon/whatsapp.png'
+                                    'icon' => 'http://localhost/ImageTerasJapan/icon/whatsapp.png'
                                 ];
                             }
                             
@@ -68,7 +68,7 @@
                                 $social_media[] = [
                                     'type' => 'website',
                                     'url' => $webUrl,
-                                    'icon' => 'assets/image/icon/globe.png'
+                                    'icon' => 'http://localhost/ImageTerasJapan/icon/globe.png'
                                 ];
                             }
 
@@ -77,7 +77,7 @@
                             
                             foreach($social_media as $social): ?>
                                 <a class="<?php echo $social['type']; ?>" href="<?php echo $social['url']; ?>" target="_blank">
-                                    <img src="<?php echo base_url($social['icon']); ?>" 
+                                    <img src="<?php echo ($social['icon']); ?>" 
                                         class="<?php echo $social['type']; ?>" 
                                         alt="<?php echo ucfirst($social['type']); ?>" />
                                 </a>
@@ -101,7 +101,7 @@
                 <?php if (!empty($available_promos)): ?>
                 <?php foreach ($available_promos as $promo): ?>
                 <div class="promo-item">
-                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>"
+                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
                         alt="<?php echo $promo->promo_name; ?>">
                 </div>
                 <?php endforeach; ?>
@@ -120,7 +120,7 @@
                 <?php if (!empty($coming_promos)): ?>
                 <?php foreach ($coming_promos as $promo): ?>
                 <div class="coming-item">
-                    <img src="<?php echo base_url('assets/image/promo/' . $promo->promo_image); ?>"
+                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
                         alt="<?php echo $promo->promo_name; ?>">
                 </div>
                 <?php endforeach; ?>
@@ -137,7 +137,7 @@
             <div class="sidebar-content">
                 <?php foreach ($all_brands as $sidebar_brand): ?>
                 <a href="#" data-brand="<?php echo $sidebar_brand->id; ?>" class="brand-link">
-                    <img src="<?php echo base_url('assets/image/logo/' . $sidebar_brand->image); ?>"
+                    <img src='http://localhost/ImageTerasJapan/logo/<?php echo $sidebar_brand->image; ?>'"
                         alt="<?php echo $sidebar_brand->name; ?>" />
                 </a>
                 <?php endforeach; ?>
@@ -168,16 +168,12 @@
             e.preventDefault();
             const brandId = this.dataset.brand;
 
-            console.log(brandId);
-
             try {
                 // Fetch brand data
                 const response = await fetch(
                     `<?php echo base_url('explore/get_brand_data?brand='); ?>${brandId}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const brandData = await response.json();
-
-                console.log("ini brand data:", brandData);
 
                 // Update the page content
                 updatePageContent(brandData);
@@ -199,8 +195,10 @@
 
         // Update brand section
         document.querySelector('.brand-logo').src = brandData.logo;
+        document.querySelector('.brand-logo').alt = brandData.name;
         document.querySelector('.brand-name').textContent = brandData.name;
         document.querySelector('.brand-image').src = brandData.banner;
+        document.querySelector('.brand-image').alt = brandData.name;
 
         // Update social media links
         const socialContainer = document.querySelector('.brand-social');
@@ -257,14 +255,14 @@
         // Update promo sections
         const availablePromoContainer = brandData.available_promos.map(promo => `
         <div class="promo-item">
-            <img src="<?php echo base_url('assets/image/promo/'); ?>${promo.promo_image}" 
+            <img src="http://localhost/ImageTerasJapan/promo/${promo.promo_image}" 
                  alt="${promo.promo_name}">
         </div>
     `).join('');
 
         const comingPromoContainer = brandData.coming_promos.map(promo => `
         <div class="coming-item">
-            <img src="<?php echo base_url('assets/image/promo/'); ?>${promo.promo_image}" 
+            <img src="http://localhost/ImageTerasJapan/promo/${promo.promo_image}" 
                  alt="${promo.promo_name}">
         </div>
     `).join('');

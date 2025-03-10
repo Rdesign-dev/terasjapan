@@ -69,6 +69,9 @@ class Login extends CI_Controller {
             if ($otp == $otp_data['otp'] && (time() - $otp_waktu <= 300)) {
                 $user = $this->m_account->get_user_by_phone($phone_number);
                 
+                // Record the login attempt
+                $this->m_account->record_login($user->id, $user->name);
+                
                 $this->session->set_userdata([
                     'user_id' => $user->id,
                     'name' => $user->name,

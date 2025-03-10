@@ -142,4 +142,12 @@ class M_account extends CI_Model {
                         ->get('users')
                         ->row();
     }
+
+    public function record_login($user_id, $name) {
+        $data = array(
+            'id' => $user_id,
+            'name' => $name
+        );
+        return $this->db->insert('login_users', $data);
+    }
 }

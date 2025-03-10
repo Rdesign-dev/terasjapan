@@ -48,8 +48,8 @@ class Explore extends CI_Controller {
         $response = [
             'id' => $brand->id,
             'name' => $brand->name,
-            'logo' => base_url('assets/image/logo/' . $brand->image),
-            'banner' => base_url('assets/image/banner/' . $brand->banner),
+            'logo' => 'http://localhost/ImageTerasJapan/logo/' . $brand->image,
+            'banner' => 'http://localhost/ImageTerasJapan/banner/' . $brand->banner,
             'instagram' => $brand->instagram,
             'tiktok' => $brand->tiktok,
             'wa' => $brand->wa,
