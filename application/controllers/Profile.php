@@ -10,6 +10,7 @@ class Profile extends CI_Controller {
         $this->load->model('User_model');
         $this->load->model('Reward_model');
         $this->load->model('Feedback_model');
+        $this->load->model('M_faq');
         // Load middleware
         require_once APPPATH . 'middleware/AuthMiddleware.php';
         $this->auth_middleware = new AuthMiddleware();
@@ -148,7 +149,10 @@ class Profile extends CI_Controller {
     }
 
     public function faq() {
-        $this->load->view('profile/faq');
+
+        $data['faqs'] = $this->M_faq->get_active_faqs();
+        
+        $this->load->view('profile/faq', $data);
     }
 
     public function feedback() {
