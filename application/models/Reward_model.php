@@ -4,20 +4,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Reward_model extends CI_Model {
 
     public function get_reward_by_id($reward_id) {
-        $this->db->where('id', $reward_id);
-        $this->db->where('qty >', 0); // Only get rewards with available quantity
-        $this->db->where('valid_until >', date('Y-m-d H:i:s')); // Only get rewards that haven't expired
-        $query = $this->db->get('rewards');
-        return $query->row();
-    }
-
-    public function get_branches_by_reward_id($reward_id) {
-        $this->db->select('branch.branch_name');
-        $this->db->from('reward_branch');
-        $this->db->join('branch', 'reward_branch.branch_id = branch.id');
-        $this->db->where('reward_branch.reward_id', $reward_id);
+        log_message('debug', 'Getting reward with ID: ' . $reward_id);
+        
+        $this->db->select('rewards.*, brands.name as brand_name');
+        $this->db->from('rewards');
+        $this->db->join('brands', 'brands.id = rewards.brand_id', 'left');
+        $this->db->where('rewards.id', $reward_id);
+        $this->db->where('rewards.qty >', 0);
+        $this->db->where('rewards.valid_until >', date('Y-m-d H:i:s'));
+        
         $query = $this->db->get();
-        return $query->result();
+        
+        log_message('debug', 'Reward query: ' . $this->db->last_query());
+        
+        return $query->row();
     }
 
     public function get_vouchers_by_user_id($user_id) {
@@ -35,87 +35,78 @@ class Reward_model extends CI_Model {
     }
 
     public function redeem_reward($user_id, $reward_id) {
-        $this->db->trans_start(); // Mulai transaksi
+        $this->db->trans_start();
 
-        // Ambil data user & reward
+        // Get user & reward data
         $user = $this->db->get_where('users', ['id' => $user_id])->row();
         $reward = $this->get_reward_by_id((int)$reward_id);
 
-        // Validasi user dan reward
+        // Validation checks
         if (!$user || !$reward) {
             return ['status' => 'error', 'message' => 'Invalid user or reward'];
         }
 
-        // Cek quantity reward
         if ($reward->qty <= 0) {
             return ['status' => 'error', 'message' => 'Reward is out of stock'];
         }
 
-        // Cek apakah user memiliki cukup poin
         if ($user->poin < $reward->points_required) {
             return ['status' => 'error', 'message' => 'Insufficient points'];
         }
 
-        // Kurangi quantity reward
+        // Update reward quantity
         $this->db->where('id', $reward_id);
         $this->db->set('qty', 'qty-1', FALSE);
         $this->db->update('rewards');
 
-        // Kurangi poin user
+        // Update user points
         $new_points = $user->poin - $reward->points_required;
         $this->db->where('id', $user_id);
         $this->db->update('users', ['poin' => $new_points]);
 
-        // Generate kode voucher unik
-        $promo_code = strtoupper(substr($reward->title, 0, 4)); // 4 karakter pertama dari nama promo
-        $date_code = date('dm'); // tanggal dan bulan redeem
-        $user_code = strtoupper(substr($user->name, 0, 3)); // 3 huruf pertama dari nama user
+        // Generate voucher code
+        $promo_code = strtoupper(substr($reward->title, 0, 4));
+        $date_code = date('dm');
+        $user_code = strtoupper(substr($user->name, 0, 3));
 
-        // Hitung berapa kali user sudah redeem promo ini
+        // Check existing redemptions
         $this->db->where('user_id', $user_id);
         $this->db->where('reward_id', $reward_id);
-        $count = $this->db->count_all_results('redeem_voucher') + 1; // tambahkan 1 untuk voucher yang baru di-redeem
+        $count = $this->db->count_all_results('redeem_voucher') + 1;
 
         $voucher_code = sprintf('%s-%s-%s-%03d', $promo_code, $date_code, $user_code, $count);
 
-        // Generate QR code using goqr.me API
-        do {
-            $qr_image_name = 'vcreward-' . $user_code . '-' . $date_code . '-' . uniqid() . '.png';
-            $qr_image_path = 'assets/image/qrcode/' . $qr_image_name;
-        } while (file_exists(FCPATH . $qr_image_path));
-
+        // Generate QR code
+        $qr_image_name = 'vcreward-' . $user_code . '-' . $date_code . '-' . uniqid() . '.png';
+        $qr_image_path = 'assets/image/qrcode/' . $qr_image_name;
         $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($voucher_code);
-        
-        // Debugging: Log QR URL
-        log_message('debug', 'QR URL: ' . $qr_url);
 
-        // Get QR image content
         $qr_image = file_get_contents($qr_url);
         if ($qr_image === FALSE) {
             return ['status' => 'error', 'message' => 'Failed to generate QR code'];
         }
 
-        // Save QR image to file
         if (file_put_contents(FCPATH . $qr_image_path, $qr_image) === FALSE) {
             return ['status' => 'error', 'message' => 'Failed to save QR code image'];
         }
 
-        // Simpan data ke `redeem_voucher`
+        // Save redemption data
         $data = [
             'user_id' => $user_id,
             'reward_id' => $reward_id,
+            'brand_id' => $reward->brand_id, // Add brand_id
             'points_used' => $reward->points_required,
             'redeem_date' => date('Y-m-d H:i:s'),
-            'status' => 'Available', // Status default
-            'qr_code_url' => $qr_image_name, // memenaggil berdasaekan nama
+            'status' => 'Available',
+            'qr_code_url' => $qr_image_name,
             'kode_voucher' => $voucher_code,
-            "expires_at" => date('Y-m-d H:i:s', strtotime('+'.$reward->total_days.' days')) // Voucher expired in 7 days
+            'expires_at' => date('Y-m-d H:i:s', strtotime('+'.$reward->total_days.' days'))
         ];
+        
         $this->db->insert('redeem_voucher', $data);
 
-        $this->db->trans_complete(); // Selesaikan transaksi
+        $this->db->trans_complete();
 
-        // Cek apakah transaksi berhasil
         if ($this->db->trans_status() === FALSE) {
             return ['status' => 'error', 'message' => 'Transaction failed'];
         }

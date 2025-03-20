@@ -26,7 +26,7 @@
         </p>
         <div class="info">
             <div class="row">
-                <span>Outlet</span>
+                <span>Brand</span>
                 <span class="value">Teras Japan</span>
             </div>
             <div class="row">
@@ -34,7 +34,7 @@
                 <span class="value"><?php echo date('d-m-Y', strtotime($voucher->redeem_date)); ?></span>
             </div>
             <div class="row">
-                <span>Reward Code</span>
+                <span>Voucher Code</span>
                 <span class="value"><?php echo $voucher->kode_voucher; ?></span>
             </div>
             <div class="row">

@@ -497,26 +497,26 @@
         });
 
         function fetchRewardData(rewardId) {
-            console.log("Fetching reward data for ID:", rewardId); // Debugging
+            console.log("Fetching reward data for ID:", rewardId);
             fetch("<?= base_url('reward/get_reward/'); ?>" + rewardId)
-                .then(response => response.text())
-                .then(text => {
-                    try {
-                        const data = JSON.parse(text);
-                        modalImage.src = "<?= reward_url(''); ?>" + data.image_name;
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 'success') {
+                        const data = response.data; // Get the data from response
+                        
+                        modalImage.src = "<?= base_url('assets/image/reward/'); ?>" + data.image_name;
                         modalTitle.innerText = data.title;
                         modalPoints.innerText = "Poin: " + data.points_required;
-                        modalDescription.innerText = data.description; // Tampilkan deskripsi dari database
-                        modalValidity.innerText = "Voucher validity: " + data.total_days +
-                            " days after redeem"; // Display voucher validity
-                        modalBranches.innerHTML = data.branches.map(branch =>
-                            `<span class="branch-badge">${branch.branch_name}</span>`).join('');
+                        modalDescription.innerText = data.description;
+                        modalValidity.innerText = "Voucher validity: " + data.total_days + " days after redeem";
+                        
+                        // Remove branches display since we no longer use it
+                        modalBranches.innerHTML = ''; // Clear the branches section
+                        
                         redeemLink.href = "javascript:showConfirmRedeemPopup(" + rewardId + ");";
-                        modal.style.display = "flex"; // Tampilkan modal
-                    } catch (error) {
-                        console.error("Error parsing JSON:", error);
-                        console.error("Response text:", text);
-                        showRewardFetchErrorPopup();
+                        modal.style.display = "flex";
+                    } else {
+                        throw new Error(response.message || 'Failed to fetch reward data');
                     }
                 })
                 .catch(error => {

@@ -10,28 +10,40 @@ class Reward extends CI_Controller {
     }
 
     public function get_reward($id) {
-        // Debugging
         log_message('debug', 'Received reward ID: ' . $id);
 
-        // Validasi ID reward harus angka
         if (!ctype_digit($id)) {
             $this->output->set_status_header(400);
             echo json_encode(['status' => 'error', 'message' => 'Invalid reward ID']);
             return;
         }
 
-        $reward = $this->Reward_model->get_reward_by_id($id);
-        $branches = $this->Reward_model->get_branches_by_reward_id($id);
-        $reward->branches = $branches;
-
-        if (!$reward) {
-            $this->output->set_status_header(404);
-            echo json_encode(['status' => 'error', 'message' => 'Reward not found']);
-            return;
+        try {
+            log_message('debug', 'Attempting to fetch reward data');
+            $reward = $this->Reward_model->get_reward_by_id($id);
+            log_message('debug', 'Reward data: ' . print_r($reward, true));
+            
+            if (!$reward) {
+                $this->output->set_status_header(404);
+                echo json_encode(['status' => 'error', 'message' => 'Reward not found']);
+                return;
+            }
+            
+            // Tambahkan status success dalam response
+            $response = [
+                'status' => 'success',
+                'data' => $reward
+            ];
+            
+            $this->output->set_content_type('application/json')
+                         ->set_status_header(200)
+                         ->set_output(json_encode($response));
+                         
+        } catch (Exception $e) {
+            log_message('error', 'Error fetching reward: ' . $e->getMessage());
+            $this->output->set_status_header(500);
+            echo json_encode(['status' => 'error', 'message' => 'Error fetching reward data']);
         }
-
-        $this->output->set_content_type('application/json')->set_status_header(200);
-        echo json_encode($reward);
     }
 
     public function redeem() {
