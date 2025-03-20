@@ -18,16 +18,16 @@ class VoucherOwnerMiddleware {
             redirect('auth/login');
         }
 
-        // Get voucher code from URL
+        // Get voucher code from URL query parameter
         $kode_voucher = $this->CI->input->get('voucher_id');
         if (!$kode_voucher) {
             redirect('profile/myvoucher');
         }
 
-        // Get voucher data and check ownership berdasarkan kode_voucher dan user_id
+        // Get voucher data and check ownership
         $voucher = $this->CI->Reward_model->get_voucher_by_code_and_user($kode_voucher, $user_id);
         if (!$voucher) {
-            // Redirect jika voucher tidak ditemukan atau bukan milik user
+            // Redirect if voucher not found or doesn't belong to user
             redirect('profile/myvoucher');
         }
 

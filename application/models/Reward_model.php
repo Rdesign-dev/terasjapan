@@ -21,15 +21,19 @@ class Reward_model extends CI_Model {
     }
 
     public function get_vouchers_by_user_id($user_id) {
-        $this->db->select('rewards.title, rewards.image_name, rewards.points_required, rewards.category, redeem_voucher.redeem_date, redeem_voucher.status, redeem_voucher.kode_voucher, redeem_voucher.expires_at');
+        $this->db->select('rewards.title, rewards.image_name, rewards.points_required, rewards.category, 
+                           redeem_voucher.redeem_date, redeem_voucher.status, redeem_voucher.kode_voucher, 
+                           redeem_voucher.expires_at, redeem_voucher.qr_code_url,
+                           brands.id as brand_id, brands.name as brand_name, brands.desc as brand_desc,
+                           brands.image as brand_image, brands.banner as brand_banner,
+                           brands.instagram, brands.tiktok, brands.wa, brands.web');
         $this->db->from('redeem_voucher');
         $this->db->join('rewards', 'rewards.id = redeem_voucher.reward_id');
+        $this->db->join('brands', 'brands.id = redeem_voucher.brand_id', 'left');
         $this->db->where('redeem_voucher.user_id', $user_id);
         $query = $this->db->get();
         
-        // Debugging
-        log_message('debug', 'Query: ' . $this->db->last_query());
-        log_message('debug', 'Vouchers: ' . print_r($query->result(), true));
+        log_message('debug', 'Voucher query: ' . $this->db->last_query());
         
         return $query->result();
     }
@@ -126,13 +130,22 @@ class Reward_model extends CI_Model {
     public function get_voucher_by_code_and_user($kode_voucher, $user_id) {
         $this->db->select('rewards.title, rewards.image_name, rewards.points_required, rewards.category, 
                            redeem_voucher.redeem_date, redeem_voucher.status, redeem_voucher.kode_voucher, 
-                           redeem_voucher.expires_at, redeem_voucher.qr_code_url');
+                           redeem_voucher.expires_at, redeem_voucher.qr_code_url,
+                           brands.id as brand_id, brands.name as brand_name');
         $this->db->from('redeem_voucher');
         $this->db->join('rewards', 'rewards.id = redeem_voucher.reward_id');
+        $this->db->join('brands', 'brands.id = redeem_voucher.brand_id', 'left');
         $this->db->where('redeem_voucher.kode_voucher', $kode_voucher);
         $this->db->where('redeem_voucher.user_id', $user_id);
         
-        return $this->db->get()->row();
+        $query = $this->db->get();
+        
+        // Debug the query and result
+        log_message('debug', 'SQL Query: ' . $this->db->last_query());
+        $result = $query->row();
+        log_message('debug', 'Query result in model: ' . print_r($result, true));
+        
+        return $result;
     }
 
     // Metode untuk memeriksa dan memperbarui status voucher yang sudah expired

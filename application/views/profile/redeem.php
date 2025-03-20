@@ -27,7 +27,13 @@
         <div class="info">
             <div class="row">
                 <span>Brand</span>
-                <span class="value">Teras Japan</span>
+                <span class="value">
+                    <?php 
+                    log_message('debug', 'Full voucher object in view: ' . print_r($voucher, true));
+                    log_message('debug', 'Brand name in view: ' . ($voucher->brand_name ?? 'null'));
+                    echo $voucher->brand_name ?? '-'; 
+                    ?>
+                </span>
             </div>
             <div class="row">
                 <span>Started on</span>

@@ -40,20 +40,39 @@ class Profile extends CI_Controller {
     }
 
     public function redeem() {
+        // Get voucher code from URL query parameter
+        $kode_voucher = $this->input->get('voucher_id');
+        
         // Verify voucher ownership
         $this->voucher_middleware->verify_ownership();
 
-        $voucher_id = $this->input->get('voucher_id');
-        // Ambil data voucher berdasarkan kode voucher
-        $voucher = $this->Reward_model->get_voucher_by_code($voucher_id);
+        if (!$kode_voucher) {
+            show_404();
+            return;
+        }
+
+        $user_id = $this->session->userdata('user_id');
+        
+        // Debug the input parameters
+        log_message('debug', 'Fetching voucher with code: ' . $kode_voucher . ' for user: ' . $user_id);
+        
+        // Ambil data voucher berdasarkan kode voucher dan user_id
+        $voucher = $this->Reward_model->get_voucher_by_code_and_user($kode_voucher, $user_id);
+        
+        // Debug the voucher object
+        log_message('debug', 'Voucher object in controller: ' . print_r($voucher, true));
 
         if (!$voucher) {
             show_404();
+            return;
         }
 
         $data = array(
             'voucher' => $voucher
         );
+
+        // Debug the data being passed to view
+        log_message('debug', 'Data passed to view: ' . print_r($data, true));
 
         $this->load->view('profile/redeem', $data);
     }
