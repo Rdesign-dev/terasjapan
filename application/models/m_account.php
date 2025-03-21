@@ -50,20 +50,6 @@ class M_account extends CI_Model {
         return $insert;
     }
 
-    // Fungsi untuk menyimpan OTP
-    // public function simpan_otp($phone_number, $otp) {
-    //     $data = array(
-    //         'phone_number' => $phone_number,
-    //         'otp' => $otp,
-    //         'waktu' => date('Y-m-d H:i:s') // Simpan waktu saat ini dalam format yang valid
-    //     );
-    //     // Simpan atau update OTP di database
-    //     $this->db->replace('users', $data);
-
-    //     // Kirim OTP ke WhatsApp menggunakan API Fontee
-    //     $this->kirim_otp_ke_whatsapp($phone_number, $otp);
-    // }
-
     public function simpan_otp($phone_number, $otp) {
         date_default_timezone_set('Asia/Jakarta');
         $data = array(
@@ -94,7 +80,10 @@ class M_account extends CI_Model {
 
     // Fungsi untuk mengambil data pengguna berdasarkan nomor telepon
     public function get_user_by_phone($phone_number) {
-        return $this->db->where('phone_number', $phone_number)->get('users')->row();
+        return $this->db->where('phone_number', $phone_number)
+                        ->where('deleted', 0)
+                        ->get('users')
+                        ->row();
     }
 
     // Fungsi untuk memasukkan data pengguna baru
@@ -149,5 +138,12 @@ class M_account extends CI_Model {
             'name' => $name
         );
         return $this->db->insert('login_users', $data);
+    }
+
+    public function check_deleted_account($phone_number) {
+        return $this->db->where('phone_number', $phone_number)
+                        ->where('deleted', 1)
+                        ->get('users')
+                        ->row();
     }
 }

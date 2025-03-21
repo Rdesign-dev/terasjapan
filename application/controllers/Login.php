@@ -35,6 +35,14 @@ class Login extends CI_Controller {
     }
 
     private function _send_otp($phone_number) {
+        // Check if account is deleted
+        $deleted_user = $this->m_account->check_deleted_account($phone_number);
+        if ($deleted_user) {
+            $this->session->set_flashdata('error', 'Akun ini telah dinonaktifkan. Silahkan hubungi admin untuk mengaktifkan kembali.');
+            $this->load->view('auth/login');
+            return;
+        }
+
         // Periksa apakah nomor telepon tersedia di database
         $user = $this->m_account->get_user_by_phone($phone_number);
         if (!$user) {
