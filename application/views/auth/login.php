@@ -96,6 +96,14 @@
             const toggleLink = document.getElementById("toggleLink");
             const linkContainer = document.getElementById("linkContainer");
 
+            // Show register form if there's an error and show_register is true
+            <?php if($this->session->flashdata('error') && isset($show_register) && $show_register): ?>
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+                linkContainer.innerHTML = 'Already have an account? <a href="#" id="toggleLink">Login here</a>';
+            <?php endif; ?>
+
+            // Form toggle functionality
             toggleLink.addEventListener("click", function (event) {
                 event.preventDefault();
                 if (loginForm.style.display === "none") {
@@ -127,7 +135,6 @@
                 }, 1000);
 
                 resendOtpBtn.addEventListener("click", function () {
-                    // Kirim ulang OTP
                     loginForm.action = "<?php echo base_url('login'); ?>";
                     loginForm.submit();
                 });

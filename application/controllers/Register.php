@@ -10,37 +10,44 @@ class Register extends CI_Controller {
     }
 
     public function index() {
-        $name = $this->input->post('name');
-        $phone_number = $this->format_phone_number($this->input->post('phone_number'));
-        
-        // Check if phone number already exists
-        if ($this->User_model->check_phone_exists($phone_number)) {
-            $this->session->set_flashdata('error', 'This phone number is already registered');
-            redirect('login');
-            return;
-        }
-
-        // Continue with registration if phone doesn't exist
-        $referral_code = strtoupper(substr($name, 0, 3) . rand(100, 999));
-        
-        $user_data = array(
-            'name' => $name,
-            'phone_number' => $phone_number,
-            'poin' => 10,
-            'referral_code' => $referral_code
-        );
-
-        if ($this->User_model->insert_user($user_data)) {
-            // Generate OTP
-            $otp = rand(100000, 999999);
-            $this->load->model('m_account');
-            $this->m_account->simpan_otp($phone_number, $otp);
-
-            $this->session->set_flashdata('success', 'Registration successful! Please verify your phone number.');
-            redirect('login?phone=' . $phone_number . '&otp_sent=true');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('auth/login', ['show_register' => true]);
         } else {
-            $this->session->set_flashdata('error', 'Registration failed. Please try again.');
-            redirect('login');
+            $name = $this->input->post('name');
+            $phone_number = $this->format_phone_number($this->input->post('phone_number'));
+            
+            // First check for deleted account
+            if ($this->User_model->check_phone_deleted($phone_number)) {
+                $this->session->set_flashdata('error', 'Nomor telepon ini terkait dengan akun yang telah dinonaktifkan. Silahkan hubungi admin untuk info lebih lanjut.');
+                $this->load->view('auth/login', ['show_register' => true]);
+                return;
+            }
+
+            // Then check for active account
+            if ($this->User_model->check_phone_exists($phone_number)) {
+                $this->session->set_flashdata('error', 'Nomor telepon sudah terdaftar. Silahkan login.');
+                $this->load->view('auth/login');
+                return;
+            }
+
+            // Proceed with new registration
+            $user_data = array(
+                'name' => $name,
+                'phone_number' => $phone_number,
+                'poin' => 10,
+                'referral_code' => $this->generate_referral_code($name),
+                'deleted' => 0
+            );
+
+            if ($this->User_model->insert_user($user_data)) {
+                $otp = rand(100000, 999999);
+                $this->m_account->simpan_otp($phone_number, $otp);
+                $this->session->set_flashdata('success', 'Registrasi berhasil! Silahkan verifikasi nomor telepon Anda.');
+                redirect('login?phone=' . $phone_number . '&otp_sent=true');
+            } else {
+                $this->session->set_flashdata('error', 'Registrasi gagal. Silahkan coba lagi.');
+                $this->load->view('auth/login', ['show_register' => true]);
+            }
         }
     }
 

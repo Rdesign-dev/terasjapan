@@ -238,11 +238,9 @@ class Profile extends CI_Controller {
         if (!$user_id) {
             redirect('auth/login');
         }
-        if ($this->input->post('confirm_delete')) {
-            // Hapus data terkait di tabel redeem_voucher
-            $this->User_model->delete_user_related_data($user_id);
 
-            // Hapus data pengguna
+        if ($this->input->post('confirm_delete')) {
+            // Soft delete user account
             if ($this->User_model->delete_user($user_id)) {
                 $this->session->sess_destroy();
                 redirect('login');

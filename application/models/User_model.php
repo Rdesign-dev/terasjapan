@@ -12,6 +12,7 @@ class User_model extends CI_Model {
         $this->db->from('users');
         $this->db->join('user_levels', 'users.level_id = user_levels.id', 'left');
         $this->db->where('users.id', $id);
+        $this->db->where('users.deleted', 0); // Only get active users
         return $this->db->get()->row();
     }
 
@@ -33,19 +34,9 @@ class User_model extends CI_Model {
     }
 
     public function delete_user($user_id) {
-        // Hapus data terkait di tabel referral_redeem
-        $this->delete_referral_redeem_data($user_id);
-
-        // Hapus data terkait di tabel redeem_voucher
-        $this->delete_user_related_data($user_id);
-
-            // Hapus baris terkait di tabel referral_redeem
-        $this->db->where('user_id', $user_id);
-        $this->db->delete('referral_redeem');
-        
-        // Hapus data pengguna
+        // Update status deleted menjadi 1 (soft delete)
         $this->db->where('id', $user_id);
-        return $this->db->delete('users');
+        return $this->db->update('users', ['deleted' => 1]);
     }
     
     public function get_old_picture($user_id) {
@@ -116,6 +107,14 @@ class User_model extends CI_Model {
 
     public function check_phone_exists($phone_number) {
         $query = $this->db->where('phone_number', $phone_number)
+                          ->where('deleted', 0)
+                          ->get('users');
+        return $query->num_rows() > 0;
+    }
+
+    public function check_phone_deleted($phone_number) {
+        $query = $this->db->where('phone_number', $phone_number)
+                          ->where('deleted', 1)
                           ->get('users');
         return $query->num_rows() > 0;
     }
