@@ -10,6 +10,21 @@
 </head>
 
 <body>
+    <!-- Advertisement Pop-up -->
+    <div id="adPopup" class="ad-popup">
+        <div class="ad-popup-content">
+            <span class="ad-close">&times;</span>
+            <?php if (!empty($popup)): ?>
+                <img src="<?php echo popup_url($popup->Image); ?>" 
+                     alt="<?php echo $popup->name; ?>"
+                     <?php if (!empty($popup->link)): ?>
+                     onclick="window.location.href='<?php echo $popup->link ?>'"
+                     style="cursor: pointer;"
+                     <?php endif; ?>>
+            <?php endif; ?>
+        </div>
+    </div>
+
     <!-- Banner -->
     <div class="banner">
         <?php if (!empty($banners)): ?>
@@ -672,6 +687,37 @@
     function closePromoModal() {
         document.getElementById('promoModal').style.display = 'none';
     }
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const adPopup = document.getElementById('adPopup');
+        const adClose = document.querySelector('.ad-close');
+        
+        // Check if user has seen the ad today
+        const lastShown = localStorage.getItem('adLastShown');
+        const today = new Date().toDateString();
+        
+        if (!lastShown || lastShown !== today) {
+            // Show popup after 1 second
+            setTimeout(() => {
+                adPopup.style.display = 'flex';
+                localStorage.setItem('adLastShown', today);
+            }, 1000);
+        }
+        
+        // Close popup when clicking close button
+        adClose.addEventListener('click', () => {
+            adPopup.style.display = 'none';
+        });
+        
+        // Close popup when clicking outside
+        adPopup.addEventListener('click', (e) => {
+            if (e.target === adPopup) {
+                adPopup.style.display = 'none';
+            }
+        });
+    });
     </script>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
