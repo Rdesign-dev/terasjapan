@@ -38,7 +38,7 @@ class Login extends CI_Controller {
         // Check if account is deleted
         $deleted_user = $this->m_account->check_deleted_account($phone_number);
         if ($deleted_user) {
-            $this->session->set_flashdata('error', 'Akun ini telah dinonaktifkan. Silahkan hubungi admin untuk mengaktifkan kembali.');
+            $this->session->set_flashdata('error', 'User tidak ditemukan!');
             $this->load->view('auth/login');
             return;
         }
