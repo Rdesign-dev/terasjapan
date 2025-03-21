@@ -43,3 +43,15 @@ if (!function_exists('brand_url')) {
         return get_root_url() . 'ImageTerasJapan/logo/' . $image_name;
     }
 }
+
+if (!function_exists('ad_url')) {
+    function ad_url($filename) {
+        return base_url('assets/image/advertisements/' . $filename);
+    }
+}
+
+if (!function_exists('popup_url')) {
+    function popup_url($image_name) {
+        return get_root_url() . 'ImageTerasJapan/popup/' . $image_name;
+    }
+}
