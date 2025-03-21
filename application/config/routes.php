@@ -75,6 +75,7 @@ $route['profile/privacypolicy'] = 'profile/privacypolicy';
 
 // Admin routes
 $route['admin'] = 'admin/dashboard/index';
+$route['admin/login'] = 'admin/login/index';
 // $route['testing/admin'] = 'admin/dashboard'; // remove or comment this line
 
 // $route['history/transaction/(:num)'] = 'history/transaction/$1';
