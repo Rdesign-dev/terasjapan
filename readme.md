@@ -37,8 +37,6 @@ testing/
 
 ## Contributors
 - Students of Politeknik Praktisi Bisnis Digital Bandung 
-    1. Bagus Santoso front end developer
-    2. Rijal Mubarok Agustiyan as Back end developer
 - Under supervision of TerasJapan Management
 
 ## License
