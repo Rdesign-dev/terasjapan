@@ -1,0 +1,183 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.header {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.content {
+    padding: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 80px;
+}
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.logo-container img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+}
+.logo-container h1 {
+    font-size: 20px;
+    color: #ff9900;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+.success-message {
+    background-color: #d1fae5;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.success-message i {
+    color: #10b981;
+    margin-right: 8px;
+}
+.success-message span {
+    color: #10b981;
+}
+.transaction-details {
+    color: #374151;
+    margin-bottom: 16px;
+}
+.total-payment {
+    background-color: #ffc264;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.total-payment span {
+    color: #000;
+}
+.total-payment .amount {
+    font-weight: bold;
+}
+
+.receipt-container {
+    display: none; /* Sembunyikan gambar saat awal */
+    text-align: center; /* Pusatkan gambar */
+    margin-top: 10px;
+}
+.transaction-summary {
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 30px;
+}
+.receipt-container img {
+    max-width: 100%;
+    height: auto;
+    border: 2px dashed #ff9900;
+}
+
+.details {
+    margin-bottom: 12px;  /* Reduced from 16px */
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;   /* Reduced from 12px */
+    padding: 4px 0;       /* Reduced from 8px */
+    border-bottom: 1px solid #eee;
+}
+
+.details-row span:first-child {
+    color: #666;
+    font-weight: 500;
+    text-align: left;
+    font-size: 14px;     /* Added font size */
+}
+
+.details-row span:last-child,
+.details-row .payment-methods {
+    color: #333;
+    font-weight: 600;
+    text-align: right;
+    flex: 1;
+    margin-left: 15px;   /* Reduced from 20px */
+    font-size: 14px;     /* Added font size */
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;            /* Reduced from 5px */
+}
+
+.payment-item {
+    padding: 3px 8px;    /* Reduced from 5px 10px */
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    text-align: right;
+    min-width: 150px;
+    font-size: 14px;     /* Added font size */
+}
+
+.details .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.details .detail-item span {
+    color: #6b7280;
+    font-weight: 700;
+}
+.details .detail-item p {
+    color: black;
+    font-size: 16px;
+}
+.details .detail-item .value {  
+    color: #374151;
+}

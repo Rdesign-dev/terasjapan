@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction</title>
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/transaction.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/topup.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/header.css'); ?>">
     <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>">
