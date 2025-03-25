@@ -20,34 +20,58 @@
             <h1>Amigos Mulia Indonesia</h1>
         </div>
         <div class="details">
-            <div class="detail-item">
-                <p>Date</p>
-                <span class="value"><?php echo date('d-m-Y', strtotime($transaction->created_at)); ?></span>
+            <div class="details-row">
+                <span>Date</span>
+                <span><?php echo date('d-m-Y', strtotime($transaction->created_at)); ?></span>
             </div>
-            <div class="detail-item">
-                <p>Outlet</p>
-                <span class="value"><?php echo $branch->branch_name; ?></span>
+
+            <div class="details-row">
+                <span>Outlet</span>
+                <span><?php echo $transaction->branch_name ?? 'Online Transaction'; ?></span>
             </div>
-            <div class="detail-item">
-                <p>Cashier Name</p>
-                <span class="value"><?php echo ucwords($cashier->name); ?></span> <!-- Tampilkan nama kasir dengan huruf kapital di setiap kata -->
+
+            <div class="details-row">
+                <span>Voucher code</span>
+                <?php if ($transaction->kode_voucher): ?>
+                    <div class="voucher-info">
+                        <span class="voucher-code"><?php echo $transaction->kode_voucher; ?></span>
+                        </span>
+                    </div>
+                <?php else: ?>
+                    <span>No voucher used</span>
+                <?php endif; ?>
             </div>
-            <div class="detail-item">
-                <p>Payment Method</p>
-                <span class="value"><?php echo $transaction->payment_method; ?></span>
+
+            <div class="details-row">
+                <span>Payment Method</span>
+                <div class="payment-methods">
+                    <?php if (!empty($transaction->payments)): ?>
+                        <?php foreach ($transaction->payments as $payment): ?>
+                            <div class="payment-item">
+                                <?php echo ucfirst($payment->payment_method); ?>: 
+                                Rp <?php echo number_format($payment->amount, 0, ',', '.'); ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span>No payment information available</span>
+                    <?php endif; ?>
+                </div>
             </div>
-            <div class="total-payment">
-                <span>Total Payments</span>
-                <span class="amount">Rp<?php echo number_format($transaction->amount, 0, ',', '.'); ?></span>
+
+            <div class="details-row">
+                <span>Total Amount</span>
+                <span>Rp <?php echo number_format($transaction->amount, 0, ',', '.'); ?></span>
             </div>
         </div>
         <div class="transaction-summary">
             <span id="toggleDetail">Payment Receipt</span>
             <div class="receipt-container" id="receiptContainer">
-                <img src="<?php echo base_url('assets/image/transaction_proof/' . $transaction->transaction_evidence); ?>" alt="Struk Pembayaran">
+                <img src="<?php echo base_url('../ImageTerasJapan/transaction_proof/Payment/' . $transaction->transaction_evidence); ?>" alt="Struk Pembayaran">
             </div>
         </div>
     </div>
+
+    
 
     <script>
         window.onload = function() {

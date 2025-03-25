@@ -23,8 +23,24 @@
         </div>
         <div class="status">
             <img src="<?php echo base_url('assets/image/icon/cek.png'); ?>" alt="Success" class="success-icon">
-            <h3 class="success-message">Balance Top-up is successful</h3>
-            <p class="description">The process of replenishing the balance via <strong><?php echo $transaction->payment_method; ?></strong> has been successfully carried out in the amount of <strong>IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?></strong> at <strong><?php echo $branch->branch_name; ?></strong>.</p>
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <span>Success</span>
+            </div>
+            <p class="transaction-text">
+                <?php echo $transaction->transaction_type; ?> is successful<br>
+                The process of replenishing the balance via
+                <?php if (!empty($transaction->payments)): ?>
+                    <?php 
+                    $payment_methods = array_map(function($payment) {
+                        return $payment->payment_method . ' (IDR ' . number_format($payment->amount, 0, ',', '.') . ')';
+                    }, $transaction->payments);
+                    echo implode(' and ', $payment_methods);
+                    ?>
+                <?php endif; ?>
+                has been successfully carried out in the amount of IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?> at
+                <?php echo $transaction->branch_name ?? 'Online Transaction'; ?>
+            </p>
         </div>
         <button class="detail-btn">Click here for transaction proof details.</button>
     </div>

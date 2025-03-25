@@ -7,6 +7,9 @@ class History extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('M_history'); // Load model
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
     }
 
     public function index() {
@@ -17,17 +20,25 @@ class History extends CI_Controller {
     }
 
     public function transaction($transaction_id) {
-        $transaction = $this->M_history->get_transaction_by_id($transaction_id);
-        if ($transaction) {
-            $data['transaction'] = $transaction;
-            $branch = $this->M_history->get_branch_by_id($transaction->branch_id);
-            $data['branch'] = $branch;
-            $cashier = $this->M_history->get_cashier_by_id($transaction->account_cashier_id);
-            $data['cashier'] = $cashier;
-            $this->load->view('history/balance', $data);
-        } else {
+        $data['transaction'] = $this->M_history->get_transaction_by_id($transaction_id);
+        
+        if (!$data['transaction'] || $data['transaction']->transaction_type !== 'Balance Top-up') {
             show_404();
+            return;
         }
+
+        $this->load->view('history/transaction', $data);
+    }
+
+    public function balance($transaction_id) {
+        $data['transaction'] = $this->M_history->get_transaction_by_id($transaction_id);
+        
+        if (!$data['transaction'] || $data['transaction']->transaction_type !== 'Teras Japan Payment') {
+            show_404();
+            return;
+        }
+
+        $this->load->view('history/balance', $data);
     }
 }
 

@@ -18,6 +18,7 @@ This project is an improvisation of the TerasJapan membership system, developed 
 - JavaScript
 - HTML/CSS
 - Bootstrap
+- TailwindCSS
 
 ## Project Structure
 ```

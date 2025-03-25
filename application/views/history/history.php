@@ -50,11 +50,11 @@
             <?php if (!empty($transactions)): ?>
                 <?php foreach ($transactions as $transaction): ?>
                     <div class="benefit-item" 
-                         <?php if ($transaction->transaction_type == 'Balance Top-up'): ?>
-                             onclick="window.location.href='<?php echo site_url('history/transaction/' . $transaction->transaction_id); ?>'"
-                         <?php elseif ($transaction->transaction_type == 'Teras Japan Payment'): ?>
-                             onclick="window.location.href='<?php echo site_url('history/transaction/' . $transaction->transaction_id); ?>'"
-                         <?php endif; ?>>
+                        <?php if ($transaction->transaction_type == 'Balance Top-up'): ?>
+                            onclick="window.location.href='<?php echo site_url('history/transaction/' . $transaction->transaction_id); ?>'"
+                        <?php elseif ($transaction->transaction_type == 'Teras Japan Payment'): ?>
+                            onclick="window.location.href='<?php echo site_url('history/balance/' . $transaction->transaction_id); ?>'"
+                        <?php endif; ?>>
                         <h3><?php echo $transaction->transaction_type; ?></h3>
                         <p><?php echo $transaction->transaction_type; ?> transaction of <strong>IDR <?php echo number_format($transaction->amount, 0, ',', '.'); ?></strong> has been successfully completed.</p>
                     </div>
