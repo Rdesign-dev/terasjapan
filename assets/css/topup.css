@@ -181,3 +181,98 @@ body {
 .details .detail-item .value {  
     color: #374151;
 }
+
+/* General container styling */
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: 60px auto 70px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Top-up info styling */
+.top-up-info h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.datetime p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Status section styling */
+.status {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.success-message {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* Transaction text styling */
+.transaction-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Button styling */
+.detail-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #ff9900;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail-btn:hover {
+    background-color: #e68a00;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    .top-up-info h2 {
+        font-size: 18px;
+    }
+
+    .transaction-text {
+        font-size: 13px;
+    }
+
+    .detail-btn {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+}

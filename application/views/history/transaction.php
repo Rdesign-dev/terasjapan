@@ -24,7 +24,6 @@
         <div class="status">
             <img src="<?php echo base_url('assets/image/icon/cek.png'); ?>" alt="Success" class="success-icon">
             <div class="success-message">
-                <i class="fas fa-check-circle"></i>
                 <span>Success</span>
             </div>
             <p class="transaction-text">
@@ -33,7 +32,7 @@
                 <?php if (!empty($transaction->payments)): ?>
                     <?php 
                     $payment_methods = array_map(function($payment) {
-                        return $payment->payment_method . ' (IDR ' . number_format($payment->amount, 0, ',', '.') . ')';
+                        return ucfirst($payment->payment_method) . ' (IDR ' . number_format($payment->amount, 0, ',', '.') . ')';
                     }, $transaction->payments);
                     echo implode(' and ', $payment_methods);
                     ?>
@@ -42,7 +41,7 @@
                 <?php echo $transaction->branch_name ?? 'Online Transaction'; ?>
             </p>
         </div>
-        <button class="detail-btn">Click here for transaction proof details.</button>
+        <button class="detail-btn">Transaction Detail</button>
     </div>
 
     <script>
