@@ -16,6 +16,7 @@ class Home extends CI_Controller {
         $this->load->model('M_mission');
         $this->load->model('M_alamat'); // Pastikan Anda memuat model M_alamat
         $this->load->model('M_banner');
+        $this->load->model('Popup_model');
     }
 
     public function index() {
@@ -40,10 +41,8 @@ class Home extends CI_Controller {
         $data['user_missions'] = $this->M_mission->get_user_missions($user_id);
         $data['banners'] = $this->M_banner->get_active_banners();
 
-        // Get active popup
-        $this->load->model('Popup_model');
+        // Get random active popup
         $data['popup'] = $this->Popup_model->get_active_popup();
-
         $this->load->view('home/index', $data);
     }
 

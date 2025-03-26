@@ -10,21 +10,20 @@
 </head>
 
 <body>
-    <!-- Advertisement Pop-up -->
-        <!-- Advertisement Pop-up -->
-        <div id="adPopup" class="ad-popup">
-            <div class="ad-popup-content">
-                <span class="ad-close">&times;</span>
-                <?php if (!empty($popup)): ?>
-                    <img src="<?php echo base_url('../ImageTerasJapan/PopupPromotion/' . $popup->Image); ?>" 
-                        alt="<?php echo $popup->name; ?>"
-                        <?php if (!empty($popup->link)): ?>
-                        onclick="window.location.href='<?php echo $popup->link ?>'"
-                        style="cursor: pointer;"
-                        <?php endif; ?>>
-                <?php endif; ?>
-            </div>
+<!-- Advertisement Pop-up -->
+    <div id="adPopup" class="ad-popup">
+        <div class="ad-popup-content">
+            <span class="ad-close">&times;</span>
+            <?php if (!empty($popup)): ?>
+                <img src="<?php echo base_url('../ImageTerasJapan/contentpopup/' . $popup->Image); ?>" 
+                    alt="<?php echo $popup->name; ?>"
+                    <?php if (!empty($popup->link)): ?>
+                    onclick="window.location.href='<?php echo $popup->link ?>'"
+                    style="cursor: pointer;"
+                    <?php endif; ?>>
+            <?php endif; ?>
         </div>
+    </div>
     <!-- Banner -->
     <div class="banner">
         <?php if (!empty($banners)): ?>
