@@ -27,16 +27,29 @@ class User_model extends CI_Model {
         $this->db->delete('referral_redeem');
     }
 
-    public function delete_user_related_data($user_id) {
-        // Hapus data terkait di tabel redeem_voucher
-        $this->db->where('user_id', $user_id);
-        $this->db->delete('redeem_voucher');
-    }
+    // public function delete_user_related_data($user_id) {
+    //     // Hapus data terkait di tabel redeem_voucher
+    //     $this->db->where('user_id', $user_id);
+    //     $this->db->delete('redeem_voucher');
+    // }
 
     public function delete_user($user_id) {
-        // Update status deleted menjadi 1 (soft delete)
+        // Update status deleted menjadi 1 dan reset beberapa field
+        $data = [
+            'deleted' => 1,
+            'time_deleted' => date('Y-m-d'), // Tambahkan timestamp delete
+            'poin' => 0,
+            'balance' => 0,
+            'birthdate' => NULL,
+            'gender' => NULL,
+            'address' => NULL,
+            'city' => NULL,
+            'email' => NULL,
+            'new_mail' => NULL     // Reset juga new_mail untuk keamanan
+        ];
+        
         $this->db->where('id', $user_id);
-        return $this->db->update('users', ['deleted' => 1]);
+        return $this->db->update('users', $data);
     }
     
     public function get_old_picture($user_id) {
