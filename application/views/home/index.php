@@ -113,7 +113,7 @@
         <div class="promo-items">
             <?php 
             $activePromos = array_filter($promos ?? [], function($promo) {
-                return isset($promo->status) && $promo->status === 'Active';
+                return $promo->status === 'Available';
             });
             
             if (!empty($activePromos)): 
@@ -121,12 +121,12 @@
                 <?php foreach ($activePromos as $promo): ?>
                     <div class="promo-item"
                          data-id="<?= $promo->id ?>"
-                         data-title="<?= htmlspecialchars($promo->title) ?>"
-                         data-description="<?= htmlspecialchars($promo->description) ?>"
-                         data-image="<?= promo_url($promo->image_name) ?>">
-                        <img src="<?php echo promo_url($promo->image_name); ?>"
-                             alt="<?php echo $promo->title; ?>">
-                        <p><?php echo $promo->title; ?></p>
+                         data-title="<?= htmlspecialchars($promo->promo_name) ?>"
+                         data-description="<?= htmlspecialchars($promo->promo_desc) ?>"
+                         data-image="<?= base_url('../ImageTerasJapan/promo/' . $promo->promo_image) ?>">
+                        <img src="<?php echo base_url('../ImageTerasJapan/promo/' . $promo->promo_image); ?>"
+                             alt="<?php echo htmlspecialchars($promo->promo_name); ?>">
+                        <p><?php echo htmlspecialchars($promo->promo_name); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -136,6 +136,7 @@
             <?php endif; ?>
         </div>
     </div>
+
     <!-- Update the promo modal HTML -->
     <div id="promoModal" class="promo-modal" style="display: none;">
         <div class="promo-modal-content">
@@ -145,6 +146,7 @@
                 <div class="promo-modal-info">
                     <h3 id="promoModalTitle" class="promo-modal-title"></h3>
                     <p id="promoModalDescription" class="promo-modal-description"></p>
+                    <p id="promoModalValidity" class="promo-modal-validity"></p>
                 </div>
             </div>
         </div>
@@ -665,21 +667,20 @@
         const promoModalImage = document.getElementById('promoModalImage');
         const promoModalTitle = document.getElementById('promoModalTitle');
         const promoModalDescription = document.getElementById('promoModalDescription');
+        const promoModalValidity = document.getElementById('promoModalValidity');
 
-        // Update selector to only target promo items within promo-items container
         document.querySelector('.promo-items').querySelectorAll('.promo-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                // Prevent click if target is a brand link
-                if (!e.target.closest('.brand-item-link')) {
-                    const title = this.getAttribute('data-title');
-                    const description = this.getAttribute('data-description');
-                    const imageUrl = this.getAttribute('data-image');
-
-                    promoModalImage.src = imageUrl;
-                    promoModalTitle.textContent = title;
-                    promoModalDescription.textContent = description;
-                    promoModal.style.display = 'flex';
-                }
+            item.addEventListener('click', function() {
+                const title = this.getAttribute('data-title');
+                const description = this.getAttribute('data-description');
+                const imageUrl = this.getAttribute('data-image');
+                const validUntil = new Date(this.getAttribute('data-valid-until'));
+                
+                promoModalImage.src = imageUrl;
+                promoModalTitle.textContent = title;
+                promoModalDescription.textContent = description;
+                promoModalValidity.textContent = `Valid until: ${validUntil.toLocaleDateString()}`;
+                promoModal.style.display = 'flex';
             });
         });
     });

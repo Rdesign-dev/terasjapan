@@ -9,7 +9,7 @@ class Home extends CI_Controller {
         $this->load->helper('asset');
         $this->load->model('User_model');
         $this->load->model('Reward_model');
-        $this->load->model('m_promo');
+        $this->load->model('M_promo');
         $this->load->model('m_reward');
         $this->load->model('m_news');
         $this->load->model('M_brands');
@@ -33,7 +33,9 @@ class Home extends CI_Controller {
             $data['balance'] = 0;
         }
 
-        $data['promos'] = $this->m_promo->get_all_promos();
+        // Get promos
+        $data['promos'] = $this->M_promo->get_all_promos();
+
         $data['rewards'] = $this->m_reward->get_all_rewards();
         $data['news'] = $this->m_news->get_all_news();
         $data['brands'] = $this->M_brands->get_all_brands();
