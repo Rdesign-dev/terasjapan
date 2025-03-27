@@ -45,7 +45,8 @@ class User_model extends CI_Model {
             'address' => NULL,
             'city' => NULL,
             'email' => NULL,
-            'new_mail' => NULL     // Reset juga new_mail untuk keamanan
+            'new_mail' => NULL,    // Reset juga new_mail untuk keamanan
+            'profile_pic' => 'profile.jpg' // Reset profile picture ke default
         ];
         
         $this->db->where('id', $user_id);
