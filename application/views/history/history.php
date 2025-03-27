@@ -27,8 +27,9 @@
         <?php if (!empty($vouchers)): ?>
             <?php foreach ($vouchers as $voucher): ?>
                 <div class="benefit-item" onclick="window.location.href='<?php echo site_url('profile/redeem?voucher_id=' . $voucher->kode_voucher); ?>'">
-                    <h3><?php echo $voucher->reward_title; ?></h3>
-                    <p>Point redemption is done at <strong><?php echo date('d-m-Y', strtotime($voucher->redeem_date)); ?></strong> and uses <strong><?php echo $voucher->points_used; ?></strong> points.</p>
+                    <h3><?php echo htmlspecialchars($voucher->reward_title); ?></h3>
+                    <p>Point redemption is done at <strong><?php echo date('d-m-Y', strtotime($voucher->redeem_date)); ?></strong> 
+                       and uses <strong><?php echo number_format($voucher->points_used); ?></strong> points.</p>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>

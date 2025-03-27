@@ -20,23 +20,7 @@ class Reward_model extends CI_Model {
         return $query->row();
     }
 
-    public function get_vouchers_by_user_id($user_id) {
-        $this->db->select('rewards.title, rewards.image_name, rewards.points_required, rewards.category, 
-                           redeem_voucher.redeem_date, redeem_voucher.status, redeem_voucher.kode_voucher, 
-                           redeem_voucher.expires_at, redeem_voucher.qr_code_url,
-                           brands.id as brand_id, brands.name as brand_name, brands.desc as brand_desc,
-                           brands.image as brand_image, brands.banner as brand_banner,
-                           brands.instagram, brands.tiktok, brands.wa, brands.web');
-        $this->db->from('redeem_voucher');
-        $this->db->join('rewards', 'rewards.id = redeem_voucher.reward_id');
-        $this->db->join('brands', 'brands.id = redeem_voucher.brand_id', 'left');
-        $this->db->where('redeem_voucher.user_id', $user_id);
-        $query = $this->db->get();
-        
-        log_message('debug', 'Voucher query: ' . $this->db->last_query());
-        
-        return $query->result();
-    }
+
 
     public function redeem_reward($user_id, $reward_id) {
         $this->db->trans_start();
@@ -155,4 +139,29 @@ class Reward_model extends CI_Model {
         // $this->db->where('status !=', 'expired');
         $this->db->update('redeem_voucher', ['status' => 'Expired']);
     }
+
+    public function get_vouchers_by_user_id($user_id, $time_deleted = null) {
+        $this->db->select('
+            rewards.title AS reward_title, 
+            rewards.image_name, 
+            rewards.points_required,
+            redeem_voucher.redeem_date,
+            redeem_voucher.points_used,
+            redeem_voucher.status,
+            redeem_voucher.kode_voucher,
+            redeem_voucher.expires_at,
+            redeem_voucher.qr_code_url
+        ');
+        $this->db->from('redeem_voucher');
+        $this->db->join('rewards', 'rewards.id = redeem_voucher.reward_id', 'left');
+        $this->db->where('redeem_voucher.user_id', $user_id);
+
+        if ($time_deleted) {
+            $this->db->where('redeem_voucher.redeem_date >', $time_deleted);
+        }
+
+        return $this->db->get()->result();
+    }
+
+
 }

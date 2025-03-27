@@ -14,8 +14,26 @@ class History extends CI_Controller {
 
     public function index() {
         $user_id = $this->session->userdata('user_id'); // Get user ID from session
-        $data['vouchers'] = $this->M_history->get_vouchers_by_user($user_id); // Get vouchers
-        $data['transactions'] = $this->M_history->get_transactions_by_user($user_id); // Get transactions
+
+        // Get the time_deleted value for the user
+        $user_time_deleted = $this->M_history->get_user_time_deleted($user_id);
+        $time_deleted = $user_time_deleted ? $user_time_deleted->time_deleted : null;
+
+        // Load models
+        $this->load->model('Reward_model');
+        
+        // Get data with debug logging
+        $vouchers = $this->Reward_model->get_vouchers_by_user_id($user_id, $time_deleted);
+        $transactions = $this->M_history->get_transactions_by_user($user_id, $time_deleted);
+        
+        // Debug logging
+        log_message('debug', 'Vouchers data: ' . print_r($vouchers, true));
+        
+        $data = [
+            'vouchers' => $vouchers,
+            'transactions' => $transactions
+        ];
+
         $this->load->view('history/history', $data); // Pass data to view
     }
 

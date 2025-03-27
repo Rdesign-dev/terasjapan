@@ -36,9 +36,10 @@ class Setting extends CI_Controller {
     public function updateProfile() {
         $user_id = $this->session->userdata('user_id');
         if (!$user_id) {
-            redirect('auth/login'); // Redirect ke halaman login jika user tidak login
+            redirect('auth/login');
         }
 
+        // Basic profile data
         $data = [
             'name' => $this->input->post('name'),
             'birthdate' => $this->input->post('birthdate'),
@@ -47,9 +48,16 @@ class Setting extends CI_Controller {
             'city' => $this->input->post('city')
         ];
 
-        // Handle file upload
-        if ($_FILES['profile_picture']['name']) {
-            $config['upload_path'] = './assets/image/Profpic/';
+        // Handle profile picture upload
+        if (!empty($_FILES['profile_picture']['name'])) {
+            $upload_path = '../ImageTerasJapan/ProfPic/';
+            
+            // Create directory if it doesn't exist
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
+            }
+
+            $config['upload_path'] = $upload_path;
             $config['allowed_types'] = 'jpg|jpeg|png';
             $config['max_size'] = 5000; // 5MB
             
@@ -65,11 +73,13 @@ class Setting extends CI_Controller {
                 
                 // Delete old picture if exists
                 $old_picture = $this->User_model->get_old_picture($user_id);
-                if ($old_picture && $old_picture != 'profile.jpg' && file_exists('./assets/image/Profpic/' . $old_picture)) {
-                    unlink('./assets/image/Profpic/' . $old_picture);
+                if ($old_picture && $old_picture != 'profile.jpg') {
+                    $old_file = $upload_path . $old_picture;
+                    if (file_exists($old_file)) {
+                        unlink($old_file);
+                    }
                 }
                 
-                // Update profile picture in database
                 $data['profile_pic'] = $upload_data['file_name'];
             } else {
                 $this->session->set_flashdata('error', $this->upload->display_errors());
@@ -78,13 +88,13 @@ class Setting extends CI_Controller {
             }
         }
 
-        if($this->User_model->update_user($user_id, $data)) {
+        if ($this->User_model->update_user($user_id, $data)) {
             $this->session->set_flashdata('successEdit', 'Profile updated successfully');
         } else {
             $this->session->set_flashdata('error', 'Failed to update profile');
         }
         
-        redirect('profile'); // Redirects to profile page
+        redirect('profile');
     }
 
     // Metode untuk mengubah email (opsional)
@@ -130,8 +140,11 @@ class Setting extends CI_Controller {
         $old_picture = $this->User_model->get_old_picture($user_id);
         
         // Delete physical file if exists and not default
-        if ($old_picture && $old_picture != 'profile.jpg' && file_exists('./assets/image/Profpic/' . $old_picture)) {
-            unlink('./assets/image/Profpic/' . $old_picture);
+        if ($old_picture && $old_picture != 'profile.jpg') {
+            $file_path = '../ImageTerasJapan/ProfPic/' . $old_picture;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
         }
         
         // Reset to default in database

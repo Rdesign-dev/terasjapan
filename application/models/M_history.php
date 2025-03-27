@@ -18,11 +18,17 @@ class M_history extends CI_Model {
         return $query->result();
     }
 
-    public function get_transactions_by_user($user_id) {
+    public function get_transactions_by_user($user_id, $time_deleted = null) {
         $this->db->select('transactions.*, branch.branch_name');
         $this->db->from('transactions');
         $this->db->join('branch', 'branch.id = transactions.branch_id', 'left');
         $this->db->where('transactions.user_id', $user_id);
+
+        // If time_deleted is not null, filter transactions after the time_deleted
+        if ($time_deleted) {
+            $this->db->where('transactions.created_at >', $time_deleted);
+        }
+
         $this->db->order_by('transactions.created_at', 'DESC');
         return $this->db->get()->result();
     }
@@ -66,6 +72,14 @@ class M_history extends CI_Model {
         $this->db->select('name');
         $this->db->from('accounts');
         $this->db->where('id', $cashier_id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function get_user_time_deleted($user_id) {
+        $this->db->select('time_deleted');
+        $this->db->from('users');
+        $this->db->where('id', $user_id);
         $query = $this->db->get();
         return $query->row();
     }

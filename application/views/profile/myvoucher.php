@@ -6,7 +6,6 @@
     <title>My Voucher</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/myvoucher.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>">
 </head>
 <body>
 
@@ -25,11 +24,11 @@
                     <?php endif; ?>
 
                         <img src="<?php echo base_url("assets/image/reward/{$voucher->image_name}"); ?>" 
-                            alt="<?php echo $voucher->title; ?>" class="voucher-image">
+                            alt="<?php echo $voucher->reward_title; ?>" class="voucher-image">
                         
                         <div class="voucher-info">
                             <div class="voucher-details">
-                                <h3><?php echo $voucher->title; ?></h3>
+                                <h3><?php echo $voucher->reward_title; ?></h3>
                                 <p class="voucher-status <?php echo strtolower($voucher->status); ?>">
                                     <?php echo $voucher->status; ?>
                                 </p>
@@ -66,35 +65,13 @@
             <?php endforeach; ?>
         <?php else: ?>
             <div class="no-voucher">
-            <div class="no-voucher-content" style="text-align: center; padding: 20px;">
-                <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History" style="max-width: 200px; margin-bottom: 20px;">
-                <p><strong>You don't have any vouchers yet, huhu 😢. Keep making transactions to earn awesome vouchers! 🚀    </strong></p>
-            </div>
+                <div class="no-voucher-content" style="text-align: center; padding: 20px;">
+                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History" style="max-width: 200px; margin-bottom: 20px;">
+                    <p><strong>You don't have any vouchers yet, huhu 😢. Keep making transactions to earn awesome vouchers! 🚀</strong></p>
+                </div>
             </div>
         <?php endif; ?>
     </div>
-
-
-
-    <script>
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll('.tab');
-
-            const containers = document.querySelectorAll('.benefit-container');
-            containers.forEach(container => (container.style.display = 'none'));
-
-            document.getElementById(tabId).style.display = 'flex';
-            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
-        }
-
-        // Add script to keep profile active in footer
-        window.onload = function() {
-            const profileLink = document.querySelector('.footer a[href="Profile.php"]');
-            if (profileLink) {
-                profileLink.classList.add('active');
-            }
-        }
-    </script>
 </body>
 <?php include 'application/views/layout/Footer.php'; ?>
 </html>

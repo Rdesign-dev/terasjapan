@@ -22,7 +22,9 @@
         
         <form action="<?php echo base_url('profile/setting/update-profile'); ?>" method="POST" enctype="multipart/form-data">
             <div class="profile-image-container">
-                <img src="<?php echo base_url('assets/image/Profpic/' . ($user->profile_pic ? $user->profile_pic : 'profile.jpg')); ?>" alt="Profile Picture" class="profile-image">
+                <img src="<?php echo base_url('../ImageTerasJapan/ProfPic/' . ($user->profile_pic ? $user->profile_pic : 'profile.jpg')); ?>"
+                     alt="Profile Picture" 
+                     class="profile-image">
                 <input type="file" name="profile_picture" accept="image/jpeg,image/jpg,image/png" class="choose-file-btn">
                 <?php if ($user->profile_pic && $user->profile_pic != 'profile.jpg'): ?>
                     <a href="<?php echo base_url('profile/setting/delete-profile-picture'); ?>" 

@@ -22,7 +22,7 @@
         <div class="flex justify-between items-center p-4">
             <?php if ($user): ?>
                 <div class="flex gap-4 items-center">
-                    <img src="<?php echo base_url('assets/image/Profpic/' . ($user->profile_pic ? $user->profile_pic : 'profile.jpg')); ?>" 
+                    <img src="<?php echo base_url('../ImageTerasJapan/ProfPic/' . ($user->profile_pic ? $user->profile_pic : 'profile.jpg')); ?>" 
                          alt="Profile Picture" 
                          class="w-[60px] h-[60px] rounded-full object-cover">
                     <div class="flex flex-col gap-1">
@@ -35,7 +35,7 @@
                 <img src="<?php echo base_url('assets/image/icon/setting.png'); ?>" alt="Settings" class="settings-icon" onclick="window.location.href='<?php echo base_url('setting') ?>'">
             <?php else: ?>
                 <div class="flex gap-4 items-center">
-                    <img src="<?php echo base_url('assets/image/Profpic/profile.jpg'); ?>" 
+                    <img src="<?php echo base_url('../ImageTerasJapan/ProfPic/profile.jpg'); ?>" 
                          alt="Guest Profile" 
                          class="w-[60px] h-[60px] rounded-full object-cover">
                     <div class="flex flex-col gap-1">

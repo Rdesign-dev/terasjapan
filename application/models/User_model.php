@@ -34,24 +34,50 @@ class User_model extends CI_Model {
     // }
 
     public function delete_user($user_id) {
-        // Update status deleted menjadi 1 dan reset beberapa field
-        $data = [
-            'deleted' => 1,
-            'time_deleted' => date('Y-m-d'), // Tambahkan timestamp delete
-            'poin' => 0,
-            'balance' => 0,
-            'birthdate' => NULL,
-            'gender' => NULL,
-            'address' => NULL,
-            'city' => NULL,
-            'email' => NULL,
-            'new_mail' => NULL     // Reset juga new_mail untuk keamanan
-        ];
-        
-        $this->db->where('id', $user_id);
-        return $this->db->update('users', $data);
+        // Start transaction
+        $this->db->trans_start();
+
+        try {
+            // 1. Update status deleted menjadi 1 dan reset beberapa field
+            $data = [
+                'deleted' => 1,
+                'time_deleted' => date('Y-m-d H:i:s'),
+                'poin' => 0,
+                'balance' => 0,
+                'birthdate' => NULL,
+                'gender' => NULL,
+                'address' => NULL,
+                'city' => NULL,
+                'email' => NULL,
+                'new_mail' => NULL,
+                'profile_pic' => 'profile.jpg' // Reset profile picture to default
+            ];
+            
+            $this->db->where('id', $user_id);
+            $this->db->update('users', $data);
+
+            // 2. Update all available vouchers to expired
+            $this->db->where('user_id', $user_id);
+            $this->db->where('status', 'Available');
+            $this->db->update('redeem_voucher', [
+                'status' => 'Expired',
+                'expires_at' => date('Y-m-d H:i:s') // Set expiry to current time
+            ]);
+
+            // Commit transaction
+            $this->db->trans_complete();
+
+            // Return transaction status
+            return $this->db->trans_status();
+
+        } catch (Exception $e) {
+            // Rollback transaction on error
+            $this->db->trans_rollback();
+            log_message('error', 'Error deleting user: ' . $e->getMessage());
+            return false;
+        }
     }
-    
+
     public function get_old_picture($user_id) {
         $this->db->select('profile_pic');
         return $this->db->get_where('users', ['id' => $user_id])->row()->profile_pic;

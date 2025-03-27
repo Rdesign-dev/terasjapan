@@ -182,26 +182,32 @@ class Profile extends CI_Controller {
         // Check if user is logged in
         $this->auth_middleware->check_login();
 
-        // Ambil data pengguna dari session
+        // Get user ID from session
         $user_id = $this->session->userdata('user_id');
 
-        // Perbarui status voucher yang sudah expired
-        $data = $this->Reward_model->update_expired_vouchers();
-        
-        // Ambil data voucher dari database jika user_id ada
+        // Get the time_deleted value for the user
+        $this->load->model('M_history');
+        $user_time_deleted = $this->M_history->get_user_time_deleted($user_id);
+        $time_deleted = $user_time_deleted ? $user_time_deleted->time_deleted : null;
+
+        // Update expired vouchers
+        $this->Reward_model->update_expired_vouchers();
+
+        // Fetch vouchers for the user
         $vouchers = null;
         if ($user_id) {
-            $vouchers = $this->Reward_model->get_vouchers_by_user_id($user_id);
+            $vouchers = $this->Reward_model->get_vouchers_by_user_id($user_id, $time_deleted);
         }
- 
+
         // Debugging
         log_message('debug', 'User ID: ' . $user_id);
+        log_message('debug', 'Time deleted: ' . ($time_deleted ?? 'null'));
         log_message('debug', 'Vouchers: ' . print_r($vouchers, true));
- 
-        // Kirim data voucher ke view
-        $data = array(
+
+        // Pass data to the view
+        $data = [
             'vouchers' => $vouchers
-        );
+        ];
 
         $this->load->view('profile/myvoucher', $data);
     }
