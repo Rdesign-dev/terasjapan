@@ -161,8 +161,9 @@
                     <div class="brand-item"> <!-- Changed from promo-item to brand-item -->
                         <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>" 
                            class="brand-item-link" style="text-decoration: none;">
-                            <img src="<?php echo brand_url($brand->image); ?>" 
-                                 alt="<?php echo $brand->name; ?>">
+                            <img src="<?php echo base_url('../ImageTerasJapan/logo/' . $brand->image); ?>"
+                                 alt="<?php echo $brand->name; ?>"
+                                 class="brand-logo">
                             <p><?php echo $brand->name; ?></p>
                         </a>
                     </div>
@@ -186,7 +187,7 @@
                     <?php foreach($brands as $brand): ?>
                         <div>
                             <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>">
-                                <img src="<?php echo base_url('assets/image/logo/' . $brand->image); ?>" 
+                                <img src="<?php echo base_url('../ImageTerasJapan/logo/' . $brand->image); ?>" 
                                      alt="<?php echo $brand->name; ?>">
                                 <p><?php echo $brand->name; ?></p>
                             </a>
@@ -518,7 +519,7 @@
                     if (response.status === 'success') {
                         const data = response.data; // Get the data from response
                         
-                        modalImage.src = "<?= base_url('assets/image/reward/'); ?>" + data.image_name;
+                        modalImage.src = "<?= base_url('../ImageTerasJapan/reward/'); ?>" + data.image_name;
                         modalTitle.innerText = data.title;
                         modalPoints.innerText = "Poin: " + data.points_required;
                         modalDescription.innerText = data.description;
