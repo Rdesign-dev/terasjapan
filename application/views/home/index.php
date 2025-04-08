@@ -146,7 +146,6 @@
                 <div class="promo-modal-info">
                     <h3 id="promoModalTitle" class="promo-modal-title"></h3>
                     <p id="promoModalDescription" class="promo-modal-description"></p>
-                    <p id="promoModalValidity" class="promo-modal-validity"></p>
                 </div>
             </div>
         </div>
@@ -670,19 +669,16 @@
         const promoModalImage = document.getElementById('promoModalImage');
         const promoModalTitle = document.getElementById('promoModalTitle');
         const promoModalDescription = document.getElementById('promoModalDescription');
-        const promoModalValidity = document.getElementById('promoModalValidity');
 
         document.querySelector('.promo-items').querySelectorAll('.promo-item').forEach(item => {
             item.addEventListener('click', function() {
                 const title = this.getAttribute('data-title');
                 const description = this.getAttribute('data-description');
                 const imageUrl = this.getAttribute('data-image');
-                const validUntil = new Date(this.getAttribute('data-valid-until'));
                 
                 promoModalImage.src = imageUrl;
                 promoModalTitle.textContent = title;
                 promoModalDescription.textContent = description;
-                promoModalValidity.textContent = `Valid until: ${validUntil.toLocaleDateString()}`;
                 promoModal.style.display = 'flex';
             });
         });
