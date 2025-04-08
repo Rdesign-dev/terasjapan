@@ -163,5 +163,15 @@ class Reward_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-
+    public function get_rewards_by_brand($brand_id) 
+    {
+        $this->db->select('*');
+        $this->db->from('rewards');
+        $this->db->where('brand_id', $brand_id);
+        $this->db->where('qty >', 0);
+        $this->db->where('valid_until >', date('Y-m-d H:i:s'));
+        $this->db->order_by('points_required', 'ASC');
+        return $this->db->get()->result();
+    }
+    
 }

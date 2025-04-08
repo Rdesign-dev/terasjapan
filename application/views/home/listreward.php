@@ -24,18 +24,33 @@
 
         <!-- Rewards by Brand -->
         <div class="reward-section">
-            <?php foreach ($all_brands as $brand): ?>
-                <div class="brand-reward-block">
-                    <h3 class="brand-reward-title"><?php echo $brand->name; ?></h3>
-                    <div class="reward-items">
-                        <?php foreach ($brand->rewards as $reward): ?>
-                            <div class="reward-item">
-                                <img src="http://localhost/ImageTerasJapan/reward/<?php echo $reward->image; ?>" alt="<?php echo $reward->name; ?>" />
-                            </div>
-                        <?php endforeach; ?>
+            <?php if (!empty($all_brands)): ?>
+                <?php foreach ($all_brands as $brand): ?>
+                    <div class="brand-reward-block">
+                        <h3 class="brand-reward-title"><?php echo $brand->name; ?></h3>
+                        <div class="reward-items">
+                            <?php if (!empty($brand->rewards)): ?>
+                                <?php foreach ($brand->rewards as $reward): ?>
+                                    <div class="reward-item">
+                                        <img src="<?php echo base_url('../ImageTerasJapan/reward/' . $reward->image_name); ?>" 
+                                             alt="<?php echo $reward->title; ?>" />
+                                        <div class="reward-info">
+                                            <h4><?php echo $reward->title; ?></h4>
+                                            <p class="points"><?php echo number_format($reward->points_required); ?> Points</p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="no-rewards">No rewards available for this brand.</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-brands">
+                    <p>No brands available.</p>
                 </div>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
 
         <!-- Footer -->

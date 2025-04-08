@@ -207,7 +207,7 @@
     <div class="reward-section">
         <div class="reward-header">
             <h2>Rewards</h2>
-            <a href="<?php echo base_url('listreward'); ?>" class="see-all-btn">See All</a>
+            <a href="<?php echo base_url('home/listreward'); ?>" class="see-all-btn">See All</a>
         </div>
         <div class="reward-items">
             <?php 

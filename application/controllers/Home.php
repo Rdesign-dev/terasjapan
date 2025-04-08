@@ -62,16 +62,22 @@ class Home extends CI_Controller {
         $addresses = $this->M_alamat->get_addresses_by_brand($brand_id);
         echo json_encode($addresses);
     }
-}
 
-class Reward extends CI_Controller {
-
-    public function __construct() {
-        parent::__construct();
+    public function listreward()
+    {
+        // Load required models 
+        $this->load->model('M_brands');
         $this->load->model('Reward_model');
-    }
 
-    public function redeem() {
-        // Implementasi redeem reward
+        // Get all brands
+        $data['all_brands'] = $this->M_brands->get_all_brands(); // Changed variable name to match view
+
+        // For each brand, get their available rewards
+        foreach ($data['all_brands'] as $brand) {
+            $brand->rewards = $this->Reward_model->get_rewards_by_brand($brand->id);
+        }
+
+        // Load view
+        $this->load->view('home/listreward', $data);
     }
 }
