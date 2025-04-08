@@ -206,7 +206,10 @@
 
     <!-- Reward Section -->
     <div class="reward-section">
-        <h2>Rewards</h2>
+        <div class="reward-header">
+            <h2>Rewards</h2>
+            <a href="<?php echo base_url('listreward'); ?>" class="see-all-btn">See All</a>
+        </div>
         <div class="reward-items">
             <?php 
             $available_rewards = array_filter($rewards ?? [], function($reward) {

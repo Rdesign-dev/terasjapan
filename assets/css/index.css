@@ -435,6 +435,34 @@ body {
 	cursor: pointer;
 }
 
+.reward-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	padding: 0 10px;
+}
+
+.reward-header h2 {
+	font-size: 16px;
+	color: #333;
+	margin: 0;
+}
+
+.see-all-btn {
+	background: #ff9900;
+	color: white;
+	padding: 5px 15px;
+	border-radius: 15px;
+	font-size: 12px;
+	text-decoration: none;
+	transition: background-color 0.3s ease;
+}
+
+.see-all-btn:hover {
+	background: #e68a00;
+}
+
 .reward-section h2 {
 	font-size: 16px;
 	margin-bottom: 10px;
