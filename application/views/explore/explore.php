@@ -132,6 +132,44 @@
             </div>
         </div>
 
+        <!-- Available reward Section -->
+        <div class="promo-section">
+            <h2>Available Reward</h2>
+            <div class="promo-items">
+                <?php if (!empty($available_promos)): ?>
+                <?php foreach ($available_promos as $promo): ?>
+                <div class="promo-item">
+                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
+                        alt="<?php echo $promo->promo_name; ?>">
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="no-promo">
+                        <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Coming Soon Promo Section -->
+        <div class="coming-section">
+            <h2>Coming Soon Reward</h2>
+            <div class="coming-items">
+                <?php if (!empty($coming_promos)): ?>
+                <?php foreach ($coming_promos as $promo): ?>
+                <div class="coming-item">
+                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
+                        alt="<?php echo $promo->promo_name; ?>">
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="no-promo">
+                        <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
         <!-- Sidebar -->
         <div class="sidebar hidden">
             <div class="sidebar-content">
