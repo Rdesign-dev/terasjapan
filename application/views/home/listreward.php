@@ -52,10 +52,7 @@
                 </div>
             <?php endif; ?>
         </div>
-
-        <!-- Footer -->
-        <?php include 'application/views/layout/Footer.php'; ?>
     </div>
 </body>
-
+<?php include 'application/views/layout/Footer.php'; ?>
 </html>
