@@ -1,0 +1,33 @@
+.reward-section {
+    padding: 1rem;
+}
+.brand-reward-block {
+    margin-bottom: 2rem;
+}
+.brand-reward-title {
+    font-weight: bold;
+    border-bottom: 3px solid #fbbf24;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+}
+.reward-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+.reward-item img {
+    width: 100%;
+    border-radius: 0.5rem;
+    background: #e5e5e5;
+}
+@media (max-width: 768px) {
+    .reward-items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    .reward-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
