@@ -91,18 +91,49 @@ h2::after {
     display: inline-block;
 }
 
+/* Update reward-items class */
 .reward-items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 15px;
+    padding-bottom: 20px; /* Add padding for scrollbar */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin; /* Show thin scrollbar Firefox */
+    scrollbar-color: #ff9900 #f1f1f1; /* Scrollbar colors Firefox */
 }
 
+/* Style scrollbar for Chrome/Safari */
+.reward-items::-webkit-scrollbar {
+    display: block; /* Show scrollbar */
+    height: 6px; /* Scrollbar height */
+}
+
+.reward-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.reward-items::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}
+
+.reward-items::-webkit-scrollbar-thumb:hover {
+    background: #e68a00;
+}
+
+/* Update reward-item class */
 .reward-item {
+    flex: 0 0 150px; /* Don't grow or shrink, fixed width 150px */
+    min-width: 150px; /* Ensure minimum width */
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    scroll-snap-align: start; /* Snap alignment */
 }
 
 .reward-item:hover {
@@ -137,6 +168,13 @@ h2::after {
     gap: 5px;
 }
 
+.stock-warning {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
 .points::before {
     content: '🏆';
     font-size: 14px;
@@ -151,19 +189,19 @@ h2::after {
     margin: 1rem 0;
 }
 
-/* Responsive Design */
+/* Remove the media queries for grid layout */
 @media (max-width: 768px) {
     .reward-items {
-        grid-template-columns: repeat(2, 1fr);
+        padding: 10px; /* Adjust padding for mobile */
+    }
+    
+    .reward-item {
+        flex: 0 0 140px; /* Slightly smaller on mobile */
+        min-width: 140px;
     }
 }
 
 @media (max-width: 480px) {
-    .reward-items {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-    }
-    
     .reward-info h4 {
         font-size: 13px;
     }
