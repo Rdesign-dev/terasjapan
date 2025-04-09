@@ -12,11 +12,9 @@
 <body>
   <div class="container">
     <!-- Header -->
-    <div class="header-wrapper">
-      <div class="header-top-container">
-        <img class="header-logo" src="<?php echo base_url('../ImageTerasJapan/logo/tjwhite.png'); ?>" alt="Teras Japan" />
-        <h1 class="header-title-text">Teras Heroes Club</h1>
-      </div>
+    <div class="header">
+        <div class="back-btn" onclick="history.back()">←</div>
+        <div class="title">Transaction</div>
     </div>
 
     <!-- News Card -->

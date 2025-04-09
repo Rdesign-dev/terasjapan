@@ -1,17 +1,84 @@
-.news-container {
-    background-color: #e0e0e0;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background-color: #f8f8f8;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 20px 100px; /* Reduced bottom padding */
+}
+
+/* Mengatur lebar scrollbar */
+/* Mengatur lebar scrollbar vertikal */
+::-webkit-scrollbar {
+	width: 8px; /* Untuk scrollbar vertikal */
+	height: 8px; /* Sembunyikan scrollbar horizontal */
+}
+
+/* Mengatur tampilan track (jalur scrollbar) */
+::-webkit-scrollbar-track {
+	background: #f1f1f1; /* Warna background track */
+	border-radius: 10px;
+}
+
+/* Mengatur tampilan thumb (bagian yang bisa digeser) */
+::-webkit-scrollbar-thumb {
+	background: #ff9800; /* Warna thumb */
+	border-radius: 10px;
+}
+
+/* Mengatur hover effect pada thumb */
+::-webkit-scrollbar-thumb:hover {
+	background: #e65100;
+}
+
+.header {
     width: 100%;
     max-width: 400px;
-    min-height: 100vh;
+    background-color: #ff9900;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.header .back-btn {
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.header .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.news-container {
+    background-color: #f8f8f8;
+    width: 100%;
+    max-width: 400px;
+    height: fit-content;
     margin: auto;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
   }
 
   .news-card {
-    background-color: #d1d1d1;
+    background-color: #f3f3f3;
     border-radius: 12px;
     padding: 20px;
+    height: fit-content;
   }
 
   .news-header {
@@ -24,22 +91,24 @@
   .news-image {
     width: 150px;
     height: 150px;
-    background-color: #8b5c5c;
+    background-color: #ffcf87;
     border-radius: 8px;
   }
 
   .news-title {
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 1000;
+    font-size: 25px;
     color: #111;
     line-height: 1.4;
-    margin-top: 10px;
+    margin-top: 40px;
+    margin-left: 10px;
   }
 
   .news-subtitle {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
     color: #111;
+    margin-left: 10px;
   }
 
   .news-section-title {
@@ -49,14 +118,13 @@
     color: #111;
   }
 
-  .news-description {
+.news-description {
     font-size: 13px;
     color: #111;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-  }
+    text-align: justify;
+    margin-top: 20px;
+}
 
-  .news-description span {
+.news-description span {
     word-break: break-word;
-  }
+}
