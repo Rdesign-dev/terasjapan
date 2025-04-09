@@ -614,6 +614,15 @@ body {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
 	cursor: pointer;
+	text-decoration: none; /* Remove underline */
+	color: inherit; /* Inherit text color */
+	display: block; /* Make link block level */
+}
+
+.news-item:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s ease;
 }
 
 .news-item img {
