@@ -11,7 +11,7 @@ class Home extends CI_Controller {
         $this->load->model('Reward_model');
         $this->load->model('M_promo');
         $this->load->model('m_reward');
-        $this->load->model('m_news');
+        $this->load->model('M_news');
         $this->load->model('M_brands');
         $this->load->model('M_mission');
         $this->load->model('M_alamat'); // Pastikan Anda memuat model M_alamat
@@ -37,7 +37,7 @@ class Home extends CI_Controller {
         $data['promos'] = $this->M_promo->get_all_promos();
 
         $data['rewards'] = $this->m_reward->get_all_rewards();
-        $data['news'] = $this->m_news->get_all_news();
+        $data['news'] = $this->M_news->get_active_news(); // Menggunakan get_active_news() sebagai gantinya
         $data['brands'] = $this->M_brands->get_all_brands();
         $data['missions'] = $this->M_mission->get_available_missions();
         $data['user_missions'] = $this->M_mission->get_user_missions($user_id);
@@ -92,5 +92,20 @@ class Home extends CI_Controller {
 
         // Load view
         $this->load->view('home/listreward', $data);
+    }
+
+    public function news($id = null) {
+        // Validasi ID
+        if (!$id || !is_numeric($id)) {
+            $data['news'] = null;
+            $this->load->view('home/news', $data);
+            return;
+        }
+
+        // Get news detail
+        $data['news'] = $this->M_news->get_news_by_id($id);
+        
+        // Load view
+        $this->load->view('home/news', $data);
     }
 }

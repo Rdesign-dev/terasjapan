@@ -334,25 +334,10 @@
         </div>
     </div>
 
-    <!-- Add this HTML for the news popup modal -->
-    <div id="newsModal" class="news-modal" style="display: none;">
-        <div class="news-modal-content">
-            <span class="news-close">&times;</span>
-            <div class="news-modal-body">
-                <img id="newsModalImage" src="" alt="News Image" class="news-modal-image">
-                <div class="news-modal-info">
-                    <h3 id="newsModalTitle" class="news-modal-title"></h3>
-                    <p id="newsModalDescription" class="news-modal-description"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="news-section">
         <h2>News & Event</h2>
         <div class="news-grid">
             <?php 
-            // Filter for active news items
             $activeNews = array_filter($news ?? [], function($news_item) {
                 return isset($news_item->status) && $news_item->status === 'Active';
             });
@@ -360,23 +345,19 @@
             if (!empty($activeNews)): 
             ?>
                 <?php foreach ($activeNews as $news_item): ?>
-                    <div class="news-item" 
-                         data-id="<?= $news_item->id ?>"
-                         data-title="<?= htmlspecialchars($news_item->title) ?>"
-                         data-description="<?= htmlspecialchars($news_item->description) ?>"
-                         data-image="<?= news_url($news_item->image) ?>">
+                    <a href="<?php echo base_url('home/news/' . $news_item->id); ?>" class="news-item">
                         <img src="<?= news_url($news_item->image) ?>"
                              alt="<?= htmlspecialchars($news_item->title) ?>">
                         <div class="news-content">
                             <h3><?= htmlspecialchars($news_item->title) ?></h3>
-                            <p><?= htmlspecialchars(substr($news_item->captions, 0, 100)) ?>...</p>
+                            <p><?= substr(htmlspecialchars($news_item->description), 0, 100) ?>...</p>
                         </div>
-                    </div>
-                    <?php endforeach; ?>
+                    </a>
+                <?php endforeach; ?>
             <?php else: ?>
                 <div class="news-no-promo">
                     <p>🔪 Unavailable News & Events, <span>Comeback Soon!</span></p>
-            </div>
+                </div>
             <?php endif; ?>
         </div>
     </div>
@@ -623,42 +604,6 @@
         function redirectToLogin() {
             window.location.href = '<?= base_url('login'); ?>';
         }
-    });
-    </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const newsModal = document.getElementById('newsModal');
-        const newsModalImage = document.getElementById('newsModalImage');
-        const newsModalTitle = document.getElementById('newsModalTitle');
-        const newsModalDescription = document.getElementById('newsModalDescription');
-        const newsCloseButton = document.querySelector('.news-close');
-
-        // Add click handlers to all news items
-        document.querySelectorAll('.news-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const title = this.getAttribute('data-title');
-                const description = this.getAttribute('data-description');
-                const imageUrl = this.getAttribute('data-image');
-
-                newsModalImage.src = imageUrl;
-                newsModalTitle.textContent = title;
-                newsModalDescription.textContent = description;
-                newsModal.style.display = 'flex';
-            });
-        });
-
-        // Close modal when clicking close button
-        newsCloseButton.addEventListener('click', function() {
-            newsModal.style.display = 'none';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === newsModal) {
-                newsModal.style.display = 'none';
-            }
-        });
     });
     </script>
 
