@@ -6,7 +6,7 @@ class Profile extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->helper(['auth', 'url']);
+        $this->load->helper(['auth', 'url', 'mission']); // Tambahkan mission helper
         $this->load->model('User_model');
         $this->load->model('Reward_model');
         $this->load->model('Feedback_model');
@@ -100,14 +100,8 @@ class Profile extends CI_Controller {
             redirect('login');
         }
 
-        $this->load->model('M_user_mission');
         $user_id = $this->session->userdata('user_id');
-        
-        // Check profile completion status first
-        $this->M_user_mission->check_profile_completion($user_id);
-        
-        // Get all missions with user status
-        $mission_data = $this->M_user_mission->get_user_missions($user_id);
+        $mission_data = check_user_missions($this, $user_id);
         
         $data = [
             'missions' => $mission_data['missions'],

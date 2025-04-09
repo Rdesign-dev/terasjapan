@@ -347,7 +347,7 @@
                 <?php foreach ($activeNews as $news_item): ?>
                     <a href="<?php echo base_url('home/news/' . $news_item->id); ?>" class="news-item">
                         <img src="<?= news_url($news_item->image) ?>"
-                             alt="<?= htmlspecialchars($news_item->title) ?>">
+                            alt="<?= htmlspecialchars($news_item->title) ?>">
                         <div class="news-content">
                             <h3><?= htmlspecialchars($news_item->title) ?></h3>
                             <p><?= substr(htmlspecialchars($news_item->description), 0, 100) ?>...</p>

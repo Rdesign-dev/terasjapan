@@ -20,7 +20,7 @@ class Register extends CI_Controller {
 		// Check deleted users
 		$checkDeleted = $this->User_model->check_phone_deleted($phone_number);
 			if ($checkDeleted) {
-				$this->session->set_flashdata('error', 'Nomor telepon ini terkait dengan akun yang telah dinonaktifkan. Silahkan hubungi admin untuk info lebih lanjut.');
+				$this->session->set_flashdata('error', 'Nomor yang ingin Anda gunakan terdaftar pada akun lain dan telah dihapus. Silakan hubungi admin untuk melakukan registrasi ulang.');
                 $this->session->set_flashdata('show_register', true);
 				return redirect('auth/login');
 			}

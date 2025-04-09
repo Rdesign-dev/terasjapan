@@ -5,8 +5,7 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->helper('url');
-        $this->load->helper('asset');
+        $this->load->helper(['url', 'asset', 'mission']); // Tambahkan mission helper
         $this->load->model('User_model');
         $this->load->model('Reward_model');
         $this->load->model('M_promo');
@@ -27,6 +26,13 @@ class Home extends CI_Controller {
             $data['name'] = $user->name;
             $data['poin'] = isset($user->poin) ? $user->poin : 0;
             $data['balance'] = $user->balance;
+            
+            // Check missions status
+            $mission_data = check_user_missions($this, $user_id);
+            if ($mission_data) {
+                $data['missions'] = $mission_data['missions'];
+                $data['missions_available'] = $mission_data['missions_available'];
+            }
         } else {
             $data['name'] = 'Guest';
             $data['poin'] = 0;
