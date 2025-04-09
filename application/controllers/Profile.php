@@ -6,7 +6,7 @@ class Profile extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->helper(['auth', 'url', 'mission']); // Tambahkan mission helper
+        $this->load->helper(['auth', 'url', 'mission', 'level']); // Add level helper to existing helpers
         $this->load->model('User_model');
         $this->load->model('Reward_model');
         $this->load->model('Feedback_model');
@@ -19,18 +19,18 @@ class Profile extends CI_Controller {
     }
 
     public function index() {
-        // Ambil data pengguna dari session
         $user_id = $this->session->userdata('user_id');
         
-        // Ambil data pengguna dari database jika user_id ada
         $user = null;
         $referral_code = null;
         if ($user_id) {
+            // Check and update user level before getting user data
+            check_and_update_user_level($this, $user_id);
+            
             $user = $this->User_model->get_user_by_id($user_id);
             $referral_code = $this->User_model->get_referral_code($user_id);
         }
 
-        // Kirim data pengguna ke view
         $data = array(
             'user' => $user,
             'referral_code' => $referral_code
