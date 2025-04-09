@@ -68,9 +68,22 @@ class Home extends CI_Controller {
         // Load required models 
         $this->load->model('M_brands');
         $this->load->model('Reward_model');
+        $this->load->model('User_model');
+
+        // Get user data
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->User_model->get_user_by_id($user_id);
+        
+        if ($user) {
+            $data['name'] = $user->name;
+            $data['poin'] = isset($user->poin) ? $user->poin : 0;
+        } else {
+            $data['name'] = 'Guest';
+            $data['poin'] = 0;
+        }
 
         // Get all brands
-        $data['all_brands'] = $this->M_brands->get_all_brands(); // Changed variable name to match view
+        $data['all_brands'] = $this->M_brands->get_all_brands();
 
         // For each brand, get their available rewards
         foreach ($data['all_brands'] as $brand) {

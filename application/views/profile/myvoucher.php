@@ -23,7 +23,7 @@
                         <a href="<?php echo site_url('profile/redeem?voucher_id=' . $voucher->kode_voucher); ?>" class="voucher-link">
                     <?php endif; ?>
 
-                        <img src="<?php echo base_url("assets/image/reward/{$voucher->image_name}"); ?>" 
+                        <img src="<?php echo base_url("../ImageTerasJapan/reward/{$voucher->image_name}"); ?>" 
                             alt="<?php echo $voucher->reward_title; ?>" class="voucher-image">
                         
                         <div class="voucher-info">

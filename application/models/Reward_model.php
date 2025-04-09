@@ -66,7 +66,7 @@ class Reward_model extends CI_Model {
 
         // Generate QR code
         $qr_image_name = 'vcreward-' . $user_code . '-' . $date_code . '-' . uniqid() . '.png';
-        $qr_image_path = 'assets/image/qrcode/' . $qr_image_name;
+        $qr_image_path = '../ImageTerasJapan/qrcode/' . $qr_image_name;
         $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($voucher_code);
 
         $qr_image = file_get_contents($qr_url);
@@ -173,5 +173,5 @@ class Reward_model extends CI_Model {
         $this->db->order_by('points_required', 'ASC');
         return $this->db->get()->result();
     }
-    
+
 }
