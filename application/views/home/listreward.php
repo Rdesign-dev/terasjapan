@@ -25,122 +25,122 @@
         <!-- Rewards by Brand -->
         <div class="reward-section">
             <?php if (!empty($all_brands)): ?>
-                <?php foreach ($all_brands as $brand): ?>
-                    <div class="brand-reward-block">
-                        <h3 class="brand-reward-title"><?php echo $brand->name; ?></h3>
-                        <div class="reward-items">
-                            <?php if (!empty($brand->rewards)): ?>
-                                <?php foreach ($brand->rewards as $reward): ?>
-                                    <div class="reward-item" 
-                                         data-id="<?php echo $reward->id; ?>"
-                                         data-brand-id="<?php echo $brand->id; ?>"
-                                         data-brand-name="<?php echo $brand->name; ?>">
-                                        <img src="<?php echo base_url('../ImageTerasJapan/reward/' . $reward->image_name); ?>" 
-                                             alt="<?php echo $reward->title; ?>" />
-                                        <div class="reward-info">
-                                            <h4><?php echo $reward->title; ?></h4>
-                                            <p class="points"><?php echo number_format($reward->points_required); ?> Points</p>
-                                            <?php if ($reward->qty <= 5): ?>
-                                                <div class="stock-warning"><?php echo $reward->qty; ?> voucher left!</div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p class="no-rewards">No rewards available for this brand.</p>
+            <?php foreach ($all_brands as $brand): ?>
+            <div class="brand-reward-block">
+                <h3 class="brand-reward-title"><?php echo $brand->name; ?></h3>
+                <div class="reward-items">
+                    <?php if (!empty($brand->rewards)): ?>
+                    <?php foreach ($brand->rewards as $reward): ?>
+                    <div class="reward-item" data-id="<?php echo $reward->id; ?>"
+                        data-brand-id="<?php echo $brand->id; ?>" data-brand-name="<?php echo $brand->name; ?>">
+                        <img src="<?php echo base_url('../ImageTerasJapan/reward/' . $reward->image_name); ?>"
+                            alt="<?php echo $reward->title; ?>" />
+                        <div class="reward-info">
+                            <h4><?php echo $reward->title; ?></h4>
+                            <p class="points"><?php echo number_format($reward->points_required); ?> Points</p>
+                            <?php if ($reward->qty <= 5): ?>
+                            <div class="stock-warning"><?php echo $reward->qty; ?> voucher left!</div>
                             <?php endif; ?>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="no-brands">
-                    <p>No brands available.</p>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                    <p class="no-rewards">No rewards available for this brand.</p>
+                    <?php endif; ?>
                 </div>
+            </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <div class="no-brands">
+                <p>No brands available.</p>
+            </div>
             <?php endif; ?>
         </div>
-    </div>
 
-    <!-- Modal Pop-Up -->
-    <div id="rewardModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeRewardModal()">&times;</span>
-            <div class="modal-body">
-                <img id="modalImage" src="" alt="Reward Image">
-                <div class="modal-info">
-                    <h3 id="modalTitle" class="modal-title"></h3>
-                    <p id="modalDescription" class="modal-description"></p>
-                    <p id="modalValidity" class="modal-validity"></p>
+        <!-- Modal Pop-Up -->
+        <div id="rewardModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeRewardModal()">&times;</span>
+                <div class="modal-body">
+                    <img id="modalImage" src="" alt="Reward Image">
+                    <div class="modal-info">
+                        <h3 id="modalTitle" class="modal-title"></h3>
+                        <p id="modalDescription" class="modal-description"></p>
+                        <p id="modalValidity" class="modal-validity"></p>
+                    </div>
                 </div>
-            </div>
-            <div id="modalBranches" class="modal-branches">
-                <!-- Branch badges will be added dynamically here -->
-            </div>
-            <div class="modal-footer">
-                <span id="modalPoints" class="point-text"></span>
-                <a href="#" id="redeemLink" class="exchange-btn">Redeem</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirm Redeem Popup -->
-    <div id="confirmRedeemPopup" class="popup-referral">
-        <div class="popup-content">
-            <span class="close-btn">&times;</span>
-            <img src="<?php echo icon_url('question.png') ?>" class="popup-image" alt="confirm-image">
-            <p>Are you sure you want to redeem this reward?</p>
-            <div class="button-container">
-                <div class="rectangle yes-btn">
-                    <p class="text">Yes</p>
+                <div id="modalBranches" class="modal-branches">
+                    <!-- Branch badges will be added dynamically here -->
                 </div>
-                <div class="rectangle no-btn">
-                    <p class="text">No</p>
+                <div class="modal-footer">
+                    <span id="modalPoints" class="point-text"></span>
+                    <a href="#" id="redeemLink" class="exchange-btn">Redeem</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Popup modals from index.php -->
-    <?php include 'reward_popups.php'; ?>
-
-    <!-- Popup Success Redeem -->
-    <div id="rewardRedeemPopup" class="popup-referral" style="display: none;">
-        <div class="popup-content">
-            <span class="close-btn" onclick="closeRewardRedeemPopup()">&times;</span>
-            <img src="<?php echo icon_url('cek.png') ?>" class="popup-image" alt="popup-image">
-            <p>Your reward has been successfully redeemed.</p>
-            <div class="button-container">
-                <div class="rectangle ok-btn" onclick="closeRewardRedeemPopup()">
-                    <p class="text">OK</p>
+        <!-- Confirm Redeem Popup -->
+        <div id="confirmRedeemPopup" class="popup-referral">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <img src="<?php echo icon_url('question.png') ?>" class="popup-image" alt="confirm-image">
+                <p>Are you sure you want to redeem this reward?</p>
+                <div class="button-container">
+                    <div class="rectangle yes-btn">
+                        <p class="text">Yes</p>
+                    </div>
+                    <div class="rectangle no-btn">
+                        <p class="text">No</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Login Popup -->
-    <div id="loginPopup" class="popup-referral" style="display: none;">
-        <div class="popup-content">
-            <span class="close-btn" onclick="closeLoginPopup()">&times;</span>
-            <p>Please log in to redeem rewards.</p>
-            <div class="button-container">
-                <div class="rectangle ok-btn" onclick="redirectToLogin()">
-                    <p class="text">OK</p>
+        <!-- Popup modals from index.php -->
+        <?php include 'reward_popups.php'; ?>
+
+        <!-- Popup Success Redeem -->
+        <div id="rewardRedeemPopup" class="popup-referral" style="display: none;">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeRewardRedeemPopup()">&times;</span>
+                <img src="<?php echo icon_url('cek.png') ?>" class="popup-image" alt="popup-image">
+                <p>Your reward has been successfully redeemed.</p>
+                <div class="button-container">
+                    <div class="rectangle ok-btn" onclick="closeRewardRedeemPopup()">
+                        <p class="text">OK</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Error Popup -->
-    <div id="rewardErrorPopup" class="popup-referral" style="display: none;">
-        <div class="popup-content">
-            <span class="close-btn" onclick="closeRewardErrorPopup()">&times;</span>
-            <img src="<?php echo icon_url('x.png') ?>" class="popup-image" alt="error-image">
-            <p id="errorMessage"></p>
-            <div class="button-container">
-                <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
-                    <p class="text">OK</p>
+        <!-- Login Popup -->
+        <div id="loginPopup" class="popup-referral" style="display: none;">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeLoginPopup()">&times;</span>
+                <p>Please log in to redeem rewards.</p>
+                <div class="button-container">
+                    <div class="rectangle ok-btn" onclick="redirectToLogin()">
+                        <p class="text">OK</p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Error Popup -->
+        <div id="rewardErrorPopup" class="popup-referral" style="display: none;">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeRewardErrorPopup()">&times;</span>
+                <img src="<?php echo icon_url('x.png') ?>" class="popup-image" alt="error-image">
+                <p id="errorMessage"></p>
+                <div class="button-container">
+                    <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
+                        <p class="text">OK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php include 'application/views/layout/Footer.php'; ?>
     </div>
 
     <script>
@@ -184,11 +184,12 @@
                         modalDescription.textContent = data.description || '';
                         modalPoints.textContent = `${data.points_required} Points`;
                         // Update validitas voucher
-                        modalValidity.textContent = `Voucher validity: ${data.total_days} days after redeem`;
-                        
+                        modalValidity.textContent =
+                            `Voucher validity: ${data.total_days} days after redeem`;
+
                         // Add brand badge
                         modalBranches.innerHTML = `<span class="brand-badge">${brandName}</span>`;
-                        
+
                         redeemLink.onclick = () => showConfirmRedeemPopup(rewardId);
                         modal.style.display = "flex";
                     } else {
@@ -213,10 +214,10 @@
 
         function showConfirmRedeemPopup(rewardId) {
             <?php if ($this->session->userdata('logged_in')): ?>
-                confirmPopup.style.display = 'flex';
-                currentRewardId = rewardId;
+            confirmPopup.style.display = 'flex';
+            currentRewardId = rewardId;
             <?php else: ?>
-                showLoginPopup();
+            showLoginPopup();
             <?php endif; ?>
         }
 
@@ -226,33 +227,33 @@
 
         function confirmRedeemReward() {
             fetch("<?= base_url('reward/redeem'); ?>", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify({
-                    "reward_id": currentRewardId
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        "reward_id": currentRewardId
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Redeem response:", data);
-                if (data.status === 'success') {
-                    showRewardRedeemPopup();
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Redeem response:", data);
+                    if (data.status === 'success') {
+                        showRewardRedeemPopup();
+                        closeConfirmRedeemPopup();
+                        modal.style.display = "none";
+                    } else {
+                        showRewardErrorPopup(data.message);
+                        closeConfirmRedeemPopup();
+                        modal.style.display = "none";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error redeeming reward:", error);
+                    showRewardErrorPopup("An error occurred while redeeming the reward");
                     closeConfirmRedeemPopup();
-                    modal.style.display = "none";
-                } else {
-                    showRewardErrorPopup(data.message);
-                    closeConfirmRedeemPopup();
-                    modal.style.display = "none";
-                }
-            })
-            .catch(error => {
-                console.error("Error redeeming reward:", error);
-                showRewardErrorPopup("An error occurred while redeeming the reward");
-                closeConfirmRedeemPopup();
-            });
+                });
         }
 
         function showRewardErrorPopup(message) {
@@ -333,5 +334,5 @@
     });
     </script>
 </body>
-<?php include 'application/views/layout/Footer.php'; ?>
+
 </html>
