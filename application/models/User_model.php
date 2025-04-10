@@ -50,6 +50,7 @@ class User_model extends CI_Model {
                 'city' => NULL,
                 'email' => NULL,
                 'new_mail' => NULL,
+                'level_id' => 1,
                 'profile_pic' => 'profile.jpg' // Reset profile picture to default
             ];
             
@@ -62,6 +63,14 @@ class User_model extends CI_Model {
             $this->db->update('redeem_voucher', [
                 'status' => 'Expired',
                 'expires_at' => date('Y-m-d H:i:s') // Set expiry to current time
+            ]);
+
+            // 3. Reset login status
+            $this->db->where('user_id', $user_id);
+            $this->db->update('login_status', [
+                'current_streak' => 0,
+                'last_login_date' => NULL,
+                'is_claimed_today' => 0
             ]);
 
             // Commit transaction

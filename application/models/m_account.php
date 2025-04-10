@@ -143,33 +143,49 @@ class M_account extends CI_Model {
         // Get current date
         $today = date('Y-m-d');
         
+        // Get maximum day number from daily_login_rewards
+        $max_day = $this->db->select_max('day_number')
+                            ->get('daily_login_rewards')
+                            ->row()
+                            ->day_number;
+        
         // Check if user exists in login_status
         $existing_status = $this->db->where('user_id', $user_id)
                                    ->get('login_status')
                                    ->row();
         
         if ($existing_status) {
-            // User exists, check last login date
-            $last_login = new DateTime($existing_status->last_login_date);
-            $today_date = new DateTime($today);
-            $interval = $last_login->diff($today_date);
-            $days_difference = $interval->days;
-
-            if ($days_difference == 0) {
-                // Already logged in today, no streak update needed
-                return true;
-            } else if ($days_difference == 1) {
-                // Logged in yesterday, increase streak
-                $data = array(
-                    'last_login_date' => $today,
-                    'current_streak' => $existing_status->current_streak + 1
-                );
-            } else {
-                // Missed a day or more, reset streak
+            // User exists, check if last_login_date is NULL
+            if ($existing_status->last_login_date === NULL) {
+                // If last_login_date is NULL, treat as first login
                 $data = array(
                     'last_login_date' => $today,
                     'current_streak' => 1
                 );
+            } else {
+                // Normal flow for existing last_login_date
+                $last_login = new DateTime($existing_status->last_login_date);
+                $today_date = new DateTime($today);
+                $interval = $last_login->diff($today_date);
+                $days_difference = $interval->days;
+
+                if ($days_difference == 0) {
+                    // Already logged in today, no streak update needed
+                    return true;
+                } else if ($days_difference == 1) {
+                    // Logged in yesterday, increase streak (but not beyond max_day)
+                    $new_streak = min($existing_status->current_streak + 1, $max_day);
+                    $data = array(
+                        'last_login_date' => $today,
+                        'current_streak' => $new_streak
+                    );
+                } else {
+                    // Missed a day or more, reset streak
+                    $data = array(
+                        'last_login_date' => $today,
+                        'current_streak' => 1
+                    );
+                }
             }
             
             return $this->db->where('user_id', $user_id)
