@@ -11,8 +11,9 @@
     <!-- Header -->
     <div class="header">
         <div class="back-btn" onclick="history.back()">←</div>
-        <div class="title">Daily Check-In</div>
+        <div class="title">Daily Check In</div>
     </div>
+
 
     <div class="checkin-container">
         <div class="checkin-header">

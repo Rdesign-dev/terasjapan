@@ -74,7 +74,7 @@
             <span class="arrow">></span>
         </div>
         <div class="menu-item" onclick="checkCheckinLoginStatus()">
-            <span>Check In</span>
+            <span>Daily Check In</span>
             <span class="arrow">></span>
         </div>
         <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/contactus') ?>'">
