@@ -73,6 +73,10 @@
             <span>My Voucher</span>
             <span class="arrow">></span>
         </div>
+        <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/checkin') ?>'">
+            <span>Check In</span>
+            <span class="arrow">></span>
+        </div>
         <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/contactus') ?>'">
             <span>Contact Us</span>
             <span class="arrow">></span>
