@@ -22,20 +22,7 @@
         </div>
 
         <div class="checkin-grid">
-            <?php 
-            // Static data for UI testing
-            $days_data = [
-                ['day' => 1, 'points' => 10, 'status' => 'checked'],
-                ['day' => 2, 'points' => 15, 'status' => 'checked'],
-                ['day' => 3, 'points' => 20, 'status' => 'active'],
-                ['day' => 4, 'points' => 25, 'status' => ''],
-                ['day' => 5, 'points' => 30, 'status' => ''],
-                ['day' => 6, 'points' => 35, 'status' => ''],
-                ['day' => 7, 'points' => 50, 'status' => '']
-            ];
-
-            foreach($days_data as $day): 
-            ?>
+            <?php foreach($days_data as $day): ?>
                 <div class="checkin-day <?php echo $day['status']; ?>">
                     <span class="day-number">Day <?php echo $day['day']; ?></span>
                     <span class="points"><?php echo $day['points']; ?> pts</span>
@@ -44,15 +31,15 @@
         </div>
 
         <div class="streak-info">
-            Current streak: 2 days
+            Current streak: <?php echo $streak_info['current_streak']; ?> days
         </div>
 
-        <button class="checkin-button">
-            Check In Now
+        <button class="checkin-button" <?php echo $streak_info['is_claimed_today'] ? 'disabled' : ''; ?>>
+            <?php echo $streak_info['is_claimed_today'] ? 'Already Claimed' : 'Check In Now'; ?>
         </button>
 
         <div class="rewards-preview">
-            Complete 7 days to get bonus 100 Ryo Points!
+            Complete 7 days to get bonus <?php echo $total_bonus; ?> Ryo Points!
         </div>
     </div>
 
@@ -72,9 +59,24 @@
     </div>
 
     <script>
-        // Static demo functionality
         document.querySelector('.checkin-button').addEventListener('click', function() {
-            document.getElementById('successPopup').style.display = 'flex';
+            if(this.disabled) return;
+            
+            fetch('<?php echo base_url('checkin/claim'); ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    document.querySelector('.earned-points').textContent = data.points;
+                    document.getElementById('successPopup').style.display = 'flex';
+                } else {
+                    alert(data.message);
+                }
+            });
         });
 
         function closeSuccessPopup() {
