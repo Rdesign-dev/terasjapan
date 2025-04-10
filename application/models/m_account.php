@@ -133,11 +133,57 @@ class M_account extends CI_Model {
     }
 
     public function record_login($user_id, $name) {
+        // Insert into login_users table
         $data = array(
             'id' => $user_id,
             'name' => $name
         );
-        return $this->db->insert('login_users', $data);
+        $this->db->insert('login_users', $data);
+
+        // Get current date
+        $today = date('Y-m-d');
+        
+        // Check if user exists in login_status
+        $existing_status = $this->db->where('user_id', $user_id)
+                                   ->get('login_status')
+                                   ->row();
+        
+        if ($existing_status) {
+            // User exists, check last login date
+            $last_login = new DateTime($existing_status->last_login_date);
+            $today_date = new DateTime($today);
+            $interval = $last_login->diff($today_date);
+            $days_difference = $interval->days;
+
+            if ($days_difference == 0) {
+                // Already logged in today, no streak update needed
+                return true;
+            } else if ($days_difference == 1) {
+                // Logged in yesterday, increase streak
+                $data = array(
+                    'last_login_date' => $today,
+                    'current_streak' => $existing_status->current_streak + 1
+                );
+            } else {
+                // Missed a day or more, reset streak
+                $data = array(
+                    'last_login_date' => $today,
+                    'current_streak' => 1
+                );
+            }
+            
+            return $this->db->where('user_id', $user_id)
+                           ->update('login_status', $data);
+        } else {
+            // First time login, create new record
+            $data = array(
+                'user_id' => $user_id,
+                'last_login_date' => $today,
+                'current_streak' => 1
+            );
+            
+            return $this->db->insert('login_status', $data);
+        }
     }
 
     public function check_deleted_account($phone_number) {

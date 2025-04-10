@@ -73,7 +73,7 @@
             <span>My Voucher</span>
             <span class="arrow">></span>
         </div>
-        <div class="menu-item" onclick="window.location.href='<?php echo base_url('profile/checkin') ?>'">
+        <div class="menu-item" onclick="checkCheckinLoginStatus()">
             <span>Check In</span>
             <span class="arrow">></span>
         </div>
@@ -253,6 +253,16 @@
             <?php if ($this->session->userdata('user_id')): ?>
                 // If user is logged in, redirect to mission page
                 window.location.href = "<?php echo base_url('profile/mission'); ?>";
+            <?php else: ?>
+                // If user is not logged in, show login popup
+                document.getElementById('loginPopup').style.display = 'flex';
+            <?php endif; ?>
+        }
+
+        function checkCheckinLoginStatus() {
+            <?php if ($this->session->userdata('user_id')): ?>
+                // If user is logged in, redirect to checkin page
+                window.location.href = "<?php echo base_url('profile/checkin'); ?>";
             <?php else: ?>
                 // If user is not logged in, show login popup
                 document.getElementById('loginPopup').style.display = 'flex';
