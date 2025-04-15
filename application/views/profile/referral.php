@@ -6,7 +6,7 @@
     <title>Teras Heroes Club</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/refferal.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>">
+    <link rel="icon" type="image/x-icon" href="https://terasjapan.com/ImageTerasJapan/logo/logo-amigos.png">
 </head>
 <body>
     <div class="header">
@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="center">
-            <img src="<?php echo base_url('assets/image/logo/refferal.jpg'); ?>" alt="Two people holding phones">
+            <img src="https://terasjapan.com/ImageTerasJapan/konten/refferal.jpg" alt="Two people holding phones">
         </div>
         <h1 class="title">Earn Poin By Inviting Friends</h1>
         <div class="input-group">
@@ -33,7 +33,9 @@
                     <div class="friend-info">
                         <div class="avatar">
                             <?php 
-                            $profilePic = !empty($redeem->referred_user_profile_pic) ? base_url('assets/image/ProfPic/' . $redeem->referred_user_profile_pic) : base_url('assets/image/Profpic/Profile.jpg'); 
+                            $profilePic = !empty($redeem->referred_user_profile_pic) 
+                                ? "https://terasjapan.com/ImageTerasJapan/ProfPic/" . $redeem->referred_user_profile_pic 
+                                : "https://terasjapan.com/ImageTerasJapan/ProfPic/profile.jpg"; 
                             ?>
                             <img src="<?php echo $profilePic; ?>" alt="<?php echo $redeem->referred_user_name; ?>">
                         </div>

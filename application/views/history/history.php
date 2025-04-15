@@ -35,12 +35,12 @@
         <?php else: ?>
             <?php if ($this->session->userdata('user_id')): ?>
                 <div class="center-container">
-                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                    <img src="https://terasjapan.com/ImageTerasJapan/konten/konten3.png" alt="No History">
                     <p><strong>You don't have transaction history</strong></p>
                 </div>
             <?php else: ?>
                 <div class="center-container">
-                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                    <img src="https://terasjapan.com/ImageTerasJapan/konten/konten3.png" alt="No History">
                     <p><strong>log in first to access your transaction history.</strong></p>
                 </div>
             <?php endif; ?>
@@ -62,13 +62,13 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="center-container">
-                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                    <img src="https://terasjapan.com/ImageTerasJapan/konten/konten3.png" alt="No History">
                     <p><strong>You don't have any balance transactions yet</strong></p>
                 </div>
             <?php endif; ?>
         <?php else: ?>
             <div class="center-container">
-                <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History">
+                <img src="https://terasjapan.com/ImageTerasJapan/konten/konten3.png" alt="No History">
                 <p><strong>log in first to access your transaction history.</strong></p>
             </div>
         <?php endif; ?>

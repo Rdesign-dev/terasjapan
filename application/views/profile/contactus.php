@@ -17,23 +17,24 @@
     <!-- Contact Container -->
     <div class="contact-container">
         <h1>Contact Us</h1>
-        <img src="<?php echo base_url('assets/image/konten/konten1.png'); ?>" alt="Contact Us" class="contact-image">
+        <img src="https://terasjapan.com/ImageTerasJapan/konten/konten1.png" alt="Contact Us" class="contact-image">
         <p style="font-weight: 600;">Questions, Comments, or Any Concerns? Please contact us at the below :</p>
 
+        <!-- Social media icons -->
         <a href="mailto:cs@terasjapan.com" class="contact-item" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/icon/email.png'); ?>" alt="Email">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/email.png" alt="Email">
             <span>cs@terasjapan.com</span>
         </a>
         <a href="https://wa.me/6281011348123" class="contact-item" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/icon/whatsapp.png'); ?>" alt="WhatsApp">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/whatsapp.png" alt="WhatsApp">
             <span>+62 810 1134 8123</span>
         </a>
         <a href="https://www.instagram.com/teras.japan/" class="contact-item" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/icon/instagram.png'); ?>" alt="Instagram">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/instagram.png" alt="Instagram">
             <span>@teras.japan</span>
         </a>
         <a href="https://www.tiktok.com/@terasjapan/" class="contact-item" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/icon/tiktok.png'); ?>" alt="TikTok">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/tiktok.png" alt="TikTok">
             <span>@terasjapan</span>
         </a>
     </div>

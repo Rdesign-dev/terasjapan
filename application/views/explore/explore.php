@@ -15,7 +15,7 @@
         <!-- Header -->
         <div class="header-wrapper">
             <div class="header-top-container">
-                <img class="header-logo" src="http://localhost/ImageTerasJapan/logo/tjwhite.png"
+                <img class="header-logo" src="https://terasjapan.com/ImageTerasJapan/logo/tjwhite.png"
                     alt="Teras Japan" />
                 <h1 class="header-title-text">Teras Heroes Club</h1>
             </div>
@@ -26,11 +26,11 @@
             <div class="brand-container">
                 <div class="brand-items">
                     <div class="brand-title">
-                        <img class="brand-logo" src= 'http://localhost/ImageTerasJapan/logo/<?php echo $brand->image; ?>'
+                        <img class="brand-logo" src="https://terasjapan.com/ImageTerasJapan/logo/<?php echo $brand->image; ?>"
                             alt="<?php echo $brand->name; ?>">
                         <p class="brand-name"><?php echo $brand->name; ?></p>
                     </div>
-                    <img class="brand-image" src= 'http://localhost/ImageTerasJapan/banner/<?php echo $brand->banner; ?>'
+                    <img class="brand-image" src="https://terasjapan.com/ImageTerasJapan/banner/<?php echo $brand->banner; ?>"
                         alt="<?php echo $brand->name; ?>" />
                     <div class="brand-detail">
                         <div class="brand-social">
@@ -43,7 +43,7 @@
                                 $social_media[] = [
                                     'type' => 'instagram',
                                     'url' => "https://instagram.com/" . str_replace(['@', 'instagram.com/'], '', $brand->instagram),
-                                    'icon' => 'http://localhost/ImageTerasJapan/icon/instagram.png'
+                                    'icon' => 'https://terasjapan.com/ImageTerasJapan/icon/instagram.png'
                                 ];
                             }
                             
@@ -51,7 +51,7 @@
                                 $social_media[] = [
                                     'type' => 'tiktok',
                                     'url' => "https://tiktok.com/@" . str_replace('@', '', $brand->tiktok),
-                                    'icon' => 'http://localhost/ImageTerasJapan/icon/tiktok.png'
+                                    'icon' => 'https://terasjapan.com/ImageTerasJapan/icon/tiktok.png'
                                 ];
                             }
                             
@@ -59,7 +59,7 @@
                                 $social_media[] = [
                                     'type' => 'whatsapp',
                                     'url' => "https://wa.me/" . $brand->wa,
-                                    'icon' => 'http://localhost/ImageTerasJapan/icon/whatsapp.png'
+                                    'icon' => 'https://terasjapan.com/ImageTerasJapan/icon/whatsapp.png'
                                 ];
                             }
                             
@@ -68,7 +68,7 @@
                                 $social_media[] = [
                                     'type' => 'website',
                                     'url' => $webUrl,
-                                    'icon' => 'http://localhost/ImageTerasJapan/icon/globe.png'
+                                    'icon' => 'https://terasjapan.com/ImageTerasJapan/icon/globe.png'
                                 ];
                             }
 
@@ -101,7 +101,7 @@
                 <?php if (!empty($available_promos)): ?>
                 <?php foreach ($available_promos as $promo): ?>
                 <div class="promo-item">
-                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
+                    <img src="https://terasjapan.com/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
                         alt="<?php echo $promo->promo_name; ?>">
                 </div>
                 <?php endforeach; ?>
@@ -120,7 +120,7 @@
                 <?php if (!empty($coming_promos)): ?>
                 <?php foreach ($coming_promos as $promo): ?>
                 <div class="coming-item">
-                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
+                    <img src="https://terasjapan.com/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
                         alt="<?php echo $promo->promo_name; ?>">
                 </div>
                 <?php endforeach; ?>
@@ -139,7 +139,7 @@
                 <?php if (!empty($available_rewards)): ?>
                     <?php foreach ($available_rewards as $reward): ?>
                         <div class="promo-item">
-                            <img src="http://localhost/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
+                            <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
                                 alt="<?php echo $reward->title; ?>">
                         </div>
                     <?php endforeach; ?>
@@ -151,31 +151,12 @@
             </div>
         </div>
 
-        <!-- Coming Soon Promo Section -->
-        <!-- <div class="coming-section">
-            <h2>Coming Soon Reward</h2>
-            <div class="coming-items">
-                <?php if (!empty($coming_promos)): ?>
-                <?php foreach ($coming_promos as $promo): ?>
-                <div class="coming-item">
-                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
-                        alt="<?php echo $promo->promo_name; ?>">
-                </div>
-                <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="no-promo">
-                        <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div> -->
-
         <!-- Sidebar -->
         <div class="sidebar hidden">
             <div class="sidebar-content">
                 <?php foreach ($all_brands as $sidebar_brand): ?>
                 <a href="#" data-brand="<?php echo $sidebar_brand->id; ?>" class="brand-link">
-                    <img src='http://localhost/ImageTerasJapan/logo/<?php echo $sidebar_brand->image; ?>'"
+                    <img src="https://terasjapan.com/ImageTerasJapan/logo/<?php echo $sidebar_brand->image; ?>"
                         alt="<?php echo $sidebar_brand->name; ?>" />
                 </a>
                 <?php endforeach; ?>
@@ -228,14 +209,10 @@
 
     // Function to update page content
     function updatePageContent(brandData) {
-        const availablePromos = brandData.available_promos;
-        const comingPromos = brandData.coming_promos;
-
         // Update brand section
-        document.querySelector('.brand-logo').src = brandData.logo;
-        document.querySelector('.brand-logo').alt = brandData.name;
+        document.querySelector('.brand-logo').src = `https://terasjapan.com/ImageTerasJapan/logo/${brandData.image}`;
         document.querySelector('.brand-name').textContent = brandData.name;
-        document.querySelector('.brand-image').src = brandData.banner;
+        document.querySelector('.brand-image').src = `https://terasjapan.com/ImageTerasJapan/banner/${brandData.banner}`;
         document.querySelector('.brand-image').alt = brandData.name;
 
         // Update social media links
@@ -246,7 +223,7 @@
             socialMedia.push({
                 type: 'instagram',
                 url: `https://instagram.com/${brandData.instagram.replace(/(@|instagram\.com\/)/g, '')}`,
-                icon: '<?php echo base_url("assets/image/icon/instagram.png"); ?>'
+                icon: 'https://terasjapan.com/ImageTerasJapan/icon/instagram.png'
             });
         }
         
@@ -254,7 +231,7 @@
             socialMedia.push({
                 type: 'tiktok',
                 url: `https://tiktok.com/@${brandData.tiktok.replace('@', '')}`,
-                icon: '<?php echo base_url("assets/image/icon/tiktok.png"); ?>'
+                icon: 'https://terasjapan.com/ImageTerasJapan/icon/tiktok.png'
             });
         }
         
@@ -262,7 +239,7 @@
             socialMedia.push({
                 type: 'whatsapp',
                 url: `https://wa.me/${brandData.wa}`,
-                icon: '<?php echo base_url("assets/image/icon/whatsapp.png"); ?>'
+                icon: 'https://terasjapan.com/ImageTerasJapan/icon/whatsapp.png'
             });
         }
         
@@ -271,7 +248,7 @@
             socialMedia.push({
                 type: 'website',
                 url: webUrl,
-                icon: '<?php echo base_url("assets/image/icon/globe.png"); ?>'
+                icon: 'https://terasjapan.com/ImageTerasJapan/icon/globe.png'
             });
         }
 
@@ -293,14 +270,14 @@
         // Update promo sections
         const availablePromoContainer = brandData.available_promos.map(promo => `
         <div class="promo-item">
-            <img src="http://localhost/ImageTerasJapan/promo/${promo.promo_image}" 
+            <img src="https://terasjapan.com/ImageTerasJapan/promo/${promo.promo_image}" 
                  alt="${promo.promo_name}">
         </div>
     `).join('');
 
         const comingPromoContainer = brandData.coming_promos.map(promo => `
         <div class="coming-item">
-            <img src="http://localhost/ImageTerasJapan/promo/${promo.promo_image}" 
+            <img src="https://terasjapan.com/ImageTerasJapan/promo/${promo.promo_image}" 
                  alt="${promo.promo_name}">
         </div>
     `).join('');
@@ -308,7 +285,7 @@
         // Add reward section update
         const availableRewardContainer = brandData.available_rewards.map(reward => `
         <div class="promo-item">
-            <img src="http://localhost/ImageTerasJapan/reward/${reward.image_name}" 
+            <img src="https://terasjapan.com/ImageTerasJapan/reward/${reward.image_name}" 
                  alt="${reward.title}">
         </div>
     `).join('');

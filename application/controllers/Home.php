@@ -5,7 +5,7 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->helper(['url', 'asset', 'mission']); // Tambahkan mission helper
+        $this->load->helper(['url', 'asset', 'mission', 'image']); // Tambahkan mission helper dan image helper
         $this->load->model('User_model');
         $this->load->model('Reward_model');
         $this->load->model('M_promo');

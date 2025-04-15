@@ -23,7 +23,7 @@
                         <a href="<?php echo site_url('profile/redeem?voucher_id=' . $voucher->kode_voucher); ?>" class="voucher-link">
                     <?php endif; ?>
 
-                        <img src="<?php echo base_url("../ImageTerasJapan/reward/{$voucher->image_name}"); ?>" 
+                        <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $voucher->image_name; ?>" 
                             alt="<?php echo $voucher->reward_title; ?>" class="voucher-image">
                         
                         <div class="voucher-info">
@@ -66,7 +66,7 @@
         <?php else: ?>
             <div class="no-voucher">
                 <div class="no-voucher-content" style="text-align: center; padding: 20px;">
-                    <img src="<?php echo base_url('assets/image/konten/konten3.png'); ?>" alt="No History" style="max-width: 200px; margin-bottom: 20px;">
+                    <img src="https://terasjapan.com/ImageTerasJapan/konten/konten3.png" alt="No History" style="max-width: 200px; margin-bottom: 20px;">
                     <p><strong>You don't have any vouchers yet, huhu 😢. Keep making transactions to earn awesome vouchers! 🚀</strong></p>
                 </div>
             </div>

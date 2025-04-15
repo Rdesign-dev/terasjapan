@@ -15,7 +15,7 @@
         <!-- Header -->
         <div class="header-wrapper">
             <div class="header-top-container">
-                <img class="header-logo" src="http://localhost/ImageTerasJapan/logo/tjwhite.png" alt="Teras Japan" />
+                <img class="header-logo" src="https://terasjapan.com/ImageTerasJapan/logo/tjwhite.png" alt="Teras Japan" />
                 <h1 class="header-title-text">Teras Heroes Club</h1>
             </div>
         </div>
@@ -33,7 +33,7 @@
                     <?php foreach ($brand->rewards as $reward): ?>
                     <div class="reward-item" data-id="<?php echo $reward->id; ?>"
                         data-brand-id="<?php echo $brand->id; ?>" data-brand-name="<?php echo $brand->name; ?>">
-                        <img src="<?php echo base_url('../ImageTerasJapan/reward/' . $reward->image_name); ?>"
+                        <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
                             alt="<?php echo $reward->title; ?>" />
                         <div class="reward-info">
                             <h4><?php echo $reward->title; ?></h4>
@@ -83,7 +83,7 @@
         <div id="confirmRedeemPopup" class="popup-referral">
             <div class="popup-content">
                 <span class="close-btn">&times;</span>
-                <img src="<?php echo icon_url('question.png') ?>" class="popup-image" alt="confirm-image">
+                <img src="https://terasjapan.com/ImageTerasJapan/icon/question.png" class="popup-image" alt="confirm-image">
                 <p>Are you sure you want to redeem this reward?</p>
                 <div class="button-container">
                     <div class="rectangle yes-btn">
@@ -103,7 +103,7 @@
         <div id="rewardRedeemPopup" class="popup-referral" style="display: none;">
             <div class="popup-content">
                 <span class="close-btn" onclick="closeRewardRedeemPopup()">&times;</span>
-                <img src="<?php echo icon_url('cek.png') ?>" class="popup-image" alt="popup-image">
+                <img src="https://terasjapan.com/ImageTerasJapan/icon/cek.png" class="popup-image" alt="popup-image">
                 <p>Your reward has been successfully redeemed.</p>
                 <div class="button-container">
                     <div class="rectangle ok-btn" onclick="closeRewardRedeemPopup()">
@@ -130,7 +130,7 @@
         <div id="rewardErrorPopup" class="popup-referral" style="display: none;">
             <div class="popup-content">
                 <span class="close-btn" onclick="closeRewardErrorPopup()">&times;</span>
-                <img src="<?php echo icon_url('x.png') ?>" class="popup-image" alt="error-image">
+                <img src="https://terasjapan.com/ImageTerasJapan/icon/x.png" class="popup-image" alt="error-image">
                 <p id="errorMessage"></p>
                 <div class="button-container">
                     <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
@@ -179,7 +179,7 @@
                 .then(response => {
                     if (response.status === 'success') {
                         const data = response.data;
-                        modalImage.src = `<?= base_url('../ImageTerasJapan/reward/'); ?>${data.image_name}`;
+                        modalImage.src = `https://terasjapan.com/ImageTerasJapan/reward/${data.image_name}`;
                         modalTitle.textContent = data.title;
                         modalDescription.textContent = data.description || '';
                         modalPoints.textContent = `${data.points_required} Points`;

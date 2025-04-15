@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/transaction.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/header.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>">
+    <link rel="icon" type="image/x-icon" href="https://terasjapan.com/ImageTerasJapan/logo/logo-amigos.png">
 </head>
 <body>
     <div class="header">
@@ -16,7 +16,7 @@
     </div>
     <div class="content">
         <div class="logo-container">
-            <img src="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>" alt="Amigos logo">
+            <img src="https://terasjapan.com/ImageTerasJapan/logo/logo-amigos.png" alt="Amigos logo">
             <h1>Amigos Mulia Indonesia</h1>
         </div>
         <div class="details">
@@ -66,7 +66,7 @@
         <div class="transaction-summary">
             <span id="toggleDetail">Payment Receipt</span>
             <div class="receipt-container" id="receiptContainer">
-                <img src="<?php echo base_url('../ImageTerasJapan/transaction_proof/Payment/' . $transaction->transaction_evidence); ?>" alt="Struk Pembayaran">
+                <img src="https://terasjapan.com/ImageTerasJapan/transaction_proof/Payment/<?php echo $transaction->transaction_evidence; ?>" alt="Struk Pembayaran">
             </div>
         </div>
     </div>

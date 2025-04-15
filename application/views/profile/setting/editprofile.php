@@ -22,7 +22,7 @@
         
         <form action="<?php echo base_url('profile/setting/update-profile'); ?>" method="POST" enctype="multipart/form-data">
             <div class="profile-image-container">
-                <img src="<?php echo base_url('../ImageTerasJapan/ProfPic/' . ($user->profile_pic ? $user->profile_pic : 'profile.jpg')); ?>"
+                <img src="https://terasjapan.com/ImageTerasJapan/ProfPic/<?php echo ($user->profile_pic ? $user->profile_pic : 'profile.jpg'); ?>"
                      alt="Profile Picture" 
                      class="profile-image">
                 <input type="file" name="profile_picture" accept="image/jpeg,image/jpg,image/png" class="choose-file-btn">

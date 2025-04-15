@@ -50,7 +50,7 @@ class Setting extends CI_Controller {
 
         // Handle profile picture upload
         if (!empty($_FILES['profile_picture']['name'])) {
-            $upload_path = '../ImageTerasJapan/ProfPic/';
+            $upload_path = FCPATH . '../ImageTerasJapan/ProfPic/';
             
             // Create directory if it doesn't exist
             if (!is_dir($upload_path)) {
@@ -141,7 +141,7 @@ class Setting extends CI_Controller {
         
         // Delete physical file if exists and not default
         if ($old_picture && $old_picture != 'profile.jpg') {
-            $file_path = '../ImageTerasJapan/ProfPic/' . $old_picture;
+            $file_path = FCPATH . '../ImageTerasJapan/ProfPic/' . $old_picture;
             if (file_exists($file_path)) {
                 unlink($file_path);
             }

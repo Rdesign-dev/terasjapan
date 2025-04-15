@@ -43,8 +43,8 @@ class Explore extends CI_Controller {
 
         $response = [
             'name' => $brand->name,
-            'logo' => 'http://localhost/ImageTerasJapan/logo/' . $brand->image,
-            'banner' => 'http://localhost/ImageTerasJapan/banner/' . $brand->banner,
+            'image' => $brand->image, // Just send the filename
+            'banner' => $brand->banner, // Just send the filename
             'instagram' => $brand->instagram,
             'tiktok' => $brand->tiktok,
             'wa' => $brand->wa,

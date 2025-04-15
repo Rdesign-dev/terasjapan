@@ -15,7 +15,8 @@
     </div>
 <div class="container">
         <div class="content-top">
-            <img src="<?php echo base_url('../ImageTerasJapan/reward/' . $voucher->image_name); ?>" alt="<?php echo $voucher->title; ?> image">
+            <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $voucher->image_name; ?>" 
+                 alt="<?php echo $voucher->title; ?> image">
             <div>
                 <h1><?php echo $voucher->title; ?></h1>
                 <span class="badge <?php echo strtolower($voucher->status); ?>"><?php echo $voucher->status; ?></span>
@@ -50,7 +51,8 @@
         </div>
         <div class="content-bottom">
             <p>Scan code in the outlet</p>
-            <img src="<?php echo base_url('../ImageTerasJapan/qrcode/' . $voucher->qr_code_url); ?>" alt="QR code for voucher">
+            <img src="https://terasjapan.com/ImageTerasJapan/qrcode/<?php echo $voucher->qr_code_url; ?>" 
+                 alt="QR code for voucher">
             <p class="note">Note: Don't give this voucher code to anyone</p>
         </div>
     </div>

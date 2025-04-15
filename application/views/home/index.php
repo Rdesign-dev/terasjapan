@@ -15,7 +15,7 @@
         <div class="ad-popup-content">
             <span class="ad-close">&times;</span>
             <?php if (!empty($popup)): ?>
-                <img src="<?php echo base_url('../ImageTerasJapan/contentpopup/' . $popup->Image); ?>" 
+                <img src="<?php echo image_url('contentpopup', $popup->Image); ?>" 
                     alt="<?php echo $popup->name; ?>"
                     <?php if (!empty($popup->link)): ?>
                     onclick="window.location.href='<?php echo $popup->link ?>'"
@@ -28,15 +28,15 @@
     <div class="banner">
         <?php if (!empty($banners)): ?>
             <?php foreach($banners as $banner): ?>
-                <img src="<?php echo banner_url($banner->image) ?>" 
-                     alt="<?php echo $banner->title ?>"
+                <img src="https://terasjapan.com/ImageTerasJapan/banner/<?php echo $banner->image; ?>" 
+                     alt="<?php echo $banner->title; ?>"
                      <?php if (!empty($banner->link)): ?>
-                     onclick="window.location.href='<?php echo $banner->link ?>'"
+                     onclick="window.location.href='<?php echo $banner->link; ?>'"
                      style="cursor: pointer;"
                      <?php endif; ?>>
             <?php endforeach; ?>
         <?php else: ?>
-            <div class="no-banner"></div>
+            <div class="no-banner">
                 <p>No active banners available.</p>
             </div>
         <?php endif; ?>
@@ -123,8 +123,8 @@
                          data-id="<?= $promo->id ?>"
                          data-title="<?= htmlspecialchars($promo->promo_name) ?>"
                          data-description="<?= htmlspecialchars($promo->promo_desc) ?>"
-                         data-image="<?= base_url('../ImageTerasJapan/promo/' . $promo->promo_image) ?>">
-                        <img src="<?php echo base_url('../ImageTerasJapan/promo/' . $promo->promo_image); ?>"
+                         data-image="<?= image_url('promo', $promo->promo_image) ?>">
+                        <img src="<?php echo image_url('promo', $promo->promo_image); ?>"
                              alt="<?php echo htmlspecialchars($promo->promo_name); ?>">
                         <p><?php echo htmlspecialchars($promo->promo_name); ?></p>
                     </div>
@@ -156,13 +156,13 @@
         <div class="promo-header">
             <h2 style="cursor: pointer;">Explore Our Brand</h2>
         </div>
-        <div class="brand-items"> <!-- Changed from promo-items to brand-items -->
+        <div class="brand-items">
             <?php if (!empty($brands)): ?>
                 <?php foreach($brands as $brand): ?>
-                    <div class="brand-item"> <!-- Changed from promo-item to brand-item -->
+                    <div class="brand-item">
                         <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>" 
                            class="brand-item-link" style="text-decoration: none;">
-                            <img src="<?php echo base_url('../ImageTerasJapan/logo/' . $brand->image); ?>"
+                            <img src="<?php echo image_url('logo', $brand->image); ?>"
                                  alt="<?php echo $brand->name; ?>"
                                  class="brand-logo">
                             <p><?php echo $brand->name; ?></p>
@@ -214,14 +214,14 @@
             $available_rewards = array_filter($rewards ?? [], function($reward) {
                 return isset($reward->qty) && 
                        $reward->qty > 0 && 
-                       strtotime($reward->valid_until) > time(); // Check if reward hasn't expired
+                       strtotime($reward->valid_until) > time();
             });
             
             if (!empty($available_rewards)): 
             ?>
                 <?php foreach ($available_rewards as $reward): ?>
                 <div class="reward-item" data-id="<?php echo $reward->id; ?>">
-                    <img src="<?php echo reward_url($reward->image_name); ?>"
+                    <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
                         alt="<?php echo $reward->title; ?>">
                     <div class="reward-info">
                         <div class="reward-title"><?php echo $reward->title; ?></div>
@@ -346,7 +346,7 @@
             ?>
                 <?php foreach ($activeNews as $news_item): ?>
                     <a href="<?php echo base_url('home/news/' . $news_item->id); ?>" class="news-item">
-                        <img src="<?= news_url($news_item->image) ?>"
+                        <img src="<?= image_url('news_event', $news_item->image) ?>"
                             alt="<?= htmlspecialchars($news_item->title) ?>">
                         <div class="news-content">
                             <h3><?= htmlspecialchars($news_item->title) ?></h3>
@@ -363,7 +363,7 @@
     </div>
 
     <a href="https://wa.me/6282283619320" class="whatsapp-section" style="text-decoration: none;">
-        <img src="<?php echo icon_url('whatsapp.png') ?>" alt="WhatsApp">
+        <img src="http://terasjapan.com/ImageTerasJapan/icon/whatsapp.png" alt="WhatsApp">
         <span>Join our Community via WhatsApp</span>
     </a>
 
@@ -502,17 +502,17 @@
                 .then(response => response.json())
                 .then(response => {
                     if (response.status === 'success') {
-                        const data = response.data; // Get the data from response
+                        const data = response.data;
                         
-                        modalImage.src = "<?= base_url('../ImageTerasJapan/reward/'); ?>" + data.image_name;
+                        // Direct URL reference
+                        modalImage.src = "https://terasjapan.com/ImageTerasJapan/reward/" + data.image_name;
+                        
                         modalTitle.innerText = data.title;
                         modalPoints.innerText = "Poin: " + data.points_required;
                         modalDescription.innerText = data.description;
                         modalValidity.innerText = "Voucher validity: " + data.total_days + " days after redeem";
                         
-                        // Remove branches display since we no longer use it
-                        modalBranches.innerHTML = ''; // Clear the branches section
-                        
+                        modalBranches.innerHTML = '';
                         redeemLink.href = "javascript:showConfirmRedeemPopup(" + rewardId + ");";
                         modal.style.display = "flex";
                     } else {
@@ -665,6 +665,7 @@
     });
     </script>
 </body>
-<?php include 'application/views/layout/Footer.php'; ?>
+
+<?php $this->load->view('layout/Footer'); ?>
 
 </html>

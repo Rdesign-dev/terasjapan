@@ -17,7 +17,7 @@
     <!-- Content -->
     <div class="content">
         <div class="banner">
-            <img src="<?php echo base_url('assets/image/banner/' . $brand->banner); ?>" 
+            <img src="https://terasjapan.com/ImageTerasJapan/banner/<?php echo $brand->banner; ?>" 
                  alt="<?php echo $brand->name; ?>" style="width: 100%; max-height: 200px; object-fit: cover;">
         </div>
         <div class="details">

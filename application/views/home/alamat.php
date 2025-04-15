@@ -20,8 +20,9 @@
     <!-- Logo Container -->
     <div class="logo-container">
         <?php foreach ($brands as $brand): ?>
-        <img src="<?php echo base_url('../ImageTerasJapan/logo/' . $brand->image) ?>" alt="<?php echo $brand->name ?>"
-            class="logo" onclick="showAddresses(<?php echo $brand->id ?>)">
+        <img src="https://terasjapan.com/ImageTerasJapan/logo/<?php echo $brand->image ?>" 
+             alt="<?php echo $brand->name ?>"
+             class="logo" onclick="showAddresses(<?php echo $brand->id ?>)">
         <?php endforeach; ?>
     </div>
 
@@ -46,7 +47,7 @@
                         var logoArray = address.brand_images.split(',');
                         logoArray.forEach(function(image) {
                             logos +=
-                                '<img src="<?php echo base_url('../ImageTerasJapan/logo/') ?>' +
+                                '<img src="https://terasjapan.com/ImageTerasJapan/logo/' +
                                 image.trim() +
                                 '" alt="Logo" class="logo" style="width:auto; height:18px;">';
                         });
@@ -79,7 +80,7 @@
                     if (address.brand_images) {
                         var logoArray = address.brand_images.split(',');
                         logoArray.forEach(function(image) {
-                            logos += '<img src="<?php echo base_url('../ImageTerasJapan/logo/') ?>' + image.trim() + '" alt="Logo" class="logo" style="width:auto; height:18px;">';
+                            logos += '<img src="https://terasjapan.com/ImageTerasJapan/logo/' + image.trim() + '" alt="Logo" class="logo" style="width:auto; height:18px;">';
                         });
                     }
                     branchesSection.append(`

@@ -46,8 +46,8 @@
     <!-- Success Popup -->
     <div id="successPopup" class="popup-referral" style="display: none;">
         <div class="popup-content">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/cek.png" alt="Success" class="success-icon">
             <span class="close-btn" onclick="closeSuccessPopup()">&times;</span>
-            <img src="<?php echo base_url('assets/image/icon/cek.png'); ?>" alt="Success" class="logout-image">
             <h2>Check-In Success!</h2>
             <p>You've earned <span class="earned-points">20</span> Ryo Points</p>
             <div class="button-container">

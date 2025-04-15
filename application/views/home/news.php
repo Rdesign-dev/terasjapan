@@ -20,10 +20,10 @@
     <!-- News Card -->
     <div class="news-container">
       <?php if (isset($news)): ?>
-      <div class="news-card">
+      <div class="news-card"> 
         <div class="news-header">
           <img class="news-image" 
-               src="<?php echo news_url($news->image); ?>" 
+                 src="https://terasjapan.com/ImageTerasJapan/news_event/<?php echo $news->image; ?>"
                alt="<?php echo $news->title; ?>" />
           <div>
             <div class="news-title"><?php echo $news->title; ?></div>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/topup.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/header.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/image/logo/logo-amigos.png'); ?>">
+    <link rel="icon" type="image/x-icon" href="https://terasjapan.com/ImageTerasJapan/logo/logo-amigos.png">
 </head>
 <body>
     <div class="header">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="status">
-            <img src="<?php echo base_url('assets/image/icon/cek.png'); ?>" alt="Success" class="success-icon">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/cek.png" alt="Success" class="success-icon">
             <div class="success-message">
                 <span>Success</span>
             </div>

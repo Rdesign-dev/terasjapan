@@ -22,7 +22,7 @@
         <div class="flex justify-between items-center p-4">
             <?php if ($user): ?>
                 <div class="flex gap-4 items-center">
-                    <img src="<?php echo base_url('../ImageTerasJapan/ProfPic/' . ($user->profile_pic ? $user->profile_pic : 'profile.jpg')); ?>" 
+                    <img src="https://terasjapan.com/ImageTerasJapan/ProfPic/<?php echo ($user->profile_pic ? $user->profile_pic : 'profile.jpg'); ?>" 
                          alt="Profile Picture" 
                          class="w-[60px] h-[60px] rounded-full object-cover">
                     <div class="flex flex-col gap-1">
@@ -32,10 +32,10 @@
                         <p class="text-yellow-500">Saldo: Rp <?php echo number_format($user->balance, 0, ',', '.'); ?></p>
                     </div>
                 </div>
-                <img src="<?php echo base_url('assets/image/icon/setting.png'); ?>" alt="Settings" class="settings-icon" onclick="window.location.href='<?php echo base_url('setting') ?>'">
+                <img src="https://terasjapan.com/ImageTerasJapan/icon/setting.png" alt="Settings" class="settings-icon" onclick="window.location.href='<?php echo base_url('setting') ?>'">
             <?php else: ?>
                 <div class="flex gap-4 items-center">
-                    <img src="<?php echo base_url('../ImageTerasJapan/ProfPic/profile.jpg'); ?>" 
+                    <img src="https://terasjapan.com/ImageTerasJapan/ProfPic/profile.jpg" 
                          alt="Guest Profile" 
                          class="w-[60px] h-[60px] rounded-full object-cover">
                     <div class="flex flex-col gap-1">
@@ -116,7 +116,7 @@
         <div class="popup-content">
             <span class="close-btn" onclick="closeLogoutPopup()">&times;</span>
             <h2>Confirm Logout</h2>
-            <img src="<?php echo base_url('assets/image/icon/exit.png'); ?>" alt="Logout Confirmation" class="logout-image">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/exit.png" alt="Logout Confirmation" class="logout-image">
             <p>Are you sure you want to logout?</p>
             <div class="button-container">
                 <a href="<?php echo base_url('profile/logout') ?>">
