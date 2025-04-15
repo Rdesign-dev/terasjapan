@@ -6,6 +6,7 @@ class Explore extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('M_explore');
+        $this->load->model('Reward_model');
     }
 
     public function index() {
@@ -25,6 +26,7 @@ class Explore extends CI_Controller {
             'brand' => $brand,
             'available_promos' => $this->M_explore->get_brand_promos($brand->id, 'Available'),
             'coming_promos' => $this->M_explore->get_brand_promos($brand->id, 'Coming'),
+            'available_rewards' => $this->Reward_model->get_rewards_by_brand($brand->id),
             'all_brands' => $this->M_explore->get_all_brands()
         ];
 
@@ -34,19 +36,12 @@ class Explore extends CI_Controller {
     public function get_brand_data() {
         $brand_id = $this->input->get('brand');
         $brand = $this->M_explore->get_brand_by_id($brand_id);
-        
+
         if (!$brand) {
-            $this->output->set_status_header(404);
-            echo json_encode(['error' => 'Brand not found']);
-            return;
+            return $this->output->set_status_header(404)->set_output(json_encode(['error' => 'Brand not found']));
         }
 
-        // Get promos for this brand
-        $available_promos = $this->M_explore->get_brand_promos($brand_id, 'Available');
-        $coming_promos = $this->M_explore->get_brand_promos($brand_id, 'Coming');
-        
         $response = [
-            'id' => $brand->id,
             'name' => $brand->name,
             'logo' => 'http://localhost/ImageTerasJapan/logo/' . $brand->image,
             'banner' => 'http://localhost/ImageTerasJapan/banner/' . $brand->banner,
@@ -54,18 +49,9 @@ class Explore extends CI_Controller {
             'tiktok' => $brand->tiktok,
             'wa' => $brand->wa,
             'web' => $brand->web,
-            'available_promos' => array_map(function($promo) {
-                return [
-                    'promo_name' => $promo->promo_name,
-                    'promo_image' => $promo->promo_image
-                ];
-            }, $available_promos),
-            'coming_promos' => array_map(function($promo) {
-                return [
-                    'promo_name' => $promo->promo_name,
-                    'promo_image' => $promo->promo_image
-                ];
-            }, $coming_promos)
+            'available_promos' => $this->M_explore->get_brand_promos($brand_id, 'Available'),
+            'coming_promos' => $this->M_explore->get_brand_promos($brand_id, 'Coming'),
+            'available_rewards' => $this->Reward_model->get_rewards_by_brand($brand_id)
         ];
 
         echo json_encode($response);

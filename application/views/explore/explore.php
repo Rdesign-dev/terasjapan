@@ -136,13 +136,13 @@
         <div class="promo-section">
             <h2>Available Reward</h2>
             <div class="promo-items">
-                <?php if (!empty($available_promos)): ?>
-                <?php foreach ($available_promos as $promo): ?>
-                <div class="promo-item">
-                    <img src="http://localhost/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
-                        alt="<?php echo $promo->promo_name; ?>">
-                </div>
-                <?php endforeach; ?>
+                <?php if (!empty($available_rewards)): ?>
+                    <?php foreach ($available_rewards as $reward): ?>
+                        <div class="promo-item">
+                            <img src="http://localhost/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
+                                alt="<?php echo $reward->title; ?>">
+                        </div>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <div class="no-promo">
                         <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
@@ -152,7 +152,7 @@
         </div>
 
         <!-- Coming Soon Promo Section -->
-        <div class="coming-section">
+        <!-- <div class="coming-section">
             <h2>Coming Soon Reward</h2>
             <div class="coming-items">
                 <?php if (!empty($coming_promos)): ?>
@@ -168,7 +168,7 @@
                     </div>
                 <?php endif; ?>
             </div>
-        </div>
+        </div> -->
 
         <!-- Sidebar -->
         <div class="sidebar hidden">
@@ -305,8 +305,23 @@
         </div>
     `).join('');
 
-        document.querySelector('.promo-items').innerHTML = availablePromoContainer || '<p>No available promos</p>';
-        document.querySelector('.coming-items').innerHTML = comingPromoContainer || '<p>No upcoming promos</p>';
+        // Add reward section update
+        const availableRewardContainer = brandData.available_rewards.map(reward => `
+        <div class="promo-item">
+            <img src="http://localhost/ImageTerasJapan/reward/${reward.image_name}" 
+                 alt="${reward.title}">
+        </div>
+    `).join('');
+
+        // Update DOM
+        document.querySelector('.promo-items').innerHTML = availablePromoContainer || 
+            '<div class="no-promo"><p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p></div>';
+        document.querySelector('.coming-items').innerHTML = comingPromoContainer || 
+            '<div class="no-promo"><p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p></div>';
+        // Update rewards section
+        document.querySelectorAll('.promo-section')[1].querySelector('.promo-items').innerHTML = 
+            availableRewardContainer || 
+            '<div class="no-promo"><p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p></div>';
     }
 
     // Visible sidebar on scroll

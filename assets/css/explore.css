@@ -12,9 +12,10 @@
     align-items: center;
     width: 100%;
     max-width: 400px;
-    background-color: #f9f9f9;
+    background-color: #f9f9f9   ;
     margin: auto;
-    min-height: 100vh; /* Ensure container takes full height */
+    min-height: auto;
+    margin-bottom: 50px;
 }
 
 .header-wrapper {
@@ -156,7 +157,7 @@
     width: 100%;
     max-width: 400px;
     margin-top: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 20px;
 }
 
 .coming-section h2 {
