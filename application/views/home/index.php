@@ -188,8 +188,8 @@
                     <?php foreach($brands as $brand): ?>
                         <div>
                             <a href="<?php echo base_url('brand/detail?brand_name=' . strtolower(str_replace(' ', '', $brand->name))); ?>">
-                                <img src="<?php echo base_url('../ImageTerasJapan/logo/' . $brand->image); ?>" 
-                                     alt="<?php echo $brand->name; ?>">
+                                <img src="https://terasjapan.com/ImageTerasJapan/logo/<?php echo $brand->image; ?>" 
+                                    alt="<?php echo $brand->name; ?>">
                                 <p><?php echo $brand->name; ?></p>
                             </a>
                         </div>
