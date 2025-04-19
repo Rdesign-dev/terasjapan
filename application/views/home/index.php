@@ -498,7 +498,7 @@
 
         function fetchRewardData(rewardId) {
             console.log("Fetching reward data for ID:", rewardId);
-            fetch("<?= base_url('reward/get_reward/'); ?>" + rewardId)
+            fetch("<?= base_url('Reward/get_reward/'); ?>" + rewardId)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status === 'success') {
@@ -536,7 +536,7 @@
         }
 
         window.confirmRedeemReward = function() {
-            fetch("<?= base_url('reward/redeem'); ?>", {
+            fetch("<?= base_url('Reward/redeem'); ?>", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -545,7 +545,12 @@
                     "reward_id": currentRewardId
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log("Redeem reward response:", data);
                 if (data.status === 'success') {
@@ -558,7 +563,10 @@
                     modal.style.display = "none";
                 }
             })
-            .catch(error => console.error("Error redeeming reward:", error));
+            .catch(error => {
+                console.error("Error redeeming reward:", error);
+                showRewardErrorPopup("Failed to process reward redemption");
+            });
         }
 
         function showRewardErrorPopup(message) {
