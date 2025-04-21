@@ -100,10 +100,10 @@
             <div class="promo-items">
                 <?php if (!empty($available_promos)): ?>
                 <?php foreach ($available_promos as $promo): ?>
-                <div class="promo-item">
-                    <img src="https://terasjapan.com/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
-                        alt="<?php echo $promo->promo_name; ?>">
-                </div>
+                    <div class="promo-item" data-description="<?php echo htmlspecialchars($promo->description ?? ''); ?>">
+                        <img src="https://terasjapan.com/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
+                            alt="<?php echo $promo->promo_name; ?>">
+                    </div>
                 <?php endforeach; ?>
                 <?php else: ?>
                     <div class="no-promo">
@@ -112,6 +112,20 @@
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- Update the promo modal HTML -->
+    <div id="promoModal" class="promo-modal" style="display: none;">
+        <div class="promo-modal-content">
+            <span class="promo-close" onclick="closePromoModal()">&times;</span>
+            <div class="promo-modal-body">
+                <img id="promoModalImage" src="" alt="Promo Image" class="promo-modal-image">
+                <div class="promo-modal-info">
+                    <h3 id="promoModalTitle" class="promo-modal-title"></h3>
+                    <p id="promoModalDescription" class="promo-modal-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Coming Soon Promo Section -->
         <div class="coming-section">
@@ -314,7 +328,55 @@
         }
     });
     </script>
-</body>
 
+    <!-- Add this script at the bottom of the file before </body> -->
+    <script>
+        // Add click event to promo items
+        document.querySelectorAll('.promo-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const promoImage = this.querySelector('img');
+                const promoName = promoImage.alt;
+                
+                // Get promo data from data attributes
+                const promoData = {
+                    image: promoImage.src,
+                    title: promoName,
+                    description: this.dataset.description || 'No description available'
+                };
+                
+                openPromoModal(promoData);
+            });
+        });
+
+        // Function to open modal
+        function openPromoModal(promoData) {
+            const modal = document.getElementById('promoModal');
+            const modalImage = document.getElementById('promoModalImage');
+            const modalTitle = document.getElementById('promoModalTitle');
+            const modalDescription = document.getElementById('promoModalDescription');
+
+            // Set modal content
+            modalImage.src = promoData.image;
+            modalTitle.textContent = promoData.title;
+            modalDescription.textContent = promoData.description;
+
+            // Show modal
+            modal.style.display = 'flex';
+        }
+
+        // Function to close modal
+        function closePromoModal() {
+            document.getElementById('promoModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('promoModal');
+            if (e.target === modal) {
+                closePromoModal();
+            }
+        });
+    </script>
+</body>
 
 </html>
