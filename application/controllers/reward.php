@@ -36,9 +36,9 @@ class Reward extends CI_Controller {
             ];
             
             $this->output->set_content_type('application/json')
-                         ->set_status_header(200)
-                         ->set_output(json_encode($response));
-                         
+                        ->set_status_header(200)
+                        ->set_output(json_encode($response));
+                        
         } catch (Exception $e) {
             log_message('error', 'Error fetching reward: ' . $e->getMessage());
             $this->output->set_status_header(500);
@@ -47,36 +47,45 @@ class Reward extends CI_Controller {
     }
 
     public function redeem() {
-        $this->output->set_content_type('application/json');
-
-        // Cek apakah user sudah login
-        $user_id = $this->session->userdata('user_id');
-        if (!$user_id) {
-            $this->output->set_status_header(401);
-            echo json_encode(['status' => 'error', 'message' => 'Please login to redeem rewards']);
-            return;
-        }
-
-        $data = json_decode(file_get_contents('php://input'), true);
-        $reward_id = $data['reward_id'] ?? null;
+        // Disable error output
+        ini_set('display_errors', 0);
         
-        if (!$reward_id || !is_numeric($reward_id)) {
-            $this->output->set_status_header(400);
-            echo json_encode(['status' => 'error', 'message' => 'Invalid reward ID']);
-            return;
-        }
-
-        $result = $this->Reward_model->redeem_reward($user_id, $reward_id);
-
-        if ($result['status'] == 'error') {
-            $this->output->set_status_header(400);
-            // Add specific handling for out of stock error
-            if ($result['message'] == 'Reward is out of stock') {
-                echo json_encode(['status' => 'error', 'message' => 'Sorry, this reward is out of stock']);
+        // Ensure clean output
+        if (ob_get_level()) ob_end_clean();
+        
+        header('Content-Type: application/json');
+        
+        try {
+            // Cek apakah user sudah login
+            $user_id = $this->session->userdata('user_id');
+            if (!$user_id) {
+                $this->output->set_status_header(401);
+                echo json_encode(['status' => 'error', 'message' => 'Please login to redeem rewards']);
                 return;
             }
-        }
 
-        echo json_encode($result);
+            $data = json_decode(file_get_contents('php://input'), true);
+            $reward_id = $data['reward_id'] ?? null;
+            
+            if (!$reward_id || !is_numeric($reward_id)) {
+                $this->output->set_status_header(400);
+                echo json_encode(['status' => 'error', 'message' => 'Invalid reward ID']);
+                return;
+            }
+
+            $result = $this->Reward_model->redeem_reward($user_id, $reward_id);
+
+            if ($result['status'] == 'error') {
+                $this->output->set_status_header(400);
+                echo json_encode($result);
+                return;
+            }
+
+            echo json_encode($result);
+        } catch (Exception $e) {
+            log_message('error', 'Redeem error: ' . $e->getMessage());
+            $this->output->set_status_header(500);
+            echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your request']);
+        }
     }
 }
