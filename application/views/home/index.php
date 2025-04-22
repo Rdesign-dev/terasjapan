@@ -545,7 +545,22 @@
                     "reward_id": currentRewardId
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                // Periksa status response terlebih dahulu
+                if (!response.ok) {
+                    // Cek apakah response adalah JSON atau bukan
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Terjadi kesalahan saat menebus reward');
+                        });
+                    } else {
+                        // Jika bukan JSON, tangani sebagai error umum
+                        throw new Error('Server error: ' + response.status);
+                    }
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log("Redeem reward response:", data);
                 if (data.status === 'success') {
