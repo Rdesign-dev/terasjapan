@@ -66,16 +66,22 @@ class Reward_model extends CI_Model {
 
         // Generate QR code
         $qr_image_name = 'vcreward-' . $user_code . '-' . $date_code . '-' . uniqid() . '.png';
-        $qr_image_path = FCPATH . 'ImageTerasJapan/qrcode/' . $qr_image_name;
+        $qr_dir = FCPATH . 'ImageTerasJapan/qrcode/';
+        $qr_image_path = $qr_dir . $qr_image_name;
         $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($voucher_code);
+
+        // Pastikan direktori ada
+        if (!file_exists($qr_dir)) {
+            mkdir($qr_dir, 0777, true);
+        }
 
         $qr_image = file_get_contents($qr_url);
         if ($qr_image === FALSE) {
             return ['status' => 'error', 'message' => 'Failed to generate QR code'];
         }
 
-        if (file_put_contents(FCPATH . $qr_image_path, $qr_image) === FALSE) {
-            return ['status' => 'error', 'message' => 'Failed to save QR code image'];
+        if (file_put_contents($qr_image_path, $qr_image) === FALSE) {
+            return ['status' => 'error', 'message' => 'Failed to save QR code image: ' . error_get_last()['message']];
         }
 
         // Save redemption data
