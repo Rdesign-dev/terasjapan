@@ -147,23 +147,44 @@
         </div>
 
         <!-- Available reward Section -->
-        <div class="promo-section">
-            <h2>Available Reward</h2>
-            <div class="promo-items">
-                <?php if (!empty($available_rewards)): ?>
-                    <?php foreach ($available_rewards as $reward): ?>
-                        <div class="promo-item">
-                            <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
-                                alt="<?php echo $reward->title; ?>">
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="no-promo">
-                        <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
-                    </div>
-                <?php endif; ?>
-            </div>
+        <div class="reward-section">
+        <div class="reward-header">
+            <h2>Rewards</h2>
+            <a href="<?php echo base_url('home/listreward'); ?>" class="see-all-btn">See All</a>
         </div>
+        <div class="reward-items">
+            <?php 
+            $available_rewards = array_filter($rewards ?? [], function($reward) {
+                return isset($reward->qty) && 
+                       $reward->qty > 0 && 
+                       strtotime($reward->valid_until) > time();
+            });
+            
+            if (!empty($available_rewards)): 
+            ?>
+                <?php foreach ($available_rewards as $reward): ?>
+                <div class="reward-item" data-id="<?php echo $reward->id; ?>">
+                    <img src="https://terasjapan.com/ImageTerasJapan/reward/<?php echo $reward->image_name; ?>"
+                        alt="<?php echo $reward->title; ?>">
+                    <div class="reward-info">
+                        <div class="reward-title"><?php echo $reward->title; ?></div>
+                        <div class="reward-points">
+                            <span class="points-value"><?php echo $reward->points_required; ?></span>
+                            <span class="points-text">Poin</span>
+                        </div>
+                        <?php if ($reward->qty <= 5): ?>
+                        <div class="stock-warning"><?php echo $reward->qty; ?> voucher left!</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-promo">
+                    <p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 
         <!-- Sidebar -->
         <div class="sidebar hidden">
