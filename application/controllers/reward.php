@@ -47,20 +47,21 @@ class Reward extends CI_Controller {
     }
 
     public function redeem() {
-        // Disable error output
+        // Nonaktifkan tampilan error
         ini_set('display_errors', 0);
         
-        // Ensure clean output
+        // Pastikan output bersih
         if (ob_get_level()) ob_end_clean();
         
-        header('Content-Type: application/json');
+        // Pastikan header content-type adalah application/json
+        $this->output->set_content_type('application/json');
         
         try {
             // Cek apakah user sudah login
             $user_id = $this->session->userdata('user_id');
             if (!$user_id) {
                 $this->output->set_status_header(401);
-                echo json_encode(['status' => 'error', 'message' => 'Please login to redeem rewards']);
+                $this->output->set_output(json_encode(['status' => 'error', 'message' => 'Please login to redeem rewards']));
                 return;
             }
 
@@ -69,7 +70,7 @@ class Reward extends CI_Controller {
             
             if (!$reward_id || !is_numeric($reward_id)) {
                 $this->output->set_status_header(400);
-                echo json_encode(['status' => 'error', 'message' => 'Invalid reward ID']);
+                $this->output->set_output(json_encode(['status' => 'error', 'message' => 'Invalid reward ID']));
                 return;
             }
 
@@ -77,15 +78,15 @@ class Reward extends CI_Controller {
 
             if ($result['status'] == 'error') {
                 $this->output->set_status_header(400);
-                echo json_encode($result);
+                $this->output->set_output(json_encode($result));
                 return;
             }
 
-            echo json_encode($result);
+            $this->output->set_output(json_encode($result));
         } catch (Exception $e) {
             log_message('error', 'Redeem error: ' . $e->getMessage());
             $this->output->set_status_header(500);
-            echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your request']);
+            $this->output->set_output(json_encode(['status' => 'error', 'message' => 'An error occurred while processing your request']));
         }
     }
 }
