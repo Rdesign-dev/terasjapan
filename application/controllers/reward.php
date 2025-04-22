@@ -29,7 +29,7 @@ class Reward extends CI_Controller {
                 return;
             }
             
-            // Tambahkan status success dalam response
+            // Tambahkan status success dalam response xxxxxxxxxxxxxxxxxxxxxxxx
             $response = [
                 'status' => 'success',
                 'data' => $reward
