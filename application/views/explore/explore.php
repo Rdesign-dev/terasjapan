@@ -228,6 +228,10 @@
                     `<?php echo base_url('explore/get_brand_data?brand='); ?>${brandId}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const brandData = await response.json();
+                
+                // Debug data
+                // console.log('Brand Data:', brandData);
+                // console.log('Available Rewards:', brandData.available_rewards);
 
                 // Update the page content
                 updatePageContent(brandData);
@@ -319,9 +323,17 @@
 
         // Add reward section update
         const availableRewardContainer = brandData.available_rewards.map(reward => `
-        <div class="promo-item">
-            <img src="https://terasjapan.com/ImageTerasJapan/reward/${reward.image_name}" 
-                 alt="${reward.title}">
+        <div class="reward-item" data-id="${reward.id}">
+            <img src="https://terasjapan.com/ImageTerasJapan/reward/${reward.image_name}"
+                alt="${reward.title}">
+            <div class="reward-info">
+                <div class="reward-title">${reward.title}</div>
+                <div class="reward-points">
+                    <span class="points-value">${reward.points_required}</span>
+                    <span class="points-text">Poin</span>
+                </div>
+                ${reward.qty <= 5 ? `<div class="stock-warning">${reward.qty} voucher left!</div>` : ''}
+            </div>
         </div>
     `).join('');
 
@@ -330,10 +342,11 @@
             '<div class="no-promo"><p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p></div>';
         document.querySelector('.coming-items').innerHTML = comingPromoContainer || 
             '<div class="no-promo"><p>🔪 Unavailable Promo, <span>Comeback Soon!</span></p></div>';
-        // Update rewards section
-        document.querySelectorAll('.promo-section')[1].querySelector('.promo-items').innerHTML = 
-            availableRewardContainer || 
+        document.querySelector('.reward-items').innerHTML = availableRewardContainer || 
             '<div class="no-promo"><p>🔪 Unavailable Reward, <span>Comeback Soon!</span></p></div>';
+
+        // Reinitialize promo click events
+        initializePromoEvents();
     }
 
     // Visible sidebar on scroll
@@ -347,6 +360,30 @@
             sidebar.classList.remove('show');
             sidebar.classList.add('hidden');
         }
+    });
+
+    // Pindahkan logika event promo ke fungsi terpisah
+    function initializePromoEvents() {
+        document.querySelectorAll('.promo-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const promoImage = this.querySelector('img');
+                const promoName = promoImage.alt;
+                
+                // Get promo data from data attributes
+                const promoData = {
+                    image: promoImage.src,
+                    title: promoName,
+                    description: this.dataset.description || 'No description available'
+                };
+                
+                openPromoModal(promoData);
+            });
+        });
+    }
+
+    // Panggil saat pertama kali halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        initializePromoEvents();
     });
     </script>
 

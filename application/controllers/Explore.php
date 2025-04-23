@@ -22,11 +22,14 @@ class Explore extends CI_Controller {
             show_404();
         }
 
+        // Tambahkan ini untuk memastikan rewards tersedia saat pertama load
+        $rewards = $this->Reward_model->get_rewards_by_brand($brand->id);
+
         $data = [
             'brand' => $brand,
             'available_promos' => $this->M_explore->get_brand_promos($brand->id, 'Available'),
             'coming_promos' => $this->M_explore->get_brand_promos($brand->id, 'Coming'),
-            'available_rewards' => $this->Reward_model->get_rewards_by_brand($brand->id),
+            'rewards' => $rewards, // Kirim rewards ke view
             'all_brands' => $this->M_explore->get_all_brands()
         ];
 
