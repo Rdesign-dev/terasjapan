@@ -12,6 +12,7 @@ class Reward extends CI_Controller {
     public function get_reward($id) {
         log_message('debug', 'Received reward ID: ' . $id);
 
+        
         if (!ctype_digit($id)) {
             $this->output->set_status_header(400);
             echo json_encode(['status' => 'error', 'message' => 'Invalid reward ID']);
@@ -21,6 +22,7 @@ class Reward extends CI_Controller {
         try {
             log_message('debug', 'Attempting to fetch reward data');
             $reward = $this->Reward_model->get_reward_by_id($id);
+            
             log_message('debug', 'Reward data: ' . print_r($reward, true));
             
             if (!$reward) {
@@ -29,7 +31,7 @@ class Reward extends CI_Controller {
                 return;
             }
             
-            // Tambahkan status success dalam response xxxxxxxxxxxxxxxxxxxxxxxx
+            // Tambahkan status success dalam response
             $response = [
                 'status' => 'success',
                 'data' => $reward
@@ -68,6 +70,7 @@ class Reward extends CI_Controller {
             $data = json_decode(file_get_contents('php://input'), true);
             $reward_id = $data['reward_id'] ?? null;
             
+            
             if (!$reward_id || !is_numeric($reward_id)) {
                 $this->output->set_status_header(400);
                 $this->output->set_output(json_encode(['status' => 'error', 'message' => 'Invalid reward ID']));
@@ -75,6 +78,7 @@ class Reward extends CI_Controller {
             }
 
             $result = $this->Reward_model->redeem_reward($user_id, $reward_id);
+            
 
             if ($result['status'] == 'error') {
                 $this->output->set_status_header(400);

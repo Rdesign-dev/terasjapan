@@ -28,6 +28,7 @@ class Reward_model extends CI_Model {
         // Get user & reward data
         $user = $this->db->get_where('users', ['id' => $user_id])->row();
         $reward = $this->get_reward_by_id((int)$reward_id);
+        
 
         // Validation checks
         if (!$user || !$reward) {
@@ -41,6 +42,7 @@ class Reward_model extends CI_Model {
         if ($user->poin < $reward->points_required) {
             return ['status' => 'error', 'message' => 'Insufficient points'];
         }
+        
 
         // Update reward quantity
         $this->db->where('id', $reward_id);
@@ -65,17 +67,22 @@ class Reward_model extends CI_Model {
         $voucher_code = sprintf('%s-%s-%s-%03d', $promo_code, $date_code, $user_code, $count);
 
         // Generate QR code
+        $urlpath = '/home/u3218221/public_html/';
         $qr_image_name = 'vcreward-' . $user_code . '-' . $date_code . '-' . uniqid() . '.png';
-        $qr_dir = FCPATH . 'ImageTerasJapan/qrcode/';
+        // $qr_dir = FCPATH . 'ImageTerasJapan/qrcode/';
+        $qr_dir = $urlpath . 'ImageTerasJapan/qrcode/';
         $qr_image_path = $qr_dir . $qr_image_name;
         $qr_url = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($voucher_code);
-
+        
+        
         // Pastikan direktori ada
         if (!file_exists($qr_dir)) {
             mkdir($qr_dir, 0777, true);
         }
 
         $qr_image = file_get_contents($qr_url);
+    
+        
         if ($qr_image === FALSE) {
             return ['status' => 'error', 'message' => 'Failed to generate QR code'];
         }
