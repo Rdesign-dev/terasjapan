@@ -73,6 +73,8 @@ $route['profile/faq'] = 'profile/faq';
 $route['profile/feedback'] = 'profile/feedback';
 $route['profile/privacypolicy'] = 'profile/privacypolicy';
 $route['profile/checkin'] = 'checkin/index';
+$route['Checkin'] = 'Checkin/index';
+$route['Checkin/claim'] = 'Checkin/claim';
 
 // Admin routes
 $route['admin'] = 'admin/dashboard/index';

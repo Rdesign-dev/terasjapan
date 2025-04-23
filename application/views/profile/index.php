@@ -261,8 +261,8 @@
 
         function checkCheckinLoginStatus() {
             <?php if ($this->session->userdata('user_id')): ?>
-                // If user is logged in, redirect to checkin page
-                window.location.href = "<?php echo base_url('profile/Checkin'); ?>";
+                // Ubah dari 'profile/Checkin' menjadi 'Checkin'
+                window.location.href = "<?php echo base_url('Checkin'); ?>";
             <?php else: ?>
                 // If user is not logged in, show login popup
                 document.getElementById('loginPopup').style.display = 'flex';
