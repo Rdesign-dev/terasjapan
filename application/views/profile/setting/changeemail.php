@@ -66,9 +66,13 @@
 
     <script>
     $(document).ready(function() {
+        // Handler untuk pengiriman OTP
         $('#sendOtpBtn').click(function() {
             var newEmail = $('#new_email').val();
             if (newEmail) {
+                // Disable button saat proses
+                $(this).prop('disabled', true).text('Sending...');
+                
                 $.ajax({
                     url: '<?php echo base_url("changeemail/request_change_email"); ?>',
                     type: 'POST',
@@ -76,47 +80,99 @@
                         new_email: newEmail
                     },
                     dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded',
                     success: function(response) {
-                        showRewardRedeemPopup(response.message);
+                        console.log('Success Response:', response);
+                        // Cek status response
                         if (response.status === 'success') {
+                            showRewardRedeemPopup('OTP has been sent to your email');
                             $('#changeEmailForm').hide();
                             $('#verifyOtpForm').show();
+                        } else {
+                            showRewardRedeemPopup(response.message || 'Failed to send OTP');
                         }
                     },
-                    error: function() {
-                        showRewardRedeemPopup('An error occurred. Please try again.');
+                    error: function(xhr, status, error) {
+                        // Coba parse response text jika ada
+                        try {
+                            var errorResponse = JSON.parse(xhr.responseText);
+                            showRewardRedeemPopup(errorResponse.message);
+                        } catch(e) {
+                            showRewardRedeemPopup('Failed to send OTP. Please try again.');
+                        }
+                        console.log('Error details:', {
+                            responseText: xhr.responseText,
+                            status: status,
+                            error: error
+                        });
+                    },
+                    complete: function() {
+                        // Re-enable button
+                        $('#sendOtpBtn').prop('disabled', false).text('VERIFY EMAIL');
                     }
                 });
             } else {
-                showRewardRedeemPopup('Please check your email correctly.');
+                showRewardRedeemPopup('Please enter your email address.');
             }
         });
 
+        // Handler untuk verifikasi OTP
         $('#verifyOtpForm').submit(function(e) {
             e.preventDefault();
             var otp = $('#otp').val();
+            
+            if (!otp) {
+                showConfirmPopup('Please enter the OTP code.');
+                return;
+            }
+
+            $(this).find('button').prop('disabled', true).text('Verifying...');
+            
             $.ajax({
                 url: '<?php echo base_url("changeemail/verify_otp"); ?>',
                 type: 'POST',
-                data: {
-                    otp: otp
-                },
+                data: { otp: otp },
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
-                    showConfirmPopup(response.message);
-                    console.log('Success');
+                    console.log('Verify Response:', response); // Debug response
+                    
+                    if (response.status === 'success') {
+                        showConfirmPopup('Email changed successfully!');
+                        setTimeout(function() {
+                            window.location.href = '<?php echo base_url('profile'); ?>';
+                        }, 2000);
+                    } else {
+                        showConfirmPopup(response.message || 'Invalid OTP code.');
+                    }
                 },
-                error: function() {
-                    showConfirmPopup('An error occurred. Please try again.');
+                error: function(xhr, status, error) {
+                    console.log('Verify Error:', {xhr, status, error}); // Debug error
+                    
+                    let errorMessage = 'An error occurred. Please try again.';
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        errorMessage = response.message || errorMessage;
+                    } catch(e) {}
+                    
+                    showConfirmPopup(errorMessage);
+                },
+                complete: function() {
+                    $('#verifyOtpForm button').prop('disabled', false).text('VERIFY OTP');
                 }
             });
         });
     });
 
     function showRewardRedeemPopup(message) {
-        document.getElementById('rewardRedeemMessage').innerText = message;
-        document.getElementById('rewardRedeemPopup').style.display = 'flex';
+        $('#rewardRedeemMessage').text(message);
+        $('#rewardRedeemPopup').show();
+        
+        // Auto hide after 3 seconds if success message
+        if(message.includes('has been sent')) {
+            setTimeout(function() {
+                $('#rewardRedeemPopup').hide();
+            }, 3000);
+        }
     }
 
     function showConfirmPopup(message) {
@@ -125,7 +181,7 @@
     }
 
     function closeRewardRedeemPopup() {
-        document.getElementById('rewardRedeemPopup').style.display = 'none';
+        $('#rewardRedeemPopup').hide();
     }
 
     function closeConfirmPopup() {

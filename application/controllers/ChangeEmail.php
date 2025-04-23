@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -16,22 +17,31 @@ class ChangeEmail extends CI_Controller {
 
     // 1. Mengirim OTP ke email baru
     public function request_change_email() {
-        $new_email = $this->input->post('new_email');
-        $user_id = $this->session->userdata('user_id');
-        
-        // Generate OTP
-        $otp = rand(100000, 999999);
-        
-        // Simpan email sementara dan OTP
-        if ($this->M_email->save_email_otp($user_id, $new_email, $otp)) {
-            // Kirim email
-            if ($this->send_otp_email($new_email, $otp)) {
-                echo json_encode(['status' => 'success', 'message' => 'OTP sent to email']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Sorry, please check your email correctly.']);
+        header('Content-Type: application/json');
+        try {
+            $new_email = $this->input->post('new_email');
+            $user_id = $this->session->userdata('user_id');
+            $otp = sprintf("%06d", mt_rand(1, 999999));
+            $send_result = $this->send_otp_email($new_email, $otp);
+
+            if ($send_result) {
+                $this->M_email->save_email_otp($user_id, $new_email, $otp);
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'OTP has been sent to your email'
+                ]);
+                return;
             }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Please try again later.']);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Failed to send OTP email'
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'An error occurred while processing your request'
+            ]);
         }
     }
 
@@ -55,17 +65,23 @@ class ChangeEmail extends CI_Controller {
         try {
             $mail = new PHPMailer(true);
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            
+            // Server settings
+            $mail->Host = 'srv130.niagahoster.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'surya.eko.pra@gmail.com';
-            $mail->Password = 'zfso zzfo sbxq bisb';
+            $mail->Username = 'member.dev@terasjapan.com';
+            $mail->Password = 'member.dev';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             
-            $mail->setFrom('cs@terasjapan.com');
+            // Recipients
+            $mail->setFrom('member.dev@terasjapan.com', 'Teras Japan Member');
             $mail->addAddress($to_email);
+            
+            // Content
             $mail->isHTML(true);
             $mail->Subject = 'Verifikasi OTP Email Baru';
-$mail->Body = '
+            $mail->Body = '
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -196,8 +212,12 @@ $mail->Body = '
 </html>
 ';
             
-            return $mail->send();
+            $result = $mail->send();
+            // HANYA return true/false, tidak ada echo
+            return $result;
+            
         } catch (Exception $e) {
+            log_message('error', 'SMTP Error: ' . $e->getMessage());
             return false;
         }
     }
