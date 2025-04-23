@@ -9,6 +9,7 @@ class M_promo extends CI_Model {
         $this->db->where('brand_promo.status', 'Available');
         $this->db->where('brand_promo.available_from <=', date('Y-m-d H:i:s'));
         $this->db->where('brand_promo.valid_until >=', date('Y-m-d H:i:s'));
+        $this->db->where('brand_promo.priority', 'Active'); // Tambahan ini untuk filter enum priority
         return $this->db->get()->result();
     }
 

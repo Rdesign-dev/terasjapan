@@ -2,3 +2,5 @@ application/logs/*
 application/cache/*
 
 application/config/database.php
+
+ImageTerasjapan/qrcode/
