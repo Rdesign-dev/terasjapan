@@ -10,29 +10,17 @@ class Explore extends CI_Controller {
     }
 
     public function index() {
-        $brand_id = $this->input->get('brand') ?? null;
+        $default_brand = $this->M_explore->get_default_brand();
+        $data['brand'] = $default_brand;
+        $data['all_brands'] = $this->M_explore->get_all_brands();
         
-        if ($brand_id) {
-            $brand = $this->M_explore->get_brand_by_id($brand_id);
-        } else {
-            $brand = $this->M_explore->get_default_brand();
-        }
-
-        if (!$brand) {
-            show_404();
-        }
-
-        // Tambahkan ini untuk memastikan rewards tersedia saat pertama load
-        $rewards = $this->Reward_model->get_rewards_by_brand($brand->id);
-
-        $data = [
-            'brand' => $brand,
-            'available_promos' => $this->M_explore->get_brand_promos($brand->id, 'Available'),
-            'coming_promos' => $this->M_explore->get_brand_promos($brand->id, 'Coming'),
-            'rewards' => $rewards, // Kirim rewards ke view
-            'all_brands' => $this->M_explore->get_all_brands()
-        ];
-
+        // Menggunakan fungsi get_brand_promos yang sudah dimodifikasi
+        $data['available_promos'] = $this->M_explore->get_brand_promos($default_brand->id, 'Available');
+        $data['coming_promos'] = $this->M_explore->get_brand_promos($default_brand->id, 'Coming');
+        
+        // Tambahkan data rewards untuk tampilan awal
+        $data['rewards'] = $this->Reward_model->get_rewards_by_brand($default_brand->id);
+        
         $this->load->view('explore/explore', $data);
     }
 

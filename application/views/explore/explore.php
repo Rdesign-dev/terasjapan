@@ -100,7 +100,9 @@
             <div class="promo-items">
                 <?php if (!empty($available_promos)): ?>
                 <?php foreach ($available_promos as $promo): ?>
-                    <div class="promo-item" data-description="<?php echo htmlspecialchars($promo->description ?? ''); ?>">
+                    <div class="promo-item" 
+                         data-description="<?php echo htmlspecialchars($promo->promo_desc ?? ''); ?>"
+                         data-name="<?php echo htmlspecialchars($promo->promo_name); ?>">
                         <img src="https://terasjapan.com/ImageTerasJapan/promo/<?php echo $promo->promo_image; ?>"
                             alt="<?php echo $promo->promo_name; ?>">
                     </div>
@@ -308,14 +310,14 @@
 
         // Update promo sections
         const availablePromoContainer = brandData.available_promos.map(promo => `
-        <div class="promo-item">
+        <div class="promo-item" data-description="${promo.promo_desc || ''}" data-name="${promo.promo_name}">
             <img src="https://terasjapan.com/ImageTerasJapan/promo/${promo.promo_image}" 
                  alt="${promo.promo_name}">
         </div>
     `).join('');
 
         const comingPromoContainer = brandData.coming_promos.map(promo => `
-        <div class="coming-item">
+        <div class="coming-item" data-description="${promo.promo_desc || ''}" data-name="${promo.promo_name}">
             <img src="https://terasjapan.com/ImageTerasJapan/promo/${promo.promo_image}" 
                  alt="${promo.promo_name}">
         </div>
@@ -362,18 +364,16 @@
         }
     });
 
-    // Pindahkan logika event promo ke fungsi terpisah
+    // Perbaiki fungsi initializePromoEvents
     function initializePromoEvents() {
         document.querySelectorAll('.promo-item').forEach(item => {
             item.addEventListener('click', function() {
                 const promoImage = this.querySelector('img');
-                const promoName = promoImage.alt;
                 
-                // Get promo data from data attributes
                 const promoData = {
                     image: promoImage.src,
-                    title: promoName,
-                    description: this.dataset.description || 'No description available'
+                    title: this.dataset.name,
+                    description: this.dataset.description || 'Tidak ada deskripsi tersedia'
                 };
                 
                 openPromoModal(promoData);

@@ -573,7 +573,18 @@
                     modal.style.display = "none";
                 }
             })
-            .catch(error => console.error("Error redeeming reward:", error));
+            .catch(error => {
+                // Tampilkan popup error jika error.message ada
+                if (error.message && error.message.includes('Insufficient')) {
+                    showRewardErrorPopup(error.message);
+                    confirmRedeemPopup.style.display = "none";
+                    modal.style.display = "none";
+                } else {
+                    // Bisa juga tampilkan popup fetch error umum
+                    showRewardErrorPopup('Failed to redeem reward. Please try again.');
+                }
+                console.error("Error redeeming reward:", error);
+            });
         }
 
         function showRewardErrorPopup(message) {
