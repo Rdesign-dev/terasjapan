@@ -324,7 +324,7 @@
     <div id="rewardErrorPopup" class="popup-referral" style="display: none;">
         <div class="popup-content">
             <span class="close-btn" onclick="closeRewardErrorPopup()">&times;</span>
-            <img src="<?php echo icon_url('x.png') ?>" class="popup-image" alt="error-image">
+            <img src="https://terasjapan.com/ImageTerasJapan/icon/x.png" class="popup-image" alt="error-image">
             <p id="errorMessage">Insufficient points to redeem this reward.</p>
             <div class="button-container">
                 <div class="rectangle ok-btn" onclick="closeRewardErrorPopup()">
